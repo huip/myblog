@@ -2,10 +2,57 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/semantic.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="wrap">
+
+      <div class="brand">
+        <div class="item">
+          <h2><%= brand %></h2>
+          <h4><%= motto %></h4>
+        </div>
+        <div class="nav-bar">
+         <div class="ui menu">
+           <a class="nav-index item" href="/#index"><%= index %></a>
+           <a class="nav-about item" href="/#about"><%= about %></a>
+           <a class="nav-login item" href="/#login"><%= login %></a>
+           <a class="nav-register item" href="/#register"><%= register %></a>
+         </div>
+        </div>
+       </div>
+       <div class="content">
+         <div class="login-container">
+
+         </div>
+         <div class="register-container">
+         </div>
+       </div>
+
+       <div class="footer">
+       </div>
+    </div>
   </body>
+  <script src='/javascripts/jquery-1.10.2.min.js'></script>
+  <script src='/javascripts/semantic.min.js'></script>
+  <script src='/javascripts/underscore-min.js'></script>
+  <script src='/javascripts/backbone-min.js'></script>
+  <script src='/javascripts/index.js'></script>
+  <script type="text/template" id="login-template">
+    <div class="login-area">
+      <p><lable>email:</lable><input name='email' type="text" class="login-email" /></p>
+      <p><lable>password:</lable><input name='password' type="text" class="login-password" /></p>
+      <p><input type="button" value="login" id='login-btn' /></p>
+    </div>
+    </div>
+  </script>
+  <script type="text/template" id="register-template">
+    <div class="register-area">
+      <p><lable>username:</lable><input name='username' type="text" class="register-username" /></p>
+      <p><lable>email:</lable><input name='email' type="text" class="register-email" /></p>
+      <p><lable>password:</lable><input name='password' type="password" class="register-password" /></p>
+      <p><input type="button" value="register" id="register-btn" /></p>
+    </div>
+  </script>
 </html>

@@ -1,7 +1,28 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0px;
+  margin: 0px;
+  line-height: 10px;
 }
 a {
   color: #00b7ff;
+}
+.wrap {
+  width: 100%;
+  height: 100%;
+}
+.brand {
+  heigth: 100px;
+  width: 90%;
+  font-size: 20px;
+  margin: 10px 0 0 5%;
+}
+.nav-bar {
+  width: 100%;
+  margin: 25px 0 0 0;
+}
+.content {
+  width: 90%;
+  height: 100%;
+  margin: 10px 0 0 5%;
 }

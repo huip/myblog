@@ -1,0 +1,12 @@
+{
+  "brand": "Huip",
+  "motto": "Follow your heart,Follow your dream",
+  "title": "huip's daily life",
+  "version": "0.1",
+  "nav": {
+    "index": "index",
+    "about": "about",
+    "login": "login",
+    "register": "register"
+  }
+}

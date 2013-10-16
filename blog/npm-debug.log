@@ -1,0 +1,56 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'node-mongodb-native' ]
+2 info using npm@1.3.11
+3 info using node@v0.11.8-pre
+4 verbose readDependencies using package.json deps
+5 verbose cache add [ 'node-mongodb-native', null ]
+6 verbose cache add name=undefined spec="node-mongodb-native" args=["node-mongodb-native",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'node-mongodb-native',
+7 verbose parsed url   path: 'node-mongodb-native',
+7 verbose parsed url   href: 'node-mongodb-native' }
+8 silly lockFile 19c00958-node-mongodb-native node-mongodb-native
+9 verbose lock node-mongodb-native /home/huip/.npm/19c00958-node-mongodb-native.lock
+10 silly lockFile 19c00958-node-mongodb-native node-mongodb-native
+11 silly lockFile 19c00958-node-mongodb-native node-mongodb-native
+12 verbose addNamed [ 'node-mongodb-native', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile 5600b9da-node-mongodb-native node-mongodb-native@
+15 verbose lock node-mongodb-native@ /home/huip/.npm/5600b9da-node-mongodb-native.lock
+16 silly addNameRange { name: 'node-mongodb-native', range: '*', hasData: false }
+17 verbose url raw node-mongodb-native
+18 verbose url resolving [ 'https://registry.npmjs.org/', './node-mongodb-native' ]
+19 verbose url resolved https://registry.npmjs.org/node-mongodb-native
+20 info trying registry request attempt 1 at 20:11:52
+21 http GET https://registry.npmjs.org/node-mongodb-native
+22 http 404 https://registry.npmjs.org/node-mongodb-native
+23 silly registry.get cb [ 404,
+23 silly registry.get   { server: 'CouchDB/1.3.1 (Erlang OTP/R15B03)',
+23 silly registry.get     date: 'Mon, 14 Oct 2013 11:11:54 GMT',
+23 silly registry.get     'content-type': 'application/json',
+23 silly registry.get     'content-length': '52',
+23 silly registry.get     'cache-control': 'must-revalidate' } ]
+24 silly lockFile 5600b9da-node-mongodb-native node-mongodb-native@
+25 silly lockFile 5600b9da-node-mongodb-native node-mongodb-native@
+26 error 404 'node-mongodb-native' is not in the npm registry.
+26 error 404 You should bug the author to publish it
+26 error 404
+26 error 404 Maybe try 'npm search mongodb native'
+26 error 404
+26 error 404 Note that you can also install from a
+26 error 404 tarball, folder, or http url, or git url.
+27 error System Linux 2.6.18-194.3.1.el5.028stab069.6xen
+28 error command "node" "/usr/local/bin/npm" "install" "node-mongodb-native"
+29 error cwd /home/huip/myprojects/myblog/blog
+30 error node -v v0.11.8-pre
+31 error npm -v 1.3.11
+32 error code E404
+33 verbose exit [ 1, true ]

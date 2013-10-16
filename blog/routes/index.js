@@ -3,14 +3,16 @@ var setting;
 
 setting = require("../settings");
 
-exports.index = function(req, res) {
-  return res.render("index", {
-    title: setting.title,
-    brand: setting.brand,
-    motto: setting.motto,
-    index: setting.nav.index,
-    about: setting.nav.about,
-    login: setting.nav.login,
-    register: setting.nav.register
+module.exports = function(app) {
+  return app.get("/", function(req, res) {
+    return res.render("index", {
+      title: setting.title,
+      brand: setting.brand,
+      motto: setting.motto,
+      index: setting.nav.index,
+      about: setting.nav.about,
+      login: setting.nav.login,
+      register: setting.nav.register
+    });
   });
 };

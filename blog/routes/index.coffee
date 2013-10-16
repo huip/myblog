@@ -1,5 +1,6 @@
 setting = require "../settings"
-exports.index = (req, res) ->
+module.exports = (app)->
+  app.get "/",(req,res)->
     res.render "index",
       title: setting.title
       brand: setting.brand
@@ -8,4 +9,3 @@ exports.index = (req, res) ->
       about: setting.nav.about
       login: setting.nav.login
       register: setting.nav.register
-   

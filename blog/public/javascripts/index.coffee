@@ -1,4 +1,11 @@
 $(document).ready ()->
+  UserModel = Backbone.Model.extend
+    urlRoot: "/api/user"
+    defaults:
+      username: ""
+      email: ""
+      password: ""
+
   LoginView = Backbone.View.extend
     initialize: ()->
       this.render()
@@ -15,6 +22,19 @@ $(document).ready ()->
     events:
       "click #register-btn" : "doRegister"
     doRegister: ()->
+      username = $(".register-username").val()
+      email = $(".register-email").val()
+      password = $(".register-password").val()
+      user = new UserModel()
+      userDetails =
+        username:username
+        email: email
+        password: password
+      console.log userDetails
+      user.save userDetails,{
+        succeess: (user)->
+          alert user.toJson() 
+      }
   AppRouter = Backbone.Router.extend
     routes :
       "" : "index"

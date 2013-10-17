@@ -1,5 +1,13 @@
 setting = require "../settings"
-mongodb = require "../models/db"
+User = require "../models/user"
 module.exports = (app)->
-  app.get "/api/test",(req,res)->
-    res.send "test"
+  app.post "/api/user",(req,res)->
+    newUser = new User {
+      username: req.username
+      email: req.email
+      password: req.password
+    }
+    newUser.save (err)->
+      if err
+        console.log err
+

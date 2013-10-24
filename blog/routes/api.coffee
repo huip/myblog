@@ -2,12 +2,23 @@ setting = require "../settings"
 User = require "../models/user"
 module.exports = (app)->
   app.post "/api/user",(req,res)->
+    status = {}
     newUser = new User {
-      username: req.username
-      email: req.email
-      password: req.password
+      username: req.body.username
+      email: req.body.email
+      password: req.body.password
     }
-    newUser.save (err)->
+    User.get newUser.email,(err,user)->
+      err = "user is already exists." if user
+      status.status_code = 101
       if err
-        console.log err
-
+        res.send status
+        throw erro
+      newUser.save (err)->
+        if err
+          status.status_code = 103
+          res.send status 
+        else
+          status.status_code = 201
+          req.session.user = newUser
+          res.send status 

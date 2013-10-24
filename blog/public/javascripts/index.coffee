@@ -30,10 +30,9 @@ $(document).ready ()->
         username:username
         email: email
         password: password
-      console.log userDetails
       user.save userDetails,{
         succeess: (user)->
-          alert user.toJson() 
+          alert user 
       }
   AppRouter = Backbone.Router.extend
     routes :
@@ -45,7 +44,6 @@ $(document).ready ()->
   appRouter = new AppRouter
   appRouter.on "route:index",()->
     $(".login-container").hide()
-
   appRouter.on "route:about",()->
     $(".login-container").hide()
     $(".register-container").hide()

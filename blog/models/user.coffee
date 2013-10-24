@@ -15,23 +15,22 @@ User.prototype.save = (callback)->
       if err
         mongodb.close()
         callback err
-      collection.ensureIndex "username",{unique:true}
+      collection.ensureIndex "email",{unique:true}
       collection.insert user,{safe:true},(arr,user)->
         mongodb.close()
         callback err,user
 
-User.prototype.get = (username,callback)->
+User.get = (email,callback)->
   mongodb.open (err,db)->
     callback err if err
     db.collection "users",(err,collection)->
       if err
         mongodb.close()
         callback err
-    collection.findOne {username:username},(err,doc)->
-      mongodb.close()
-      if doc
-        user = new User(doc)
-        callback err,user
-      else
-        callback err,null
-        
+      collection.findOne {email:email},(err,doc)->
+        mongodb.close()
+        if doc
+          user = new User(doc)
+          callback err,user
+        else
+          callback err,null

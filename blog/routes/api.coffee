@@ -13,12 +13,7 @@ module.exports = (app)->
       status.status_code = 101
       if err
         res.send status
-        throw erro
       newUser.save (err)->
         if err
           status.status_code = 103
-          res.send status 
-        else
-          status.status_code = 201
-          req.session.user = newUser
           res.send status 

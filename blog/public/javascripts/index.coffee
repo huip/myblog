@@ -1,4 +1,6 @@
 $(document).ready ()->
+  $loginContainer = $('.login-container')
+  $registerContainer = $('.register-container')
   UserModel = Backbone.Model.extend
     urlRoot: "/api/user"
     defaults:
@@ -32,7 +34,7 @@ $(document).ready ()->
         password: password
       user.save userDetails,{
         succeess: (user)->
-          alert user 
+          console.log user
       }
   AppRouter = Backbone.Router.extend
     routes :
@@ -43,16 +45,16 @@ $(document).ready ()->
       "register" : "register"
   appRouter = new AppRouter
   appRouter.on "route:index",()->
-    $(".login-container").hide()
+    $loginContainer.hide()
   appRouter.on "route:about",()->
-    $(".login-container").hide()
-    $(".register-container").hide()
+    $loginContainer.hide()
+    $registerContainer.hide()
   appRouter.on "route:login",()->
-    $(".login-container").show()
-    $(".register-container").hide()
-    loginView = new LoginView {el: $(".login-container")}
+    $loginContainer.show()
+    $registerContainer.hide()
+    loginView = new LoginView {el: $loginContainer}
   appRouter.on "route:register",()->
-    $(".register-container").show()
-    $(".login-container").hide()
-    registerView = new RegisterView {el: $(".register-container")}
+    $registerContainer.show()
+    $loginContainer.hide()
+    registerView = new RegisterView {el: $registerContainer}
   Backbone.history.start()

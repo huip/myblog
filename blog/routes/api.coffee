@@ -1,12 +1,14 @@
+crypto = require 'crypto'
 setting = require "../settings"
 User = require "../models/user"
 module.exports = (app)->
   app.post "/api/user",(req,res)->
     status = {}
+    md5 = crypto.createHash('md5')
     newUser = new User {
       username: req.body.username
       email: req.body.email
-      password: req.body.password
+      password: md5.update(req.body.password).digest('base64')
     }
     User.get newUser.email,(err,user)->
       err = "user is already exists." if user
@@ -16,4 +18,8 @@ module.exports = (app)->
       newUser.save (err)->
         if err
           status.status_code = 103
-          res.send status 
+          res.send status
+        else
+          status.status_code = 201
+          req.session.user = newUser
+          res.send status

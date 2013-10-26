@@ -33,8 +33,9 @@ $(document).ready ()->
         email: email
         password: password
       user.save userDetails,{
-        succeess: (user)->
-          console.log user
+        success: (model,response)->
+          # if response.status_code == 201
+            
       }
   AppRouter = Backbone.Router.extend
     routes :

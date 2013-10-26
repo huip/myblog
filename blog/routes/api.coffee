@@ -14,12 +14,12 @@ module.exports = (app)->
       err = "user is already exists." if user
       status.status_code = 101
       if err
-        res.send status
+        res.send JSON.stringify status
       newUser.save (err)->
         if err
           status.status_code = 103
-          res.send status
+          res.send JSON.stringify status
         else
           status.status_code = 201
           req.session.user = newUser
-          res.send status
+          res.send JSON.stringify status

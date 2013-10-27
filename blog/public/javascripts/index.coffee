@@ -2,7 +2,7 @@ $(document).ready ()->
   $loginContainer = $('.login-container')
   $registerContainer = $('.register-container')
   UserModel = Backbone.Model.extend
-    urlRoot: "/api/user"
+    urlRoot: "/api/u/register"
     defaults:
       username: ""
       email: ""
@@ -14,6 +14,23 @@ $(document).ready ()->
     render: ()->
       template = _.template( $("#login-template").html(),{} )
       this.$el.html template
+    events: ()->
+      "click #login-btn" : "doLogin"
+    doLogin: ()->
+      email = $(".login-email")
+      password = $(".login-password")
+      datas = {email:email.val(),password:password.val()}
+      $.ajax
+        url: "api/u/login"
+        type: "post"
+        data: datas
+        success: (data)->
+          if data.status_code == 202
+            window.location.href = "/"
+          else if data.status_code == 103
+            alert "用户名不存在！"
+          else if data.status_code == 104
+            alert "用户名或密码错误！"
 
   RegisterView = Backbone.View.extend
     initialize: ()->
@@ -34,7 +51,8 @@ $(document).ready ()->
         password: password
       user.save userDetails,{
         success: (model,response)->
-          # if response.status_code == 201
+         alert "注册成功!" if response.status_code == 201
+         alert "用户名或密码已经存在！" if response.status_code == 101
             
       }
   AppRouter = Backbone.Router.extend

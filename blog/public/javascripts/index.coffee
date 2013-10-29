@@ -55,6 +55,7 @@ $(document).ready ()->
          alert "用户名或密码已经存在！" if response.status_code == 101
             
       }
+
   AppRouter = Backbone.Router.extend
     routes :
       "" : "index"

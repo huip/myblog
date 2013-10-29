@@ -9,3 +9,16 @@ module.exports = (app)->
       about: setting.nav.about
       login: setting.nav.login
       register: setting.nav.register
+  app.get "/admin",(req,res)->
+    res.render "admin",
+      title: setting.admin.title
+      brand: setting.admin.brand
+      list: setting.admin.list
+      post: setting.admin.post
+  app.get "/admin/post",(req,res)->
+    res.render "post",
+      title: setting.admin.title
+      brand: setting.admin.brand
+      list: setting.admin.list
+      post: setting.admin.post
+      

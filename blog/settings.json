@@ -9,6 +9,12 @@
     "login": "login",
     "register": "register"
   },
+  "admin": {
+    "title": "admin systerm",
+    "brand": "admin systerm",
+    "list": "list",
+    "post": "post"
+  },
   "db": {
     "host": "127.0.0.1",
     "port": "27017",

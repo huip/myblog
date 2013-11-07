@@ -1,6 +1,7 @@
 $(document).ready ()->
-  $loginContainer = $('.login-container')
-  $registerContainer = $('.register-container')
+  $loginContainer = $(".login-container")
+  $registerContainer = $(".register-container")
+  $articleContainer = $(".article-container")
   UserModel = Backbone.Model.extend
     urlRoot: "/api/u/register"
     defaults:
@@ -9,14 +10,14 @@ $(document).ready ()->
       password: ""
 
   LoginView = Backbone.View.extend
-    initialize: ()->
-      this.render()
-    render: ()->
+    initialize:()->
+      @render()
+    render:()->
       template = _.template( $("#login-template").html(),{} )
-      this.$el.html template
-    events: ()->
+      @$el.html template
+    events:()->
       "click #login-btn" : "doLogin"
-    doLogin: ()->
+    doLogin:()->
       email = $(".login-email")
       password = $(".login-password")
       datas = {email:email.val(),password:password.val()}
@@ -24,7 +25,7 @@ $(document).ready ()->
         url: "api/u/login"
         type: "post"
         data: datas
-        success: (data)->
+        success:(data)->
           if data.status_code == 202
             window.location.href = "/admin"
           else if data.status_code == 103
@@ -33,14 +34,14 @@ $(document).ready ()->
             alert "用户名或密码错误！"
 
   RegisterView = Backbone.View.extend
-    initialize: ()->
-      this.render()
-    render: ()->
+    initialize:()->
+      @render()
+    render:()->
       template = _.template( $("#register-template").html(),{} )
-      this.$el.html template
+      @$el.html template
     events:
       "click #register-btn" : "doRegister"
-    doRegister: ()->
+    doRegister:()->
       username = $(".register-username").val()
       email = $(".register-email").val()
       password = $(".register-password").val()
@@ -50,11 +51,16 @@ $(document).ready ()->
         email: email
         password: password
       user.save userDetails,{
-        success: (model,response)->
+        success:(model,response)->
          alert "注册成功!" if response.status_code == 201
          alert "用户名或密码已经存在！" if response.status_code == 101
-            
       }
+  ArticleView = Backbone.View.extend
+    initialize:()->
+      @render()
+    render:()->
+      template = _.template( $("#article-template").html(),{} )
+      @$el.html template
 
   AppRouter = Backbone.Router.extend
     routes :
@@ -63,6 +69,7 @@ $(document).ready ()->
       "about" : "about"
       "login" : "login"
       "register" : "register"
+      "p/:id" : "p"
   appRouter = new AppRouter
   appRouter.on "route:index",()->
     $loginContainer.hide()
@@ -77,4 +84,7 @@ $(document).ready ()->
     $registerContainer.show()
     $loginContainer.hide()
     registerView = new RegisterView {el: $registerContainer}
+  appRouter.on "route:p",(id)->
+    articleView = new ArticleView {el: $articleContainer}
+    
   Backbone.history.start()

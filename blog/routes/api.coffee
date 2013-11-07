@@ -56,6 +56,9 @@ module.exports = (app)->
       else
         status.status_code = 203
         res.json status
-
-
+  # article info 
+  app.post "/p",(req,res)->
+    Post.getOne req.body.id,(err,docs)->
+     console.log err if err
+     res.json docs
 

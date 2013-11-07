@@ -6,9 +6,10 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <div class="wrap">
 
+    <div class="wrap">
       <div class="brand">
+
         <div class="item">
           <h2><%= brand %></h2>
           <h4><%= motto %></h4>
@@ -20,18 +21,23 @@
            <a class="nav-login item" href="/#login"><%= login %></a>
            <a class="nav-register item" href="/#register"><%= register %></a>
          </div>
-        </div>
        </div>
-       <div class="content">
-         <div class="login-container">
 
+      </div>
+
+      <div class="content">
+
+         <div class="login-container">
          </div>
          <div class="register-container">
          </div>
-       </div>
+         <div class="article-container">
+         </div>
+      </div>
 
        <div class="footer">
        </div>
+
     </div>
   </body>
   <script src='/javascripts/jquery-1.10.2.min.js'></script>
@@ -53,6 +59,11 @@
       <p><lable>email:</lable><input name='email' type="text" class="register-email" /></p>
       <p><lable>password:</lable><input name='password' type="password" class="register-password" /></p>
       <p><input type="button" value="register" id="register-btn" /></p>
+    </div>
+  </script>
+  <script type="text/template" id="article-template">
+    <div class="article-area">
+      test
     </div>
   </script>
 </html>

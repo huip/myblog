@@ -30,6 +30,7 @@ module.exports = (app)->
     email = req.body.email
     password = md5.update(req.body.password).digest("base64")
     User.get email,(err,user)->
+      console.log user
       if user == null
         status.status_code = 103
         res.json status

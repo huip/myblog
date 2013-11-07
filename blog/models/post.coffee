@@ -1,5 +1,6 @@
 mongodb = require "./db"
 markdown = require("markdown").markdown
+ObjectID = require("mongodb").ObjectID
 Post = (post)->
   @name = post.name
   @title = post.title
@@ -32,7 +33,7 @@ Post.prototype.save = (callback)->
       collection.insert post,{safe:true},(err)->
         mongodb.close()
         callback err
-
+# get article list args [limit,page]
 Post.get = (args,callback)->
   mongodb.open (err,db)->
     callback err if err
@@ -54,3 +55,19 @@ Post.get = (args,callback)->
         docs.forEach (doc)->
           doc.post = markdown.toHTML doc.post
         callback null,docs,total
+# get one artcle info by artical id
+Post.getOne = (id,callback)->
+  mongodb.open (err,db)->
+    callback err if err
+    db.collection "posts",(err,collection)->
+      if err
+        mongodb.close()
+        callback err
+      collection.findOne
+        _id:new ObjectID(id)
+        ,(err,doc)->
+          mongodb.close()
+          if doc
+            callback err,doc
+          else
+            callback err,null

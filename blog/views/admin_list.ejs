@@ -19,9 +19,24 @@
         </div>
        </div>
        <div class="content">
+         <table class="ui padded table segment">
+          <thead>
+            <tr>
+              <th>title</th>
+              <th>author</th>
+              <th>time</th>
+            </tr>
+          </thead>
          <% posts.forEach(function(post) { %>
-         <div><%=post.post %></div>
-         <%})%>
+            <tbody>
+               <tr>
+                 <td><a href="/p/<%=post._id %>"><%=post.title %></td>
+                 <td><%=post.name %></td>
+                 <td><%=post.time.day %></td>
+               </tr>
+             </tbody>
+             <%})%>
+           </table>
          </div>
         
        </div>

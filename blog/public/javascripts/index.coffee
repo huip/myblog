@@ -26,7 +26,7 @@ $(document).ready ()->
         data: datas
         success: (data)->
           if data.status_code == 202
-            window.location.href = "/"
+            window.location.href = "/admin"
           else if data.status_code == 103
             alert "用户名不存在！"
           else if data.status_code == 104

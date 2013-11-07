@@ -10,12 +10,28 @@ module.exports = (app)->
       about: setting.nav.about
       login: setting.nav.login
       register: setting.nav.register
+
+ # article info
+  app.get "/p/:id",(req,res)->
+    Post.getOne req.params.id,(err,docs)->
+     console.log err if err
+     res.json docs
+
+ # admin page 
   app.get "/admin",(req,res)->
-    res.render "admin",
-      title: setting.admin.title
-      brand: setting.admin.brand
-      list: setting.admin.list
-      post: setting.admin.post
+    arg = {
+      page: 1
+      limit: 10
+      name: req.session.user.id
+    }
+    Post.get arg,(err,posts,total)->
+      console.log err if err
+      res.render "admin_list",
+        title: setting.admin.title
+        brand: setting.admin.brand
+        list: setting.admin.list
+        post: setting.admin.post
+        posts: posts
   app.get "/admin/post",(req,res)->
     res.render "post",
       title: setting.admin.title
@@ -27,11 +43,11 @@ module.exports = (app)->
     arg = {
       page: req.params.id
       limit: 10
-      name: req.session.user.username
+      name: req.session.user.id
     }
     Post.get arg,(err,posts,total)->
       console.log err if err
-      res.render "list",
+      res.render "admin_list",
         title: setting.admin.title
         brand: setting.admin.brand
         list: setting.admin.list

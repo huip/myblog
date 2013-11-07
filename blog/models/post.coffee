@@ -41,16 +41,16 @@ Post.get = (args,callback)->
         mongodb.close()
         callback err
       query = {}
-      query.name = name if name
+      query.name = args.name if args.name
       collection.count query,(err,total)->
        collection.find(query,{
-         skip: (page-1)*arg.pageSize
-         limit:arg.limit
+         skip: (args.page-1)*args.limit
+         limit:args.limit
        } ).sort(
          time:-1
        ).toArray (err,docs)->
         mongodb.close()
         callback err if err
-        docs.forEach (err)->
-          docs.post = markdown.toHTML doc.post
+        docs.forEach (doc)->
+          doc.post = markdown.toHTML doc.post
         callback null,docs,total

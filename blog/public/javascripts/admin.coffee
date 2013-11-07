@@ -20,6 +20,6 @@ $(document).ready ()->
         url: @postUrl
         type: "POST"
         data:datas
-        success:(data)->
-          console.log data
+        success:(msg)->
+          window.location.href = "/admin" if msg.status_code == 203
   AdminAction.init()

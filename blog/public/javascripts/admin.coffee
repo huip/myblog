@@ -1,11 +1,10 @@
 $(document).ready ()->
   AdminAction = 
-    postUrl:""
+    postUrl:"/api/p/add"
     $postTitle: $ ".post-title"
-    $postCate: $ ".post-cate"
-    $postContent: $ ".post-content"
+    $postTags: $ ".post-tags"
+    $postPost: $ ".post-post"
     $postBtn: $ ".post-btn"
-    
     init:()->
       @event()
     event:()->
@@ -14,14 +13,13 @@ $(document).ready ()->
     doPost:()->
       datas = {
         title: @$postTitle.val()
-        cate: @$postCate.val()
-        content: @$postContent.val()
+        tags: @$postTags.val()
+        post: @$postPost.val()
       }
       $.ajax
         url: @postUrl
         type: "POST"
         data:datas
         success:(data)->
-          alert data
-        
+          console.log data
   AdminAction.init()

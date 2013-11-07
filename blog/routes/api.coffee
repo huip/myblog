@@ -1,6 +1,7 @@
 crypto = require "crypto"
 setting = require "../settings"
 User = require "../models/user"
+Post = require "../models/post"
 status = {}
 module.exports = (app)->
   app.post "/api/u/register",(req,res)->
@@ -40,3 +41,20 @@ module.exports = (app)->
       req.session.user = user
       status.status_code = 202
       res.json status
+  app.post "/api/p/add",(req,res)->
+    newPost = new Post {
+      name: req.session.user.username 
+      title: req.body.title
+      tags: req.body.tags
+      post: req.body.post
+    }
+    newPost.save (err)->
+      if err
+        status.status_code = 105
+        res.json status
+      else
+        status.status_code = 203
+        res.json status
+
+
+

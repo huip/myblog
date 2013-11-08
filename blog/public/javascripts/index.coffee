@@ -73,18 +73,26 @@ $(document).ready ()->
   appRouter = new AppRouter
   appRouter.on "route:index",()->
     $loginContainer.hide()
+    $registerContainer.hide()
+    $articleContainer.hide()
   appRouter.on "route:about",()->
     $loginContainer.hide()
     $registerContainer.hide()
+    $articleContainer.hide()
   appRouter.on "route:login",()->
     $loginContainer.show()
     $registerContainer.hide()
+    $articleContainer.hide()
     loginView = new LoginView {el: $loginContainer}
   appRouter.on "route:register",()->
     $registerContainer.show()
     $loginContainer.hide()
+    $articleContainer.hide()
     registerView = new RegisterView {el: $registerContainer}
   appRouter.on "route:p",(id)->
+    $registerContainer.hide()
+    $loginContainer.hide()
+    $articleContainer.show()
     articleView = new ArticleView {el: $articleContainer}
     
   Backbone.history.start()

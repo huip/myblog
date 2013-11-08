@@ -19,6 +19,7 @@ module.exports = (app)->
 
  # admin page 
   app.get "/admin",(req,res)->
+    isLogin req,res
     arg = {
       page: 1
       limit: 10
@@ -32,6 +33,7 @@ module.exports = (app)->
         post: setting.admin.post
         posts: posts
   app.get "/admin/post",(req,res)->
+    isLogin req,res
     res.render "post",
       title: setting.admin.title
       brand: setting.admin.brand
@@ -39,6 +41,7 @@ module.exports = (app)->
       post: setting.admin.post
   # get post list  
   app.get "/admin/list/:id",(req,res)->
+    isLogin req,res
     arg = {
       page: req.params.id
       limit: 10
@@ -53,6 +56,7 @@ module.exports = (app)->
         posts: posts
         total: total
   app.get "/admin/p/edit/:id",(req,res)->
+    isLogin req,res
     Post.getOne req.params.id,"markdown",(err,docs)->
       console.log err if err
       res.render "edit",
@@ -61,3 +65,5 @@ module.exports = (app)->
         list: setting.admin.list
         post: setting.admin.post
         posts: docs
+  isLogin = (req,res)->
+    res.redirect "/#login" if !req.session.user

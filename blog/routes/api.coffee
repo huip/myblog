@@ -44,6 +44,7 @@ module.exports = (app)->
       res.json status
   # add article
   app.post "/api/p/add",(req,res)->
+    isLogin req,res
     newPost = new Post {
       name: req.session.user.username 
       title: req.body.title
@@ -59,11 +60,13 @@ module.exports = (app)->
         res.json status
   # delete article
   app.get "/api/p/remove/:id",(req,res)->
+    isLogin req,res
     Post.remove req.params.id,(err,info)->
       console.log err if err
       res.redirect "/admin" 
   # update article
   app.post "/api/p/update/:id",(req,res)->
+    isLogin req,res
     args = 
       id: req.params.id
       name: req.session.user.username
@@ -89,4 +92,6 @@ module.exports = (app)->
     Post.get arg,(err,posts,total)->
       console.log err if err
       res.json posts
-
+  isLogin = (req,res)->
+    res.redirect "/#login" if !req.session.user
+   

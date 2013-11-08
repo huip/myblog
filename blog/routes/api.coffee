@@ -42,6 +42,7 @@ module.exports = (app)->
       req.session.user = user
       status.status_code = 202
       res.json status
+  # add article
   app.post "/api/p/add",(req,res)->
     newPost = new Post {
       name: req.session.user.username 
@@ -56,7 +57,12 @@ module.exports = (app)->
       else
         status.status_code = 203
         res.json status
-  # article info 
+  # delete article
+  app.get "/api/p/remove/:id",(req,res)->
+    Post.remove req.params.id,(err,info)->
+      console.log err if err
+      res.redirect "/admin" 
+  # get one article info 
   app.get "/api/p/get/:id",(req,res)->
     Post.getOne req.params.id,(err,docs)->
      console.log err if err

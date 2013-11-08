@@ -25,14 +25,28 @@
               <th>title</th>
               <th>author</th>
               <th>time</th>
+              <th>operator</th>
             </tr>
           </thead>
           {{ posts.forEach(function(post) { }}
             <tbody>
                <tr>
                  <td><a href="/#p/{{= post._id }}">{{= post.title }}</td>
-                   <td>{{= post.name }}</td>
-                   <td>{{= post.time.day }}</td>
+                 <td>{{= post.name }}</td>
+                 <td>{{= post.time.day }}</td>
+                 <td>
+                    <div class="mini ui remove-article red button" href="api/p/remove/{{=post._id}}">
+                       <i class="trash icon"></i>
+                        Trash
+                     </div>
+                   </a>
+                   <a href="#">
+                     <div class="mini blue ui button">
+                       <i class="edit icon"></i>
+                        Edit
+                     </div>
+                   </a>
+                 </td>
                </tr>
              </tbody>
              {{ }) }}

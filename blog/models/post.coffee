@@ -71,3 +71,18 @@ Post.getOne = (id,callback)->
             callback err,doc
           else
             callback err,null
+Post.remove = (id,callback)->
+  mongodb.open (err,db)->
+    callback err if err
+    db.collection "posts",(err,collection)->
+      if err
+        mongodb.close()
+        callback err
+      collection.remove
+        _id:new ObjectID(id)
+        ,{w:1}
+        ,(err)->
+          mongodb.close()
+          if err
+            callback err
+          callback null

@@ -52,3 +52,12 @@ module.exports = (app)->
         post: setting.admin.post
         posts: posts
         total: total
+  app.get "/admin/p/edit/:id",(req,res)->
+    Post.getOne req.params.id,"markdown",(err,docs)->
+      console.log err if err
+      res.render "edit",
+        title: setting.admin.title
+        brand: setting.admin.brand
+        list: setting.admin.list
+        post: setting.admin.post
+        posts: docs

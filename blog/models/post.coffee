@@ -8,21 +8,12 @@ Post = (post)->
   @post = post.post
 module.exports = Post
 Post.prototype.save = (callback)->
-  date = new Date()
-  time = {
-    date: date
-    year: date.getFullYear()
-    month: date.getFullYear() + "-" + (date.getMonth() + 1)
-    day: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
-    minute: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()+
-            " " + date.getHours()+":"+ date.getMinutes()
-  }
   post =
     name: @name
     title: @title
     tags: @tags
     post: @post
-    time: time
+    time: Post.getTime()
     pv: 0
   mongodb.open (err,db)->
     callback err if err
@@ -54,8 +45,8 @@ Post.get = (args,callback)->
         docs.forEach (doc)->
           doc.post = markdown.toHTML doc.post
         callback null,docs,total
-# get one artcle info by artical id
-Post.getOne = (id,callback)->
+# get one artcle info by artical id type { "markdown","html" }
+Post.getOne = (id,type,callback)->
   mongodb.open (err,db)->
     callback err if err
     db.collection "posts",(err,collection)->
@@ -67,7 +58,7 @@ Post.getOne = (id,callback)->
         ,(err,doc)->
           mongodb.close()
           if doc
-            doc.post = markdown.toHTML doc.post
+            doc.post = markdown.toHTML doc.post if type == "html"
             callback err,doc
           else
             callback err,null
@@ -86,3 +77,27 @@ Post.remove = (id,callback)->
           if err
             callback err
           callback null
+Post.update = (args,callback)->
+  mongodb.open (err,db)->
+    callback err if err
+    args.time = Post.getTime()
+    db.collection "posts",(err,collection)->
+      if err
+        mongodb.close()
+        callback err
+      collection.update
+        _id: new ObjectID(args.id)
+        ,{$set:args},(err)->
+          mongodb.close()
+          callback err if err
+          callback null
+Post.getTime = ()->
+  date = new Date()
+  time = {
+    date: date
+    year: date.getFullYear()
+    month: date.getFullYear() + "-" + (date.getMonth() + 1)
+    day: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+    minute: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()+
+            " " + date.getHours()+":"+ date.getMinutes()
+  }

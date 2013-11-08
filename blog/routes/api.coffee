@@ -62,9 +62,23 @@ module.exports = (app)->
     Post.remove req.params.id,(err,info)->
       console.log err if err
       res.redirect "/admin" 
+  # update article
+  app.post "/api/p/update/:id",(req,res)->
+    args = 
+      id: req.params.id
+      name: req.session.user.username
+      title: req.body.title
+      tags: req.body.tags
+      post: req.body.post
+    Post.update args,(err,info)->
+      console.log err if err
+      status.status_code = 204
+      res.json status
+    
+
   # get one article info 
   app.get "/api/p/get/:id",(req,res)->
-    Post.getOne req.params.id,(err,docs)->
+    Post.getOne req.params.id,"html",(err,docs)->
      console.log err if err
      res.json docs
   app.get "/api/p/list/:id",(req,res)->
@@ -75,3 +89,4 @@ module.exports = (app)->
     Post.get arg,(err,posts,total)->
       console.log err if err
       res.json posts
+

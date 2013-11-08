@@ -97,6 +97,7 @@ $(document).ready ()->
       "p/:id" : "p"
   appRouter = new AppRouter
   appRouter.on "route:index",(id)->
+    $indexContainer.show()
     $loginContainer.hide()
     $registerContainer.hide()
     $articleContainer.hide()
@@ -106,17 +107,21 @@ $(document).ready ()->
     $loginContainer.hide()
     $registerContainer.hide()
     $articleContainer.hide()
+    $indexContainer.hide()
   appRouter.on "route:login",()->
     $loginContainer.show()
     $registerContainer.hide()
     $articleContainer.hide()
+    $indexContainer.hide()
     loginView = new LoginView {el: $loginContainer}
   appRouter.on "route:register",()->
     $registerContainer.show()
     $loginContainer.hide()
     $articleContainer.hide()
+    $indexContainer.hide()
     registerView = new RegisterView {el: $registerContainer}
   appRouter.on "route:p",(id)->
+    $indexContainer.hide()
     $registerContainer.hide()
     $loginContainer.hide()
     $articleContainer.show()

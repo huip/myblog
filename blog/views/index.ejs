@@ -48,28 +48,78 @@
   <script src='/javascripts/backbone-min.js'></script>
   <script src='/javascripts/index.js'></script>
   <script type="text/template" id="index-template">
-    <div class="index-area">
+    <div class="index-area grid ui">
       <%_.each(articles, function(article) {%>
-      <p class="article-title"><%= article.title %></p>
-      <p><%= article.time %>post by <%= article.name %></p>
-      <p><%= article.post %></p>
-    </div>
+      <div class="ui piled segment ten wide column ">
+        <h2 class="article-title"><a href="#/p/<%=article._id%>"><%= article.title %></a></h2>
+        <p class="">post by <%= article.name %></p>
+        <p class=""><%= article.post %></p>
+      </div>
     <%})%>
+    </div>
   </script>
   <script type="text/template" id="login-template">
-    <div class="login-area">
-      <p><lable>email:</lable><input name='email' type="text" class="login-email" /></p>
-      <p><lable>password:</lable><input name='password' type="password" class="login-password" /></p>
-      <p><input type="button" value="login" id='login-btn' /></p>
-    </div>
-    </div>
+    <div class="login-area ui grid" style="margin:10px auto">
+      <div class="ui form segment column wide middle six">
+        <div class="field">
+          <label>email</label>
+          <div class="ui left labeled icon input">
+            <input type="text" class="login-email wide three" name="email" placeholder="email">
+            <i class="user icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>password</label>
+          <div class="ui left labeled icon input">
+            <input type="password" class="login-password column" name="password" placeholder="email">
+            <i class="lock icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <div class="ui blue  button" id="login-btn">Login</div>
+      </div>
+      </div>
   </script>
   <script type="text/template" id="register-template">
-    <div class="register-area">
-      <p><lable>username:</lable><input name='username' type="text" class="register-username" /></p>
-      <p><lable>email:</lable><input name='email' type="text" class="register-email" /></p>
-      <p><lable>password:</lable><input name='password' type="password" class="register-password" /></p>
-      <p><input type="button" value="register" id="register-btn" /></p>
+    <div class="login-area ui grid" style="margin:10px auto">
+      <div class="ui form segment column wide middle six">
+        <div class="field">
+          <label>username</label>
+          <div class="ui left labeled icon input">
+            <input type="text" class="register-username wide three" name="username" placeholder="username">
+            <i class="user icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        <div class="field">
+          <label>email</label>
+          <div class="ui left labeled icon input">
+            <input type="text" class="register-email wide three" name="email" placeholder="email">
+            <i class="user icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>password</label>
+          <div class="ui left labeled icon input">
+            <input type="password" class="register-password column" name="password" placeholder="email">
+            <i class="lock icon"></i>
+            <div class="ui corner label">
+              <i class="icon asterisk"></i>
+            </div>
+          </div>
+        </div>
+        <div class="ui blue button" id="register-btn">Register</div>
+      </div>
+      </div>
     </div>
   </script>
   <script type="text/template" id="article-template">

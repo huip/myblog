@@ -68,6 +68,7 @@ Post.getOne = (id,callback)->
         ,(err,doc)->
           mongodb.close()
           if doc
+            doc.post = markdown.toHTML doc.post
             callback err,doc
           else
             callback err,null

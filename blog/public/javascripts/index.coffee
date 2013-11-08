@@ -8,6 +8,14 @@ $(document).ready ()->
       username: ""
       email: ""
       password: ""
+  ArticleModel = Backbone.Model.extend
+    urlRoot: "/api/p/get"
+    defaults:
+      name: ""
+      title: ""
+      tags: ""
+      post: ""
+      time: ""
 
   LoginView = Backbone.View.extend
     initialize:()->
@@ -57,9 +65,14 @@ $(document).ready ()->
       }
   ArticleView = Backbone.View.extend
     initialize:()->
-      @render()
-    render:()->
-      template = _.template( $("#article-template").html(),{} )
+      that = @
+      article = new ArticleModel {id:@id} 
+      article.fetch
+        success:(data)->
+          that.render( data.toJSON() )
+    render:(data)->
+      console.log data
+      template = _.template( $("#article-template").html(),data )
       @$el.html template
 
   AppRouter = Backbone.Router.extend
@@ -93,6 +106,6 @@ $(document).ready ()->
     $registerContainer.hide()
     $loginContainer.hide()
     $articleContainer.show()
-    articleView = new ArticleView {el: $articleContainer}
+    articleView = new ArticleView {el: $articleContainer,id:id}
     
   Backbone.history.start()

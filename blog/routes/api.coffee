@@ -57,8 +57,8 @@ module.exports = (app)->
         status.status_code = 203
         res.json status
   # article info 
-  app.post "/p",(req,res)->
-    Post.getOne req.body.id,(err,docs)->
+  app.get "/api/p/get/:id",(req,res)->
+    Post.getOne req.params.id,(err,docs)->
      console.log err if err
      res.json docs
 

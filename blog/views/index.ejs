@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>{{= title }}</title>
     <link rel='stylesheet' href='/stylesheets/semantic.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
@@ -11,15 +11,15 @@
       <div class="brand">
 
         <div class="item">
-          <h2><%= brand %></h2>
-          <h4><%= motto %></h4>
+          <h2>{{= brand }}</h2>
+          <h4>{{= motto }}</h4>
         </div>
         <div class="nav-bar">
          <div class="ui menu">
-           <a class="nav-index item" href="/#index"><%= index %></a>
-           <a class="nav-about item" href="/#about"><%= about %></a>
-           <a class="nav-login item" href="/#login"><%= login %></a>
-           <a class="nav-register item" href="/#register"><%= register %></a>
+           <a class="nav-index item" href="/#index">{{= index }}</a>
+           <a class="nav-about item" href="/#about">{{= about }}</a>
+           <a class="nav-login item" href="/#login">{{= login }}</a>
+           <a class="nav-register item" href="/#register">{{= register }}</a>
          </div>
        </div>
 
@@ -63,7 +63,9 @@
   </script>
   <script type="text/template" id="article-template">
     <div class="article-area">
-      test
+      <div class="article-title">
+        <%= title %> 
+      </div>
     </div>
   </script>
 </html>

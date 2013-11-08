@@ -4,9 +4,12 @@ Module dependencies.
 ###
 express = require("express")
 indexs = require("./routes")
+ejs = require("ejs")
 apis = require("./routes/api")
 http = require("http")
 path = require("path")
+ejs.open = "{{"
+ejs.close = "}}"
 app = express()
 # all environments
 app.set "port", process.env.PORT or 3000

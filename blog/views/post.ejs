@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>{{= title }}</title>
     <link rel='stylesheet' href='/stylesheets/semantic.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
@@ -9,12 +9,12 @@
     <div class="wrap">
       <div class="brand">
         <div class="item">
-          <h4><%= brand %></h4>
+          <h4>{{= brand }}</h4>
         </div>
         <div class="nav-bar">
          <div class="ui menu">
-           <a class="nav-index item" href="/admin"><%= list %></a>
-           <a class="nav-index item" href="/admin/post"><%= post %></a>
+           <a class="nav-index item" href="/admin">{{= list }}</a>
+           <a class="nav-index item" href="/admin/post">{{= post }}</a>
          </div>
         </div>
        </div>
@@ -22,7 +22,7 @@
          <div class="ui form">
           <div class="field">
             <label>title</label>
-            <input class="post-title"   type="text">
+            <input class="post-title" type="text">
           </div>
         </div>
         <div class="ui form">

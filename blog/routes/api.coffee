@@ -61,4 +61,11 @@ module.exports = (app)->
     Post.getOne req.params.id,(err,docs)->
      console.log err if err
      res.json docs
-
+  app.get "/api/p/list/:id",(req,res)->
+    arg = {
+      page: req.params.id
+      limit: 10
+    }
+    Post.get arg,(err,posts,total)->
+      console.log err if err
+      res.json posts

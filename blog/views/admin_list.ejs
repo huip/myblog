@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>{{= title }}</title>
     <link rel='stylesheet' href='/stylesheets/semantic.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
@@ -9,12 +9,12 @@
     <div class="wrap">
       <div class="brand">
         <div class="item">
-          <h4><%= brand %></h4>
+          <h4>{{= brand }}</h4>
         </div>
         <div class="nav-bar">
          <div class="ui menu">
-           <a class="nav-index item" href="/admin"><%= list %></a>
-           <a class="nav-index item" href="/admin/post"><%= post %></a>
+           <a class="nav-index item" href="/admin">{{= list }}</a>
+           <a class="nav-index item" href="/admin/post">{{= post }}</a>
          </div>
         </div>
        </div>
@@ -27,15 +27,15 @@
               <th>time</th>
             </tr>
           </thead>
-         <% posts.forEach(function(post) { %>
+          {{ posts.forEach(function(post) { }}
             <tbody>
                <tr>
-                 <td><a href="/#p/<%=post._id %>"><%=post.title %></td>
-                 <td><%=post.name %></td>
-                 <td><%=post.time.day %></td>
+                 <td><a href="/#p/{{= post._id }}">{{= post.title }}</td>
+                   <td>{{= post.name }}</td>
+                   <td>{{= post.time.day }}</td>
                </tr>
              </tbody>
-             <%})%>
+             {{ }) }}
            </table>
          </div>
         

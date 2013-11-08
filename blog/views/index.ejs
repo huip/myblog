@@ -27,6 +27,8 @@
 
       <div class="content">
 
+         <div class="index-container">
+         </div>
          <div class="login-container">
          </div>
          <div class="register-container">
@@ -45,6 +47,15 @@
   <script src='/javascripts/underscore-min.js'></script>
   <script src='/javascripts/backbone-min.js'></script>
   <script src='/javascripts/index.js'></script>
+  <script type="text/template" id="index-template">
+    <div class="index-area">
+      <%_.each(articles, function(article) {%>
+      <p class="article-title"><%= article.title %></p>
+      <p><%= article.time %>post by <%= article.name %></p>
+      <p><%= article.post %></p>
+    </div>
+    <%})%>
+  </script>
   <script type="text/template" id="login-template">
     <div class="login-area">
       <p><lable>email:</lable><input name='email' type="text" class="login-email" /></p>
@@ -63,9 +74,9 @@
   </script>
   <script type="text/template" id="article-template">
     <div class="article-area">
-      <div class="article-title">
-        <%= title %> 
-      </div>
+      <p class="article-title"><%= title %></p>
+      <p><%= time.day %>post by <%= name %></p>
+      <p><%= post %></p>
     </div>
   </script>
 </html>

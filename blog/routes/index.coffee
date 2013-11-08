@@ -22,7 +22,6 @@ module.exports = (app)->
     arg = {
       page: 1
       limit: 10
-      name: req.session.user.id
     }
     Post.get arg,(err,posts,total)->
       console.log err if err
@@ -43,7 +42,6 @@ module.exports = (app)->
     arg = {
       page: req.params.id
       limit: 10
-      name: req.session.user.id
     }
     Post.get arg,(err,posts,total)->
       console.log err if err

@@ -1,4 +1,5 @@
 $(document).ready ()->
+  $indexContainer = $(".index-container")
   $loginContainer = $(".login-container")
   $registerContainer = $(".register-container")
   $articleContainer = $(".article-container")
@@ -16,7 +17,8 @@ $(document).ready ()->
       tags: ""
       post: ""
       time: ""
-
+  ArticlesModel = Backbone.Model.extend
+    urlRoot: "/api/p/list/"
   LoginView = Backbone.View.extend
     initialize:()->
       @render()
@@ -71,23 +73,35 @@ $(document).ready ()->
         success:(data)->
           that.render( data.toJSON() )
     render:(data)->
-      console.log data
       template = _.template( $("#article-template").html(),data )
       @$el.html template
-
+  IndexView = Backbone.View.extend
+    initialize:()->
+      that = @
+      articles = new ArticlesModel {id:@id}
+      articles.fetch
+        success:(data)->
+          that.render( data.toJSON() )
+    render:(data)->
+      console.log data
+      template = _.template( $("#index-template").html(),{articles:data} )
+      @$el.html template
   AppRouter = Backbone.Router.extend
     routes :
       "" : "index"
       "index" : "index"
+      "index/:id" : "index"
       "about" : "about"
       "login" : "login"
       "register" : "register"
       "p/:id" : "p"
   appRouter = new AppRouter
-  appRouter.on "route:index",()->
+  appRouter.on "route:index",(id)->
     $loginContainer.hide()
     $registerContainer.hide()
     $articleContainer.hide()
+    id = 1 if id == undefined
+    indexView = new IndexView {el: $indexContainer,id:id}
   appRouter.on "route:about",()->
     $loginContainer.hide()
     $registerContainer.hide()

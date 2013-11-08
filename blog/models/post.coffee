@@ -42,7 +42,6 @@ Post.get = (args,callback)->
         mongodb.close()
         callback err
       query = {}
-      query.name = args.name if args.name
       collection.count query,(err,total)->
        collection.find(query,{
          skip: (args.page-1)*args.limit

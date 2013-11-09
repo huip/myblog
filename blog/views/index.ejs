@@ -18,8 +18,6 @@
          <div class="ui menu">
            <a class="nav-index item" href="/#index">{{= index }}</a>
            <a class="nav-about item" href="/#about">{{= about }}</a>
-           <a class="nav-login item" href="/#login">{{= login }}</a>
-           <a class="nav-register item" href="/#register">{{= register }}</a>
          </div>
        </div>
 
@@ -56,70 +54,6 @@
         <p class=""><%= article.post %></p>
       </div>
     <%})%>
-    </div>
-  </script>
-  <script type="text/template" id="login-template">
-    <div class="login-area ui grid" style="margin:10px auto">
-      <div class="ui form segment column wide middle six">
-        <div class="field">
-          <label>email</label>
-          <div class="ui left labeled icon input">
-            <input type="text" class="login-email wide three" name="email" placeholder="email">
-            <i class="user icon"></i>
-            <div class="ui corner label">
-              <i class="icon asterisk"></i>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label>password</label>
-          <div class="ui left labeled icon input">
-            <input type="password" class="login-password column" name="password" placeholder="email">
-            <i class="lock icon"></i>
-            <div class="ui corner label">
-              <i class="icon asterisk"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ui blue  button" id="login-btn">Login</div>
-      </div>
-      </div>
-  </script>
-  <script type="text/template" id="register-template">
-    <div class="login-area ui grid" style="margin:10px auto">
-      <div class="ui form segment column wide middle six">
-        <div class="field">
-          <label>username</label>
-          <div class="ui left labeled icon input">
-            <input type="text" class="register-username wide three" name="username" placeholder="username">
-            <i class="user icon"></i>
-            <div class="ui corner label">
-              <i class="icon asterisk"></i>
-            </div>
-          </div>
-        <div class="field">
-          <label>email</label>
-          <div class="ui left labeled icon input">
-            <input type="text" class="register-email wide three" name="email" placeholder="email">
-            <i class="user icon"></i>
-            <div class="ui corner label">
-              <i class="icon asterisk"></i>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label>password</label>
-          <div class="ui left labeled icon input">
-            <input type="password" class="register-password column" name="password" placeholder="email">
-            <i class="lock icon"></i>
-            <div class="ui corner label">
-              <i class="icon asterisk"></i>
-            </div>
-          </div>
-        </div>
-        <div class="ui blue button" id="register-btn">Register</div>
-      </div>
-      </div>
     </div>
   </script>
   <script type="text/template" id="article-template">

@@ -5,6 +5,7 @@ Module dependencies.
 express = require("express")
 indexs = require("./routes")
 ejs = require("ejs")
+stylus = require("stylus")
 apis = require("./routes/api")
 http = require("http")
 path = require("path")
@@ -22,6 +23,7 @@ app.use express.methodOverride()
 app.use(express.cookieParser())
 app.use(express.session({secret: '1234567890QWERTY'}));
 app.use app.router
+app.use stylus.middleware path.join __dirname, "public";
 app.use express.static(path.join(__dirname, "public"))
 
 # development only

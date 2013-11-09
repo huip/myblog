@@ -93,5 +93,5 @@ module.exports = (app)->
       console.log err if err
       res.json posts
   isLogin = (req,res)->
-    res.redirect "/#login" if !req.session.user
+    res.redirect "/login" if !req.session.user
    

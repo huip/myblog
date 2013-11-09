@@ -1,6 +1,7 @@
 setting = require "../settings"
 Post = require "../models/post"
 module.exports = (app)->
+  # index page
   app.get "/",(req,res)->
     res.render "index",
       title: setting.title
@@ -11,7 +12,17 @@ module.exports = (app)->
       login: setting.nav.login
       register: setting.nav.register
 
- # article info
+  # login page
+  app.get "/login",(req,res)->
+    res.render "login",
+      title: "title"
+
+  # register page
+  app.get "/register",(req,res)->
+    res.render "register",
+      title: "register"
+
+  # get one article info
   app.get "/p/:id",(req,res)->
     Post.getOne req.params.id,(err,docs)->
      console.log err if err
@@ -32,6 +43,8 @@ module.exports = (app)->
         list: setting.admin.list
         post: setting.admin.post
         posts: posts
+
+  # post article page
   app.get "/admin/post",(req,res)->
     isLogin req,res
     res.render "post",
@@ -39,7 +52,8 @@ module.exports = (app)->
       brand: setting.admin.brand
       list: setting.admin.list
       post: setting.admin.post
-  # get post list  
+
+  # admin article list
   app.get "/admin/list/:id",(req,res)->
     isLogin req,res
     arg = {
@@ -55,6 +69,8 @@ module.exports = (app)->
         post: setting.admin.post
         posts: posts
         total: total
+
+  # article edit page
   app.get "/admin/p/edit/:id",(req,res)->
     isLogin req,res
     Post.getOne req.params.id,"markdown",(err,docs)->
@@ -65,5 +81,7 @@ module.exports = (app)->
         list: setting.admin.list
         post: setting.admin.post
         posts: docs
+
+  # check user is login
   isLogin = (req,res)->
-    res.redirect "/#login" if !req.session.user
+    res.redirect "/login" if !req.session.user

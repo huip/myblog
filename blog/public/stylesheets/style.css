@@ -6,6 +6,7 @@ body {
 }
 a {
   color: #00b7ff;
+  under-line: none;
 }
 .wrap {
   width: 100%;
@@ -25,4 +26,10 @@ a {
   width: 90%;
   height: 100%;
   margin: 10px 0 0 5%;
+}
+.login-content {
+  text-aligin: center;
+}
+.login-area {
+  margin: 100px auto;
 }

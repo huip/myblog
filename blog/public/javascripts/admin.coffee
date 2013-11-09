@@ -11,6 +11,13 @@ $(document).ready ()->
     $editTitle: $ ".edit-title"
     $editTags: $ ".edit-tags"
     $editBtn: $ ".edit-btn"
+    $loginEmail:  $ ".login-email"
+    $loginPassword: $ ".login-password"
+    $loginBtn: $ ".login-btn"
+    $regUname: $ ".register-username"
+    $regEmail: $ ".register-email"
+    $regPassword: $ ".register-password"
+    $regBtn: $ ".register-btn"
     init:()->
       @event()
     event:()->
@@ -20,6 +27,10 @@ $(document).ready ()->
         AdminAction.removePost $ @
       @$editBtn.click ()->
         AdminAction.editPost $ @
+      @$loginBtn.click ()->
+        AdminAction.doLogin()
+      @$regBtn.click ()->
+        AdminAction.doRegister()
     doPost:()->
       datas =
         title: @$postTitle.val()
@@ -27,15 +38,15 @@ $(document).ready ()->
         post: @$postPost.val()
       $.ajax
         url: @postUrl
-        type: "POST"
+        type: "post"
         data: datas
         success:(msg)->
           window.location.href = "/admin" if msg.status_code == 203
     removePost:(that)->
-     isRemove = window.confirm "are your sure delte this article?"
-     window.location.href = that.attr "href" if isRemove
+      isRemove = window.confirm "are your sure delte this article?"
+      window.location.href = that.attr "href" if isRemove
     editPost:(that)->
-      datas = 
+      datas =
         title: @$editTitle.val()
         tags: @$editTags.val()
         post: @$editPost.val()
@@ -46,5 +57,31 @@ $(document).ready ()->
         data: datas
         success:(msg)->
           window.location.href = "/admin" if msg.status_code == 204
-
+    doLogin:()->
+      datas = 
+        email:@$loginEmail.val()
+        password:@$loginPassword.val()
+      $.ajax
+        url: "api/u/login"
+        type: "post"
+        data: datas
+        success:(msg)->
+          if msg.status_code == 202
+            window.location.href = "/admin"
+          else if msg.status_code == 103
+            alert "用户名不存在！"
+          else if msg.status_code == 104
+            alert "用户名或密码错误！"
+    doRegister:()->
+      datas =
+        username: @$regUname.val()
+        email: @$regEmail.val()
+        password: @$regPassword.val()
+      $.ajax
+        url: "/api/u/register"
+        type: "post"
+        data: datas
+        success:(msg)->
+          alert "注册成功!" if msg.status_code == 201
+          alert "用户名或密码已经存在！" if msg.status_code == 101
   AdminAction.init()

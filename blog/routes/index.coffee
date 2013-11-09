@@ -39,7 +39,7 @@ module.exports = (app)->
     }
     Post.get arg,(err,posts,total)->
       console.log err if err
-      res.render "admin_list",
+      res.render "admin",
         title: setting.admin.title
         brand: setting.admin.brand
         index: setting.nav.index

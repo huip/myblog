@@ -9,14 +9,16 @@ module.exports = (app)->
       motto: setting.motto
       index: setting.nav.index
       about: setting.nav.about
-      login: setting.nav.login
-      register: setting.nav.register
+      user: req.session.user
 
   # login page
   app.get "/login",(req,res)->
     res.render "login",
       title: "title"
-
+  # logout page
+  app.get "/logout",(req,res)->
+    req.session.user = null
+    res.redirect "/"
   # register page
   app.get "/register",(req,res)->
     res.render "register",
@@ -40,6 +42,9 @@ module.exports = (app)->
       res.render "admin_list",
         title: setting.admin.title
         brand: setting.admin.brand
+        index: setting.nav.index
+        about: setting.nav.about
+        user: req.session.user
         list: setting.admin.list
         post: setting.admin.post
         posts: posts
@@ -49,9 +54,12 @@ module.exports = (app)->
     isLogin req,res
     res.render "post",
       title: setting.admin.title
+      index: setting.nav.index
+      about: setting.nav.about
       brand: setting.admin.brand
       list: setting.admin.list
       post: setting.admin.post
+      user: req.session.user
 
   # admin article list
   app.get "/admin/list/:id",(req,res)->
@@ -65,10 +73,13 @@ module.exports = (app)->
       res.render "admin_list",
         title: setting.admin.title
         brand: setting.admin.brand
+        index: setting.nav.index
+        about: setting.nav.about
         list: setting.admin.list
         post: setting.admin.post
         posts: posts
         total: total
+        user: req.session.user
 
   # article edit page
   app.get "/admin/p/edit/:id",(req,res)->
@@ -78,9 +89,12 @@ module.exports = (app)->
       res.render "edit",
         title: setting.admin.title
         brand: setting.admin.brand
+        index: setting.nav.index
+        about: setting.nav.about
         list: setting.admin.list
         post: setting.admin.post
         posts: docs
+        user: req.session.user
 
   # check user is login
   isLogin = (req,res)->

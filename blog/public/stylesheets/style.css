@@ -14,22 +14,11 @@ a {
 }
 .brand {
   heigth: 100px;
-  width: 90%;
+  width: 50%;
   font-size: 20px;
-  margin: 10px 0 0 5%;
-}
-.nav-bar {
-  width: 100%;
-  margin: 25px 0 0 0;
+  margin: 5px 0 0 5%;
 }
 .content {
   width: 90%;
-  height: 100%;
-  margin: 10px 0 0 5%;
-}
-.login-content {
-  text-aligin: center;
-}
-.login-area {
-  margin: 100px auto;
+  margin: 25px 0 0 5%;
 }

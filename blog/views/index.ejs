@@ -32,7 +32,7 @@
 <script type="text/template" id="index-template">
     <div class="index-area grid ui">
       <%_.each(articles.posts, function(article) {%>
-      <div class="ui piled segment ten wide column ">
+      <div class="ui articles-area  piled segment ten wide column ">
         <h2 class="article-title"><a href="#/p/<%=article._id%>"><%= article.title %></a></h2>
         <p class="article-author">post by <%= article.name %></p>
         <p class="article-content"><%= article.post %></p>

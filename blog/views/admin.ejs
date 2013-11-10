@@ -32,6 +32,21 @@
     </tbody>
     {{ }) }}
   </table>
+  <div class="ui borderless pagination menu">
+    {{ if (!isFirstPage) { }}
+    <a class="item" href="/admin/list/{{=page-1}}">
+     <i class="icon left arrow"></i> Previous
+    </a>
+   {{  } }}
+    {{ for(var i= 1 ; i<= numPage; i++) { }}
+      <a class="item" href="/admin/list/{{=i}}">{{=i}}</a>
+    {{  } }}
+    {{ if (!isLastPage) { }}
+      <a class="item" href="/admin/list/{{=page+1}}">
+       Next <i class="icon right arrow"></i>
+      </a>
+    {{  } }}
+  </div>
 </div>
 </div>
 <div class="footer">

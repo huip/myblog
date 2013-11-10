@@ -25,9 +25,10 @@ a {
 .index-area {
   line-height: 25px;
 }
-.article-area {
+.articles-area {
   line-height: 25px;
-  width: 70%;
+  word-break: break-all;
+  white-space: normal;
 }
 .footer {
   margin: 50px 0 0 0;

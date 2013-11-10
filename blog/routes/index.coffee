@@ -48,6 +48,10 @@ module.exports = (app)->
         list: setting.admin.list
         post: setting.admin.post
         posts: posts
+        page:arg.page
+        isFirstPage: (arg.page - 1) == 0
+        isLastPage: ((arg.page - 1) * arg.limit + posts.length) == total
+        numPage:Math.ceil(total/10)
 
   # post article page
   app.get "/admin/post",(req,res)->
@@ -65,7 +69,7 @@ module.exports = (app)->
   app.get "/admin/list/:id",(req,res)->
     isLogin req,res
     arg = {
-      page: req.params.id
+      page: parseInt( req.params.id )
       limit: 10
     }
     Post.get arg,(err,posts,total)->
@@ -78,7 +82,10 @@ module.exports = (app)->
         list: setting.admin.list
         post: setting.admin.post
         posts: posts
-        total: total
+        page:arg.page
+        isFirstPage: (arg.page - 1) == 0
+        isLastPage: ((arg.page - 1) * arg.limit + posts.length) == total
+        numPage:Math.ceil(total/10)
         user: req.session.user
 
   # article edit page

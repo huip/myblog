@@ -16,6 +16,11 @@
   </div>
 </div>
 <div class="footer">
+  <div class="site-info">
+    <div style="font-family:Monaco, MonacoRegular, 'Courier New', monospace; color:#777; text-align: center;">
+     Since Feb 2012. Powered by <a href="/#about" rel="author">huip</a>
+    </div>
+  </div>    
 </div>
 </div>
 </body>
@@ -26,18 +31,35 @@
 <script src='/javascripts/index.js'></script>
 <script type="text/template" id="index-template">
     <div class="index-area grid ui">
-      <%_.each(articles, function(article) {%>
+      <%_.each(articles.posts, function(article) {%>
       <div class="ui piled segment ten wide column ">
         <h2 class="article-title"><a href="#/p/<%=article._id%>"><%= article.title %></a></h2>
-        <p class="">post by <%= article.name %></p>
-        <p class=""><%= article.post %></p>
+        <p class="article-author">post by <%= article.name %></p>
+        <p class="article-content"><%= article.post %></p>
       </div>
     <%})%>
+    </div>
+    <div class="ui borderless pagination menu">
+        <% 
+          var currentPage = parseInt( window.location.href.split("/")[window.location.href.split("/").length - 1] ); 
+          currentPage = isNaN(currentPage)?1:currentPage;
+          var prevPage =  currentPage <= 1 ?1:currentPage-1 ;
+          var nextPage = currentPage >= Math.ceil(articles.total/10)?Math.ceil(articles.total/10):currentPage+1;
+          %>
+        <a class="item" href="#/index/<%= prevPage %>">
+          <i class="icon left arrow"></i> Previous
+        </a>
+        <% for (var i = 1;i <= Math.ceil( articles.total/10 );i++){%>
+        <a class="item" href="/#index/<%=i%>"><%=i%></a>
+          <%}%>
+        <a class="item" href="/#index/<%= nextPage %>">
+          Next <i class="icon right arrow"></i>
+        </a>
     </div>
 </script>
 <script type="text/template" id="article-template">
     <div class="article-area">
-      <p class="article-title"><%= title %></p>
+      <h2 class="article-title"><%= title %></h2>
       <p><%= time.day %>post by <%= name %></p>
       <p><%= post %></p>
     </div>

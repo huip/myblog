@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{= title }}</title>
+    <link rel='stylesheet' href='/stylesheets/semantic.min.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/markdown.css' />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="ui menu inverted ">
+        <a class="active green item" href="/#index">
+           {{= index}}
+        </a>
+        <a class="blue item" href="/#about">
+           {{= about }}
+        </a>
+        {{ if( user ) { }}
+          <a class="item" href="/admin">
+            list
+          </a>
+          <a class="item" href="/admin/post">
+            post
+          </a>
+          <div class="menu right">
+            <a class="item" href="/admin">
+             welcome {{=user.username}}
+            </a>
+            <a class="item" href="/logout">
+              logout
+            </a>
+          </div>
+        {{  } else { }}
+          <a class="item" href="/login">
+            login
+          </a>
+          {{  } }}
+      </div>

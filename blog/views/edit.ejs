@@ -1,24 +1,30 @@
 {{- include header}}
 <div class="content">
-  <div class="ui form">
-    <div class="field">
+  <div class="ui grid two column form">
+    <div class="field column">
       <label>title</label>
-      <input class="edit-title" type="text" value="{{= posts.title }}">
+      <input class="edit-title" type="text" value="{{=posts.title}}">
     </div>
   </div>
-  <div class="ui form">
-    <div class="field">
+  <div class="ui grid two column form">
+    <div class="field column">
       <label>tags</label>
-      <input class="edit-tags" type="text" value="{{= posts.tags }}">
+      <input class="edit-tags" type="text" value="{{=posts.tags}}">
     </div>
   </div>
   <div class="ui form">
     <div class="field">
-      <label>post</label>
-      <textarea class="edit-post">{{= posts.post }}</textarea>
+      <div class="wmd-panel">
+        <div id="wmd-button-bar"></div>
+        <textarea class="wmd-input edit-post " style="height:800px" id="wmd-input">{{=posts.post}}</textarea>
+      </div>
+      <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
     </div>
   </div>
-  <input type="button" pid="{{=posts._id}}" class="ui button circular edit-btn" value="update" />
+  <div class="ui form" style="clear:both;top:10px">
+      <input type="button" class="ui button circular edit-btn" pid="{{=posts._id}}" value="update" />
+      <input type="button" class="ui button circular preview-btn" value="preview" />
+  </div>
 </div>
 <div class="footer">
 </div>
@@ -29,4 +35,34 @@
 <script src='/javascripts/underscore-min.js'></script>
 <script src='/javascripts/backbone-min.js'></script>
 <script src='/javascripts/admin.js'></script>
+<script src="/javascripts/Markdown.Converter.js"></script>
+<script src="/javascripts/Markdown.Sanitizer.js"></script>
+<script src="/javascripts/Markdown.Editor.js"></script>
+<script>
+(function () {
+ var converter1 = Markdown.getSanitizingConverter();
+ converter1.hooks.chain("preBlockGamut", function (text, rbg) {
+   return text.replace(/^ {0,3}""" *\n((?:.*?\n)+?) {0,3}""" *$/gm, 
+     function (whole, inner) {
+       return "<blockquote>" + rbg(inner) + "</blockquote>\n";
+     });
+   });
+ var editor1 = new Markdown.Editor(converter1);
+ editor1.run();
+ var converter2 = new Markdown.Converter();
+ converter2.hooks.chain("preConversion", function (text) {
+     return text.replace(/\b(a\w*)/gi, "*$1*");
+ });
+ converter2.hooks.chain("plainLinkText", function (url) {
+     return "This is a link to " + url.replace(/^https?:\/\//, "");
+ });
+ var help = function () { alert("Do you need help?");  }
+ var options = {
+    helpButton: { handler: help  },
+    strings: { quoteexample: "whatever you're quoting, put it right here"  }
+ };
+ var editor2 = new Markdown.Editor(converter2, "-second", options);
+ editor2.run();
+ })();
+</script>
 </html>

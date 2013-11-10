@@ -18,6 +18,7 @@ $(document).ready ()->
     $regEmail: $ ".register-email"
     $regPassword: $ ".register-password"
     $regBtn: $ ".register-btn"
+    $preBtn: $ ".preview-btn"
     init:()->
       @event()
     event:()->
@@ -31,6 +32,8 @@ $(document).ready ()->
         AdminAction.doLogin()
       @$regBtn.click ()->
         AdminAction.doRegister()
+      @$preBtn.click ()->
+        AdminAction.prePost $ @
     doPost:()->
       datas =
         title: @$postTitle.val()
@@ -84,4 +87,13 @@ $(document).ready ()->
         success:(msg)->
           alert "注册成功!" if msg.status_code == 201
           alert "用户名或密码已经存在！" if msg.status_code == 101
+    prePost:(that)->
+     if that.hasClass "hide"
+       $(".wmd-preview").css "display","none"
+       $(".wmd-input").css "display","block"
+       that.removeClass "hide"
+     else 
+       $(".wmd-input").css "display","none"
+       $(".wmd-preview").css "display","block"
+       that.addClass "hide"
   AdminAction.init()

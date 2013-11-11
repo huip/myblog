@@ -1,10 +1,4 @@
 {{- include header }}
-<div class="brand">
-  <div class="item">
-    <h2>{{= brand }}</h2>
-    <h4>{{= motto }}</h4>
-  </div>
-</div>
 <div class="content">
   <div class="index-container">
   </div>
@@ -25,7 +19,7 @@
 </div>
 </body>
 <script src='/javascripts/jquery-1.10.2.min.js'></script>
-<script src='/javascripts/semantic.min.js'></script>
+<script src='/javascripts/bootstrap.min.js'></script>
 <script src='/javascripts/underscore-min.js'></script>
 <script src='/javascripts/backbone-min.js'></script>
 <script src='/javascripts/index.js'></script>
@@ -39,22 +33,26 @@
       </div>
     <%})%>
     </div>
-    <div class="ui borderless pagination menu">
+    <ul class="pagination">
         <% 
           var currentPage = parseInt( window.location.href.split("/")[window.location.href.split("/").length - 1] ); 
           currentPage = isNaN(currentPage)?1:currentPage;
           var prevPage =  currentPage <= 1 ?1:currentPage-1 ;
           var nextPage = currentPage >= Math.ceil(articles.total/10)?Math.ceil(articles.total/10):currentPage+1;
           %>
+      <li>
         <a class="item" href="#/index/<%= prevPage %>">
-          <i class="icon left arrow"></i> Previous
+          &laquo;
         </a>
-        <% for (var i = 1;i <= Math.ceil( articles.total/10 );i++){%>
-        <a class="item" href="/#index/<%=i%>"><%=i%></a>
-          <%}%>
+      </li>
+      <% for (var i = 1;i <= Math.ceil( articles.total/10 );i++){%>
+        <li><a class="item" href="/#index/<%=i%>"><%=i%></a></li>
+      <%}%>
+      <li>
         <a class="item" href="/#index/<%= nextPage %>">
-          Next <i class="icon right arrow"></i>
+          &raquo;
         </a>
+      </li>
     </div>
 </script>
 <script type="text/template" id="article-template">

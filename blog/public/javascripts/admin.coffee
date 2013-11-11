@@ -88,12 +88,12 @@ $(document).ready ()->
           alert "注册成功!" if msg.status_code == 201
           alert "用户名或密码已经存在！" if msg.status_code == 101
     prePost:(that)->
-     if that.hasClass "hide"
+     if that.hasClass "hides"
        $(".wmd-preview").css "display","none"
        $(".wmd-input").css "display","block"
-       that.removeClass "hide"
+       that.removeClass "hides"
      else 
        $(".wmd-input").css "display","none"
        $(".wmd-preview").css "display","block"
-       that.addClass "hide"
+       that.addClass "hides"
   AdminAction.init()

@@ -1,28 +1,30 @@
 {{- include header }}
 <div class="content">
-  <table class="ui padded table segment">
-    <thead>
-      <tr>
-        <th>title</th>
-        <th>author</th>
-        <th>time</th>
-        <th>operator</th>
-      </tr>
-    </thead>
-    {{ posts.forEach(function(post) { }}
-    <tbody>
+  <div class="panel panel-default">
+  <!-- Default panel contents -->
+    <div class="panel-heading">blog's dashbord <a href="/admin/post"><div class="btn btn-primary">create</div></a></div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>title</th>
+            <th>author</th>
+            <th>time</th>
+            <th>operator</th>
+          </tr>
+        </thead>
+        {{ posts.forEach(function(post) { }}
+      <tbody>
       <tr>
         <td><a href="/#p/{{= post._id }}">{{= post.title }}</td>
           <td>{{= post.name }}</td>
           <td>{{= post.time.day }}</td>
           <td>
-            <div class="mini ui remove-article red button" href="api/p/remove/{{=post._id}}">
-              <i class="trash icon"></i>
+            <div class="remove-article btn btn-danger" href="api/p/remove/{{=post._id}}">
               Trash
             </div>
           </a>
           <a href="/admin/p/edit/{{= post._id}}">
-            <div class="mini blue ui button">
+            <div class="btn btn-primary">
               <i class="edit icon"></i>
               Edit
             </div>
@@ -31,20 +33,25 @@
       </tr>
     </tbody>
     {{ }) }}
-  </table>
-  <div class="ui borderless pagination menu">
+      </table>
+    </div>
+  </div>
+  <ul class=" pagination">
     {{ if (!isFirstPage) { }}
-    <a class="item" href="/admin/list/{{=page-1}}">
+    <li><a class="item" href="/admin/list/{{=page-1}}">
      <i class="icon left arrow"></i> Previous
     </a>
+    </li>
    {{  } }}
     {{ for(var i= 1 ; i<= numPage; i++) { }}
-      <a class="item" href="/admin/list/{{=i}}">{{=i}}</a>
+      <li><a class="item" href="/admin/list/{{=i}}">{{=i}}</a></li>
     {{  } }}
     {{ if (!isLastPage) { }}
-      <a class="item" href="/admin/list/{{=page+1}}">
-       Next <i class="icon right arrow"></i>
-      </a>
+      <li>
+        <a class="item" href="/admin/list/{{=page+1}}">
+          Next <i class="icon right arrow"></i>
+        </a>
+      </li>
     {{  } }}
   </div>
 </div>

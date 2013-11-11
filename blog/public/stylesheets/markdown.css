@@ -15,7 +15,7 @@ blockquote {
 	margin-left: 0%;
 	margin-right: 0%;
 	width: 70%;
-	min-width: 800px;
+	min-width: 600px;
 }
 
 .wmd-button-bar 
@@ -26,7 +26,7 @@ blockquote {
 
 .wmd-input 
 { 
-	min-height: 700px;
+	min-height: 450px;
 	width: 100%;
 	background-color: Gainsboro;
 	border: 1px solid DarkGray;

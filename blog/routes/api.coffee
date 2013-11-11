@@ -73,6 +73,7 @@ module.exports = (app)->
       title: req.body.title
       tags: req.body.tags
       post: req.body.post
+      
     Post.update args,(err,info)->
       console.log err if err
       status.status_code = 204

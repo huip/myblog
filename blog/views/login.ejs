@@ -1,24 +1,26 @@
 {{= include header}}
-<div class="login-area">
-  <form class="form-horizontal" role="form">
+<div class="login-area row">
+  <div class="col-md-4"></div>
+  <form class="form-horizontal login-form  col-md-4" role="form">
     <fieldset>
       <div class="form-group">
-        <label class="col-sm-1 control-label">email</label>
-        <div class="col-sm-6">
+        <label class="col-sm-2 control-label">email</label>
+        <div class="col-sm-8">
           <input type="text" class="login-email form-control" name="email" placeholder="email">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-1 control-label">password</label>
-        <div class="col-sm-6">
+        <label class="col-sm-2 control-label">password</label>
+        <div class="col-sm-8">
           <input type="password" class="login-password form-control" name="password" placeholder="password">
         </div>
       </div>
       <div class="btn btn-primary login-btn">Login</div>
     </fieldset>
   </form>
+  <div class="col-md-4"></div>
 </div>
-<div class="footer">
+{{- include footer}}
 </div>
 </body>
 <script src='/javascripts/jquery-1.10.2.min.js'></script>

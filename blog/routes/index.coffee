@@ -28,6 +28,11 @@ module.exports = (app)->
   app.get "/register",(req,res)->
     res.render "register",
       title: "register"
+      brand: setting.brand
+      motto: setting.motto
+      index: setting.nav.index
+      about: setting.nav.about
+      user: req.session.user
 
   # get one article info
   app.get "/p/:id",(req,res)->

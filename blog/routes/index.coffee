@@ -50,8 +50,8 @@ module.exports = (app)->
     Post.get arg,(err,posts,total)->
       console.log err if err
       res.render "admin",
-        title: setting.admin.title
-        brand: setting.admin.brand
+        title: setting.nav.title
+        brand: setting.brand
         index: setting.nav.index
         about: setting.nav.about
         user: req.session.user
@@ -67,10 +67,10 @@ module.exports = (app)->
   app.get "/admin/post",(req,res)->
     isLogin req,res
     res.render "post",
-      title: setting.admin.title
+      title: setting.nav.title
       index: setting.nav.index
       about: setting.nav.about
-      brand: setting.admin.brand
+      brand: setting.brand
       list: setting.admin.list
       post: setting.admin.post
       user: req.session.user
@@ -85,8 +85,8 @@ module.exports = (app)->
     Post.get arg,(err,posts,total)->
       console.log err if err
       res.render "admin",
-        title: setting.admin.title
-        brand: setting.admin.brand
+        title: setting.nav.title
+        brand: setting.brand
         index: setting.nav.index
         about: setting.nav.about
         list: setting.admin.list
@@ -104,8 +104,8 @@ module.exports = (app)->
     Post.getOne req.params.id,"markdown",(err,docs)->
       console.log err if err
       res.render "edit",
-        title: setting.admin.title
-        brand: setting.admin.brand
+        title: setting.nav.title
+        brand: setting.brand
         index: setting.nav.index
         about: setting.nav.about
         list: setting.admin.list

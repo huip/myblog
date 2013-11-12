@@ -1,6 +1,7 @@
 {{- include header}}
 <div class="content">
-<form class="form-horizontal" role="form">
+<div class="col-md-2"></div>
+<form class="form-horizontal col-md-10" role="form">
   <div class="form-group">
       <label class="col-sm-1 control-label">title</label>
       <div class="col-sm-6">
@@ -13,19 +14,20 @@
         <input class="post-tags form-control" type="text">
       </div>
   </div>
-  <div class="wmd-panel form-group">
+  <div class="form-group">
+  <div class="wmd-panel col-md-10">
      <div id="wmd-button-bar"></div>
      <textarea class="wmd-input post-post form-control " id="wmd-input"></textarea>
-  </div>
-  <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
-  <div class="ui form" style="clear:both;top:10px">
+    <div id="wmd-preview" class="wmd-panel wmd-preview col-md-10"></div>
+    <div class="col-md-10" style="margin:10px 0 0 0px">
       <input type="button" class="btn post-btn" value="post" />
       <input type="button" class="btn preview-btn" value="preview" />
+    </div>
+    </div>
   </div>
   </form>
 </div>
-<div class="footer">
-</div>
+{{- include footer}}
 </div>
 </body>
 <script src='/javascripts/jquery-1.10.2.min.js'></script>

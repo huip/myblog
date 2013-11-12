@@ -1,8 +1,9 @@
 {{- include header }}
 <div class="content">
-  <div class="panel panel-default">
+  <div class="col-md-2"></div>
+  <div class="panel col-md-8 panel-default">
   <!-- Default panel contents -->
-    <div class="panel-heading">blog's dashbord <a href="/admin/post"><div class="btn btn-primary">create</div></a></div>
+    <div class="panel-heading col-md-12">blog's dashbord <a href="/admin/post"><div class="btn btn-primary">create</div></a></div>
       <table class="table">
         <thead>
           <tr>
@@ -34,9 +35,8 @@
     </tbody>
     {{ }) }}
       </table>
-    </div>
   </div>
-  <ul class=" pagination">
+  <ul class="col-md-12 pagination">
     {{ if (!isFirstPage) { }}
     <li><a class="item" href="/admin/list/{{=page-1}}">
      <i class="icon left arrow"></i> Previous
@@ -53,11 +53,9 @@
         </a>
       </li>
     {{  } }}
-  </div>
+  </ul>
 </div>
-</div>
-<div class="footer">
-</div>
+{{- include footer}}
 </div>
 </body>
 <script src='/javascripts/jquery-1.10.2.min.js'></script>

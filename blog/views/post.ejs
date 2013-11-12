@@ -5,13 +5,21 @@
   <div class="form-group">
       <label class="col-sm-1 control-label">title</label>
       <div class="col-sm-6">
-        <input class="post-title form-control" type="text">
+        <input class="post-title form-control" type="text" />
       </div>
   </div>
   <div class="form-group">
       <label class="col-sm-1 control-label">tags</label>
       <div class="col-sm-6">
-        <input class="post-tags form-control" type="text">
+        <select class="post-tags form-control">
+        {{ for(var i = 0 ;i < tags.length; i++){ }}
+          <option value="{{=tags[i]}}">{{=tags[i]}}</option>
+        {{  } }}
+        </select>
+        <br />
+        <input type="text" class="form-control input-tag" placeholder="create tags" />
+        <br />
+        <div class="btn btn-primary create-tag">create</div>
       </div>
   </div>
   <div class="form-group">

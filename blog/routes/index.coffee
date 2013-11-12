@@ -50,7 +50,7 @@ module.exports = (app)->
     Post.get arg,(err,posts,total)->
       console.log err if err
       res.render "admin",
-        title: setting.nav.title
+        title: setting.title
         brand: setting.brand
         index: setting.nav.index
         about: setting.nav.about
@@ -66,14 +66,17 @@ module.exports = (app)->
   # post article page
   app.get "/admin/post",(req,res)->
     isLogin req,res
-    res.render "post",
-      title: setting.nav.title
-      index: setting.nav.index
-      about: setting.nav.about
-      brand: setting.brand
-      list: setting.admin.list
-      post: setting.admin.post
-      user: req.session.user
+    Post.getTags (err,tags)->
+      console.log err if err
+      res.render "post",
+        title: setting.title
+        index: setting.nav.index
+        about: setting.nav.about
+        brand: setting.brand
+        list: setting.admin.list
+        post: setting.admin.post
+        user: req.session.user
+        tags: tags
 
   # admin article list
   app.get "/admin/list/:id",(req,res)->
@@ -85,7 +88,7 @@ module.exports = (app)->
     Post.get arg,(err,posts,total)->
       console.log err if err
       res.render "admin",
-        title: setting.nav.title
+        title: setting.title
         brand: setting.brand
         index: setting.nav.index
         about: setting.nav.about
@@ -104,7 +107,7 @@ module.exports = (app)->
     Post.getOne req.params.id,"markdown",(err,docs)->
       console.log err if err
       res.render "edit",
-        title: setting.nav.title
+        title: setting.title
         brand: setting.brand
         index: setting.nav.index
         about: setting.nav.about
@@ -112,7 +115,6 @@ module.exports = (app)->
         post: setting.admin.post
         posts: docs
         user: req.session.user
-
   # check user is login
   isLogin = (req,res)->
     res.redirect "/login" if !req.session.user

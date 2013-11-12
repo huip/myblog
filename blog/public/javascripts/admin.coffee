@@ -96,4 +96,5 @@ $(document).ready ()->
        $(".wmd-input").css "display","none"
        $(".wmd-preview").css "display","block"
        that.addClass "hides"
+      
   AdminAction.init()

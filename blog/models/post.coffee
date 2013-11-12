@@ -91,6 +91,17 @@ Post.update = (args,callback)->
           mongodb.close()
           callback err if err
           callback null
+Post.getTags = (callback)->
+  mongodb.open (err,db)->
+    callback err if err
+    db.collection "posts",(err,collection)->
+      if err
+        mongodb.close()
+        callback err
+      collection.distinct "tags",(err,docs)->
+        mongodb.close()  
+        callback err if err
+        callback null,docs
 Post.getTime = ()->
   date = new Date()
   time = {

@@ -11,7 +11,15 @@
   <div class="form-group">
       <label class="col-sm-1 control-label">tags</label>
       <div class="col-sm-6">
-        <input class="edit-tags form-control" value="{{=posts.tags}}" type="text">
+        <select class="edit-tags form-control">
+        {{ for(var i = 0 ;i < tags.length; i++){ }}
+          <option value="{{=tags[i]}}">{{=tags[i]}}</option>
+        {{  } }}
+        </select>
+        <br />
+        <input type="text" class="form-control input-tag" placeholder="create tags" />
+        <br />
+        <div class="btn btn-primary hides create-tag">create</div>
       </div>
   </div>
   <div class="wmd-panel col-md-10 form-group">

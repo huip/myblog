@@ -106,15 +106,18 @@ module.exports = (app)->
     isLogin req,res
     Post.getOne req.params.id,"markdown",(err,docs)->
       console.log err if err
-      res.render "edit",
-        title: setting.title
-        brand: setting.brand
-        index: setting.nav.index
-        about: setting.nav.about
-        list: setting.admin.list
-        post: setting.admin.post
-        posts: docs
-        user: req.session.user
+      Post.getTags (err,tags)->
+        console.log err if err
+        res.render "edit",
+         title: setting.title
+         brand: setting.brand
+         index: setting.nav.index
+         about: setting.nav.about
+         list: setting.admin.list
+         post: setting.admin.post
+         posts: docs
+         user: req.session.user
+         tags: tags
   # check user is login
   isLogin = (req,res)->
     res.redirect "/login" if !req.session.user

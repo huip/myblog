@@ -19,6 +19,7 @@ $(document).ready ()->
     $regPassword: $ ".register-password"
     $regBtn: $ ".register-btn"
     $preBtn: $ ".preview-btn"
+    $ctagBtn: $ ".create-tag"
     init:()->
       @event()
     event:()->
@@ -34,6 +35,8 @@ $(document).ready ()->
         AdminAction.doRegister()
       @$preBtn.click ()->
         AdminAction.prePost $ @
+      @$ctagBtn.click ()->
+        AdminAction.createTag $ @
     doPost:()->
       datas =
         title: @$postTitle.val()
@@ -96,5 +99,15 @@ $(document).ready ()->
        $(".wmd-input").css "display","none"
        $(".wmd-preview").css "display","block"
        that.addClass "hides"
-      
+    createTag:(that)->
+      $inptTag = $(".input-tag")
+      if that.hasClass "hides"
+        $inptTag.css "display","block"
+        that.removeClass "hides"
+      else 
+        if $inptTag.val() != ""
+          tagOption = "<option value="+$inptTag.val()+">"+$inptTag.val()+"</option>"
+          $(".post-tags").append( tagOption )
+          $inptTag.css( "display","none" ).val("")
+          that.addClass "hides"
   AdminAction.init()

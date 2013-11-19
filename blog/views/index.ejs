@@ -6,6 +6,8 @@
   <div class="article-container col-md-6">
   </div>
   <div class="right-column col-md-2">
+    <div class="recent-container">
+    </div>
     <div class="tags-container">
     </div>
   </div>
@@ -22,7 +24,7 @@
     <div class="index-area">
       <%_.each(articles.posts, function(article) {%>
       <div class="index-article-area ">
-        <h2 class="articles-title"><a href="#/p/<%=article._id%>"><%= article.title %></a></h2>
+        <h2 class="articles-title"><a href="#p/<%=article._id%>"><%= article.title %></a></h2>
         <p class="article-author">post by <%= article.name %></p>
         <p class="article-content"><%= article.post %></p>
       </div>
@@ -61,6 +63,14 @@
       <!-- UY END -->
     </div>
 </script>
+<script type="text/template" id="recent-template">
+  <h4>Recent post</h4>
+  <%_.each(recents,function(article) {%>
+      <div class="post-wigets">
+        <div class="post-listt"><a href="#p/<%=article._id%>"><%=article.title%></a></div>
+      </div>
+   <%})%>
+</script>
 <script type="text/template" id="tags-template">
   <h4>Tags</h4>
   <ul class="tags-area">
@@ -73,7 +83,7 @@
   <div class="tagarticle-area">
     <%_.each(tagArticles, function(article) {%>
       <div class="index-article-area ">
-        <h2 class="articles-title"><a href="#/p/<%=article._id%>"><%= article.title %></a></h2>
+        <h2 class="articles-title"><a href="#p/<%=article._id%>"><%= article.title %></a></h2>
         <p class="article-author">post by <%= article.name %></p>
         <p class="article-content"><%= article.post %></p>
       </div>

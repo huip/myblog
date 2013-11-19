@@ -4,6 +4,7 @@ $(document).ready ()->
   $registerContainer = $(".register-container")
   $articleContainer = $(".article-container")
   $tagsContainer = $(".tags-container")
+  $recentContainer = $(".recent-container")
   # arcile model get one article 
   ArticleModel = Backbone.Model.extend
     urlRoot: "/api/p/get"
@@ -18,10 +19,13 @@ $(document).ready ()->
     urlRoot: "/api/p/list/"
   # tag list model
   TagsModel = Backbone.Model.extend
-    urlRoot: "/api/tags"
+    urlRoot: "/api/wigets/tags"
   # article  tag model
-  TagArticlesModel = Backbone.Model.extend
+  TagWigetsModel = Backbone.Model.extend
     urlRoot: "/api/p/tag/list/"
+  # recent article model 
+  RecentWigetsModel = Backbone.Model.extend
+    urlRoot: "/api/wigets/recent/"
   # one article view page
   ArticleView = Backbone.View.extend
     initialize:()->
@@ -40,7 +44,7 @@ $(document).ready ()->
       articles = new ArticlesModel {id:@id}
       articles.fetch
         success:(data)->
-          that.render( data.toJSON() )
+          that.render data.toJSON() 
     render:(data)->
       template = _.template $("#index-template").html(),{articles:data}
       @$el.html template
@@ -56,18 +60,31 @@ $(document).ready ()->
       template = _.template $("#tags-template").html(),{tags:data}
       @$el.html template
   # get all articles by tag name page
-  TagArticlesView = Backbone.View.extend
+  TagWigetsView = Backbone.View.extend
     initialize:()->
       that = @
-      tagArticlesModel = new TagArticlesModel {id:@id}
-      tagArticlesModel.fetch
+      tagList = new TagWigetsModel {id:@id}
+      tagList.fetch
         success:(data)->
           that.render data.toJSON()
     render:(data)->
       template = _.template $("#tagarticle-template").html(),{tagArticles:data}
       @$el.html template
+  # get recent post wigets
+  RecentWigetsView = Backbone.View.extend
+    initialize:()->
+      that = @
+      recentPost = new RecentWigetsModel {id:5}
+      recentPost.fetch
+        success:(data)->
+          that.render data.toJSON()
+    render:(data)->
+      template = _.template $("#recent-template").html(),{recents:data}
+      @$el.html template
+      
   # initial tagsView
   tagsView = new TagsView {el:$tagsContainer}
+  recentView = new RecentWigetsView {el:$recentContainer}
   AppRouter = Backbone.Router.extend
     routes :
       "" : "index"
@@ -90,6 +107,8 @@ $(document).ready ()->
     $articleContainer.show()
     articleView = new ArticleView {el: $articleContainer,id:id}
   appRouter.on "route:tag",(tag)->
-    tagArticlesView = new TagArticlesView {el:$indexContainer,id:tag}
+    $indexContainer.show()
+    $articleContainer.hide()
+    tagArticlesView = new TagWigetsView {el:$indexContainer,id:tag}
     
   Backbone.history.start()

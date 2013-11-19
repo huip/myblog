@@ -87,10 +87,9 @@ module.exports = (app)->
      res.json docs
 
   app.get "/api/p/list/:id",(req,res)->
-    arg = {
+    arg =
       page: req.params.id
       limit: 10
-    }
     Post.get arg,(err,posts,total)->
       console.log err if err
       post =
@@ -103,10 +102,18 @@ module.exports = (app)->
       console.log err if err
       res.json docs
   # get tags 
-  app.get "/api/tags",(req,res)->
+  app.get "/api/wigets/tags",(req,res)->
     Post.getTags (err,tags)->
       console.log err if err
       res.json tags
+  # get rencent articles title
+  app.get "/api/wigets/recent/:id",(req,res)->
+    arg = 
+      page:1
+      limit:req.params.id
+    Post.get arg,(err,posts,total)->
+      console.log err if err
+      res.json posts
   isLogin = (req,res)->
     res.redirect "/login" if !req.session.user
    

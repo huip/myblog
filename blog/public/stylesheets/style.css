@@ -80,3 +80,6 @@ a {
   display: inline;
   margin: 0 0 0 5px;
 }
+.post-wigets div {
+  line-height: 20px;
+}

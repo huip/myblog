@@ -3,12 +3,8 @@ $(document).ready ()->
   $loginContainer = $(".login-container")
   $registerContainer = $(".register-container")
   $articleContainer = $(".article-container")
-  UserModel = Backbone.Model.extend
-    urlRoot: "/api/u/register"
-    defaults:
-      username: ""
-      email: ""
-      password: ""
+  $tagsContainer = $(".tags-container")
+  # arcile model get one article 
   ArticleModel = Backbone.Model.extend
     urlRoot: "/api/p/get"
     defaults:
@@ -17,9 +13,12 @@ $(document).ready ()->
       tags: ""
       post: ""
       time: ""
+  # get series articles
   ArticlesModel = Backbone.Model.extend
     urlRoot: "/api/p/list/"
-
+  TagsModel = Backbone.Model.extend
+    urlRoot: "/api/tags"
+  # one article view page
   ArticleView = Backbone.View.extend
     initialize:()->
       that = @
@@ -28,8 +27,9 @@ $(document).ready ()->
         success:(data)->
           that.render( data.toJSON() )
     render:(data)->
-      template = _.template( $("#article-template").html(),data )
+      template = _.template $("#article-template").html(),data
       @$el.html template
+  # index page show 
   IndexView = Backbone.View.extend
     initialize:()->
       that = @
@@ -38,9 +38,22 @@ $(document).ready ()->
         success:(data)->
           that.render( data.toJSON() )
     render:(data)->
-      console.log data
-      template = _.template( $("#index-template").html(),{articles:data} )
+      template = _.template $("#index-template").html(),{articles:data}
       @$el.html template
+  # right tags cloud view
+  TagsView = Backbone.View.extend
+    initialize:()->
+      that = @
+      tags = new TagsModel()
+      tags.fetch
+        success:(data)->
+          that.render data.toJSON()
+    render:(data)->
+      console.log data
+      template = _.template $("#tags-template").html(),{tags:data}
+      @$el.html template
+  # initial tagsView
+  tagsView = new TagsView {el:$tagsContainer}
   AppRouter = Backbone.Router.extend
     routes :
       "" : "index"

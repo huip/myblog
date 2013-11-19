@@ -7,6 +7,7 @@ Post = (post)->
   @tags =  post.tags
   @post = post.post
 module.exports = Post
+# save a article
 Post.prototype.save = (callback)->
   post =
     name: @name
@@ -62,6 +63,7 @@ Post.getOne = (id,type,callback)->
             callback err,doc
           else
             callback err,null
+# remove  article by id
 Post.remove = (id,callback)->
   mongodb.open (err,db)->
     callback err if err
@@ -77,6 +79,7 @@ Post.remove = (id,callback)->
           if err
             callback err
           callback null
+# update article
 Post.update = (args,callback)->
   mongodb.open (err,db)->
     callback err if err
@@ -91,6 +94,7 @@ Post.update = (args,callback)->
           mongodb.close()
           callback err if err
           callback null
+# get all tag
 Post.getTags = (callback)->
   mongodb.open (err,db)->
     callback err if err
@@ -98,10 +102,28 @@ Post.getTags = (callback)->
       if err
         mongodb.close()
         callback err
-      collection.distinct "tags",(err,docs)->
+      collection.distinct "tags",(err,tags)->
         mongodb.close()  
         callback err if err
-        callback null,docs
+        callback null,tags
+# get articles by tag name
+Post.getArticleByTagName = (tagName,callback)->
+  mongodb.open (err,db)->
+    callback err if err
+    query = {}
+    query.tags = tagName if tagName?
+    db.collection "posts",(err,collection)->
+      if err
+        mongodb.close()
+        callback err
+      collection.find(query)
+        .sort({time:-1})
+        .toArray (err,docs)->
+          mongodb.close() if err
+          docs.forEach (doc)->
+            doc.post = markdown.toHTML doc.post
+          callback null,docs
+# get now time  
 Post.getTime = ()->
   date = new Date()
   time = {

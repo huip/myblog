@@ -96,8 +96,17 @@ module.exports = (app)->
       post =
         posts:posts
         total:total
-      console.log post
       res.json post
+  # get article by tag name
+  app.get "/api/p/tag/list/:tag",(req,res)->
+    Post.getArticleByTagName req.params.tag,(err,docs)->
+      console.log err if err
+      res.json docs
+  # get tags 
+  app.get "/api/tags",(req,res)->
+    Post.getTags (err,tags)->
+      console.log err if err
+      res.json tags
   isLogin = (req,res)->
     res.redirect "/login" if !req.session.user
    

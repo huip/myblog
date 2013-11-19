@@ -71,3 +71,12 @@ a {
 .input-tag {
   display: none;
 }
+.tags-area {
+  list-style: none;
+  margin: 0 0 0 -40px;
+}
+.tags-area li {
+  float: left;
+  display: inline;
+  margin: 0 0 0 5px;
+}

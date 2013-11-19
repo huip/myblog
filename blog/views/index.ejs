@@ -9,7 +9,10 @@
   </div>
   <div class="article-container col-md-6">
   </div>
-  <div class="col-md-4"></div>
+  <div class="right-column col-md-2">
+    <div class="tags-container">
+    </div>
+  </div>
 </div>
 {{- include footer }}
 </div>
@@ -20,9 +23,9 @@
 <script src='/javascripts/backbone-min.js'></script>
 <script src='/javascripts/index.js'></script>
 <script type="text/template" id="index-template">
-    <div class="index-area grid ui">
+    <div class="index-area">
       <%_.each(articles.posts, function(article) {%>
-      <div class="ui index-article-area  piled segment ten wide column ">
+      <div class="index-article-area ">
         <h2 class="articles-title"><a href="#/p/<%=article._id%>"><%= article.title %></a></h2>
         <p class="article-author">post by <%= article.name %></p>
         <p class="article-content"><%= article.post %></p>
@@ -61,5 +64,13 @@
         <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1603560"></script>
       <!-- UY END -->
     </div>
+</script>
+<script type="text/template" id="tags-template">
+  <h4>Tags</h4>
+  <ul class="tags-area">
+  <%_.each(tags,function(tag) {%>
+    <li><a href="#p/tag/<%=tag%>"><%=tag%></a></li>
+  <%})%>
+  </ul>
 </script>
 </html>

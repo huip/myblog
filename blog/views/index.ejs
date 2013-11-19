@@ -3,10 +3,6 @@
   <div class="col-md-2"></div>
   <div class="index-container col-md-6">
   </div>
-  <div class="login-container">
-  </div>
-  <div class="register-container">
-  </div>
   <div class="article-container col-md-6">
   </div>
   <div class="right-column col-md-2">
@@ -72,5 +68,16 @@
     <li><a href="#p/tag/<%=tag%>"><%=tag%></a></li>
   <%})%>
   </ul>
+</script>
+<script type="text/template" id="tagarticle-template">
+  <div class="tagarticle-area">
+    <%_.each(tagArticles, function(article) {%>
+      <div class="index-article-area ">
+        <h2 class="articles-title"><a href="#/p/<%=article._id%>"><%= article.title %></a></h2>
+        <p class="article-author">post by <%= article.name %></p>
+        <p class="article-content"><%= article.post %></p>
+      </div>
+    <%})%>
+  </div>
 </script>
 </html>

@@ -119,7 +119,8 @@ Post.getArticleByTagName = (tagName,callback)->
       collection.find(query)
         .sort({time:-1})
         .toArray (err,docs)->
-          mongodb.close() if err
+          callback err if err
+          mongodb.close()
           docs.forEach (doc)->
             doc.post = markdown.toHTML doc.post
           callback null,docs

@@ -16,8 +16,12 @@ $(document).ready ()->
   # get series articles
   ArticlesModel = Backbone.Model.extend
     urlRoot: "/api/p/list/"
+  # tag list model
   TagsModel = Backbone.Model.extend
     urlRoot: "/api/tags"
+  # article  tag model
+  TagArticlesModel = Backbone.Model.extend
+    urlRoot: "/api/p/tag/list/"
   # one article view page
   ArticleView = Backbone.View.extend
     initialize:()->
@@ -49,8 +53,18 @@ $(document).ready ()->
         success:(data)->
           that.render data.toJSON()
     render:(data)->
-      console.log data
       template = _.template $("#tags-template").html(),{tags:data}
+      @$el.html template
+  # get all articles by tag name page
+  TagArticlesView = Backbone.View.extend
+    initialize:()->
+      that = @
+      tagArticlesModel = new TagArticlesModel {id:@id}
+      tagArticlesModel.fetch
+        success:(data)->
+          that.render data.toJSON()
+    render:(data)->
+      template = _.template $("#tagarticle-template").html(),{tagArticles:data}
       @$el.html template
   # initial tagsView
   tagsView = new TagsView {el:$tagsContainer}
@@ -61,6 +75,7 @@ $(document).ready ()->
       "index/:id" : "index"
       "about" : "about"
       "p/:id" : "p"
+      "p/tag/:tag" : "tag"
   appRouter = new AppRouter
   appRouter.on "route:index",(id)->
     $indexContainer.show()
@@ -74,5 +89,7 @@ $(document).ready ()->
     $indexContainer.hide()
     $articleContainer.show()
     articleView = new ArticleView {el: $articleContainer,id:id}
+  appRouter.on "route:tag",(tag)->
+    tagArticlesView = new TagArticlesView {el:$indexContainer,id:tag}
     
   Backbone.history.start()

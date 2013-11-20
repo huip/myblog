@@ -10,6 +10,8 @@
     </div>
     <div class="tags-container">
     </div>
+    <div class="month-container">
+    </div>
   </div>
 </div>
 {{- include footer }}
@@ -88,6 +90,17 @@
         <p class="article-content"><%= article.post %></p>
       </div>
     <%})%>
+  </div>
+</script>
+<script type="text/template" id="month-template">
+  <div>
+    <br />
+    <h4>month archive</h4>
+    <div class="month-area">
+      <%_.each(months,function(month) {%>
+        <div class="month-list"><a href="#p/month/<%=month%>"><%=month%></div>
+      <%})%>
+    </div>
   </div>
 </script>
 </html>

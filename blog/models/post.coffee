@@ -106,6 +106,18 @@ Post.getTags = (callback)->
         mongodb.close()  
         callback err if err
         callback null,tags
+# get month archive
+Post.getMonthArchive = (callback)->
+  mongodb.open (err,db)->
+    callback err if err
+    db.collection "posts",(err,collection)->
+      if err
+        mongodb.close()
+        callback err
+      collection.distinct "time.month",(err,month)->
+        mongodb.close()
+        callback err if err
+        callback null,month 
 # get articles by tag name
 Post.getArticleByTagName = (tagName,callback)->
   mongodb.open (err,db)->

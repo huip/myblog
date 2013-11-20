@@ -5,6 +5,7 @@ $(document).ready ()->
   $articleContainer = $(".article-container")
   $tagsContainer = $(".tags-container")
   $recentContainer = $(".recent-container")
+  $monthContainer = $(".month-container")
   # arcile model get one article 
   ArticleModel = Backbone.Model.extend
     urlRoot: "/api/p/get"
@@ -18,14 +19,17 @@ $(document).ready ()->
   ArticlesModel = Backbone.Model.extend
     urlRoot: "/api/p/list/"
   # tag list model
-  TagsModel = Backbone.Model.extend
+  TagsWigetsModel = Backbone.Model.extend
     urlRoot: "/api/wigets/tags"
   # article  tag model
-  TagWigetsModel = Backbone.Model.extend
+  TagArticlesModel = Backbone.Model.extend
     urlRoot: "/api/p/tag/list/"
   # recent article model 
   RecentWigetsModel = Backbone.Model.extend
     urlRoot: "/api/wigets/recent/"
+  # month archive model
+  MonthWigetsModel = Backbone.Model.extend
+    urlRoot: "/api/wigets/month"
   # one article view page
   ArticleView = Backbone.View.extend
     initialize:()->
@@ -49,10 +53,10 @@ $(document).ready ()->
       template = _.template $("#index-template").html(),{articles:data}
       @$el.html template
   # right tags cloud view
-  TagsView = Backbone.View.extend
+  TagsWigetsView = Backbone.View.extend
     initialize:()->
       that = @
-      tags = new TagsModel()
+      tags = new TagsWigetsModel()
       tags.fetch
         success:(data)->
           that.render data.toJSON()
@@ -60,10 +64,10 @@ $(document).ready ()->
       template = _.template $("#tags-template").html(),{tags:data}
       @$el.html template
   # get all articles by tag name page
-  TagWigetsView = Backbone.View.extend
+  TagArticlesView = Backbone.View.extend
     initialize:()->
       that = @
-      tagList = new TagWigetsModel {id:@id}
+      tagList = new TagArticlesModel {id:@id}
       tagList.fetch
         success:(data)->
           that.render data.toJSON()
@@ -81,10 +85,23 @@ $(document).ready ()->
     render:(data)->
       template = _.template $("#recent-template").html(),{recents:data}
       @$el.html template
-      
+  # get month archive wigets
+  MonthWigetsView = Backbone.View.extend
+    initialize:()->
+      that = @
+      month = new MonthWigetsModel()
+      month.fetch
+        success:(data)->
+          that.render data.toJSON()
+    render:(data)->
+      console.log data
+      template = _.template $("#month-template").html() ,{months:data}
+      @$el.html template
   # initial tagsView
-  tagsView = new TagsView {el:$tagsContainer}
-  recentView = new RecentWigetsView {el:$recentContainer}
+  tagsWigetsView = new TagsWigetsView {el:$tagsContainer}
+  recentWigetsView = new RecentWigetsView {el:$recentContainer}
+  monthWigetsView = new MonthWigetsView {el:$monthContainer}
+  
   AppRouter = Backbone.Router.extend
     routes :
       "" : "index"
@@ -109,6 +126,6 @@ $(document).ready ()->
   appRouter.on "route:tag",(tag)->
     $indexContainer.show()
     $articleContainer.hide()
-    tagArticlesView = new TagWigetsView {el:$indexContainer,id:tag}
+    tagArticlesView = new TagArticlesView {el:$indexContainer,id:tag}
     
   Backbone.history.start()

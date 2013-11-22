@@ -37,8 +37,8 @@
       <%_.each(articles.posts, function(article) {%>
       <div class="index-article-area ">
         <h2 class="articles-title"><a href="#p/<%=article._id%>"><%= article.title %></a></h2>
-        <p class="article-author">post by <%= article.name %></p>
         <p class="article-content"><%= article.post %></p>
+        <p>This entry was posted on <span class="article-time"><%= article.time.day%></span></p>
       </div>
     <%})%>
     </div>
@@ -66,8 +66,8 @@
 </script>
 <script type="text/template" id="article-template">
     <div class="article-area">
-      <h2 class="article-title"><%= title %></h2>
-      <p><%= time.day %>post by <%= name %></p>
+      <h1 class="article-title"><%= title %></h1>
+      <p class="article-status">post on:&nbsp;<%= time.minute %> read:&nbsp;<%= pv %> tag:&nbsp;#<%=tags %></p>
       <p><%= post %></p>
     </div>
 </script>
@@ -75,7 +75,7 @@
   <h4>Recent post</h4>
   <%_.each(recents,function(article) {%>
       <div class="post-wigets">
-        <div class="post-listt"><a href="#p/<%=article._id%>"><%=article.title%></a></div>
+        <div class="post-list"><a href="#p/<%=article._id%>"><%=article.title%></a></div>
       </div>
    <%})%>
 </script>

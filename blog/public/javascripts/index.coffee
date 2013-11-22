@@ -5,7 +5,7 @@ $(document).ready ()->
   $articleContainer = $(".article-container")
   $tagsContainer = $(".tags-container")
   $recentContainer = $(".recent-container")
-  $monthContainer = $(".month-container")
+  $aboutContainer = $(".about-container")
   # arcile model get one article 
   ArticleModel = Backbone.Model.extend
     urlRoot: "/api/p/get"
@@ -112,20 +112,27 @@ $(document).ready ()->
       "p/tag/:tag" : "tag"
   appRouter = new AppRouter
   appRouter.on "route:index",(id)->
+    $(".navbar-nav li").eq(0).addClass("active").siblings().removeClass("active")
     $indexContainer.show()
     $articleContainer.hide()
+    $aboutContainer.hide()
     id = 1 if id == undefined
     indexView = new IndexView {el: $indexContainer,id:id}
   appRouter.on "route:about",()->
+    $(".navbar-nav li").eq(1).addClass("active").siblings().removeClass("active")
     $articleContainer.hide()
+    $aboutContainer.show()
     $indexContainer.hide()
   appRouter.on "route:p",(id)->
+    $(".navbar-nav li").removeClass("active")
     $indexContainer.hide()
     $articleContainer.show()
     articleView = new ArticleView {el: $articleContainer,id:id}
   appRouter.on "route:tag",(tag)->
+    $(".navbar-nav li").removeClass("active")
     $indexContainer.show()
     $articleContainer.hide()
+    $aboutContainer.hide()
     tagArticlesView = new TagArticlesView {el:$indexContainer,id:tag}
     
   Backbone.history.start()

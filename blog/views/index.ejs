@@ -5,7 +5,7 @@
   </div>
   <div class="article-container col-md-7">
   </div>
-  <div class="about-container">
+  <div class="about-container col-md-7">
   {{- include about }} 
   </div>
   <div class="right-column col-md-2">
@@ -93,11 +93,15 @@
 </script>
 <script type="text/template" id="tagarticle-template">
   <div class="tagarticle-area">
-    <%_.each(tagArticles, function(article) {%>
+    <h4>
+      TAGS ARCHIVE:<%=datas.tag%>
+    </h4>
+    <%_.each(datas.docs, function(article) {%>
       <div class="index-article-area ">
         <h2 class="articles-title"><a href="#p/<%=article._id%>"><%= article.title %></a></h2>
         <p class="article-author">post by <%= article.name %></p>
         <p class="article-content"><%= article.post %></p>
+        <p><%=article.time.minute%></p>
       </div>
     <%})%>
   </div>

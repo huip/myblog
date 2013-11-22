@@ -72,7 +72,8 @@ $(document).ready ()->
         success:(data)->
           that.render data.toJSON()
     render:(data)->
-      template = _.template $("#tagarticle-template").html(),{tagArticles:data}
+      console.log data
+      template = _.template $("#tagarticle-template").html(),{datas:data}
       @$el.html template
   # get recent post wigets
   RecentWigetsView = Backbone.View.extend
@@ -94,13 +95,11 @@ $(document).ready ()->
         success:(data)->
           that.render data.toJSON()
     render:(data)->
-      console.log data
       template = _.template $("#month-template").html() ,{months:data}
       @$el.html template
   # initial tagsView
   tagsWigetsView = new TagsWigetsView {el:$tagsContainer}
   recentWigetsView = new RecentWigetsView {el:$recentContainer}
- # monthWigetsView = new MonthWigetsView {el:$monthContainer}
   
   AppRouter = Backbone.Router.extend
     routes :

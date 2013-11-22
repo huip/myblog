@@ -99,8 +99,11 @@ module.exports = (app)->
   # get article by tag name
   app.get "/api/p/tag/list/:tag",(req,res)->
     Post.getArticleByTagName req.params.tag,(err,docs)->
+      result = {}
       console.log err if err
-      res.json docs
+      result.docs = docs
+      result.tag = req.params.tag
+      res.json result
   # get tags 
   app.get "/api/wigets/tags",(req,res)->
     Post.getTags (err,tags)->

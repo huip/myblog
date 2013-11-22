@@ -100,7 +100,7 @@ $(document).ready ()->
   # initial tagsView
   tagsWigetsView = new TagsWigetsView {el:$tagsContainer}
   recentWigetsView = new RecentWigetsView {el:$recentContainer}
-  monthWigetsView = new MonthWigetsView {el:$monthContainer}
+ # monthWigetsView = new MonthWigetsView {el:$monthContainer}
   
   AppRouter = Backbone.Router.extend
     routes :

@@ -136,25 +136,6 @@ Post.getArticleByTagName = (tagName,callback)->
           docs.forEach (doc)->
             doc.post = markdown.toHTML doc.post
           callback null,docs
-# get articles by month
-Post.getArticleByMonth = (month,callback)->
-  mongodb.open (err,db)->
-    callback err if err
-    query = {}
-    query.time = {}
-    query.time.month = month if month?
-    db.collection "posts",(err,collection)->
-      if err
-        mongodb.close()
-        callback err
-      collection.find(query)
-        .sort({time:-1})
-        .toArray (err,docs)->
-          callback err if err
-          mongodb.close()
-          docs.forEach (doc)->
-            doc.post = markdown.toHTML doc.post
-          callback null,docs
 # get now time  
 Post.getTime = ()->
   date = new Date()

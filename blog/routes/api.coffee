@@ -114,16 +114,6 @@ module.exports = (app)->
     Post.get arg,(err,posts,total)->
       console.log err if err
       res.json posts
-  # get month archive 
-  app.get "/api/wigets/month",(req,res)->
-    Post.getMonthArchive (err,month)->
-      console.log err if err
-      res.json month
-  # get articles by month
-  app.get "/api/p/month/list/:month",(req,res)->
-    Post.getArticleByMonth req.params.month,(err,docs)->
-      console.log err if err
-      res.json docs
   isLogin = (req,res)->
     res.redirect "/login" if !req.session.user
    

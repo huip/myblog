@@ -1,8 +1,9 @@
 {{- include header }}
 <div class="content">
   <div class="col-md-2"></div>
-  <div class="panel col-md-8 panel-default">
-  <!-- Default panel contents -->
+  <div class="col-md-8">
+    <div class="panel panel-default">
+    <!-- Default panel contents -->
     <div class="panel-heading col-md-12">blog's dashbord <a href="/admin/post"><div class="btn btn-primary">create</div></a></div>
       <table class="table">
         <thead>
@@ -35,6 +36,7 @@
     </tbody>
     {{ }) }}
       </table>
+    </div>
   </div>
   <ul class="col-md-12 pagination">
     {{ if (!isFirstPage) { }}

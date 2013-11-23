@@ -25,14 +25,16 @@
                     <a class="blue item" href="/#about">
                       {{= about }}
                     </a>
-                  </li>
+                    </li>
                   {{ if( user ) { }}
                       <li>
                         <a class="item" href="/admin">list</a>
                       </li>
                       <li>
                         <a class="item" href="/admin/post">post</a>
-                      </li>
+                        </li>
+                  </ul>
+                  <ul class="nav navbar-nav pull-right">
                         <li>
                           <a class="item" href="/admin">
                             welcome {{=user.username}}
@@ -42,13 +44,11 @@
                           <a class="item" href="/logout">
                             logout
                           </a>
-                        </li>
-                    {{  } else { }}
-                      <li>
-                        <a class="item" href="/login">login</a>
-                      </li>
-                    {{  } }}
-                  </ul>
+                          </li>
+                   </ul>
+                   {{  } else{ }}
+                 </ul>
+                 {{  } }}
                 </div>
            </div>
         </nav>

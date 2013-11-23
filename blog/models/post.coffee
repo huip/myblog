@@ -136,6 +136,32 @@ Post.getArticleByTagName = (tagName,callback)->
           docs.forEach (doc)->
             doc.post = markdown.toHTML doc.post
           callback null,docs
+# add pv
+Post.countPv = (id,callback)->
+  mongodb.open (err,db)->
+    callback err if err
+    db.collection "posts",(err,collection)->
+      if err
+        mongodb.close()
+        callback err
+      collection.findOne
+        _id:new ObjectID(id)
+        ,(err,doc)->
+           mongodb.close()
+           callback err if err
+           upArgs = {}
+           upArgs.pv = doc.pv+1
+           mongodb.open (err,db)->
+            db.collection "posts",(err,collection)->
+              collection.update
+                 _id:new ObjectID(id),
+                 {$set:upArgs},
+                 (err)->
+                    mongodb.close()
+                    callback err if err
+                    callback null
+
+
 # get now time  
 Post.getTime = ()->
   date = new Date()

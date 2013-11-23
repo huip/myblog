@@ -82,9 +82,11 @@ module.exports = (app)->
 
   # get one article info 
   app.get "/api/p/get/:id",(req,res)->
-    Post.getOne req.params.id,"html",(err,docs)->
-     console.log err if err
-     res.json docs
+    Post.countPv req.params.id,(err,docs)->
+      console.log err if err
+      Post.getOne req.params.id,"html",(err,docs)->
+        console.log err if err
+        res.json docs
 
   app.get "/api/p/list/:id",(req,res)->
     arg =

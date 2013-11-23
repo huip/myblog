@@ -160,8 +160,6 @@ Post.countPv = (id,callback)->
                     mongodb.close()
                     callback err if err
                     callback null
-
-
 # get now time  
 Post.getTime = ()->
   date = new Date()

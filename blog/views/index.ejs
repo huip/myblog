@@ -47,26 +47,28 @@
       </div>
     <%})%>
     </div>
-    <ul class="pagination">
+    <div class="paging">
         <% 
           var currentPage = parseInt( window.location.href.split("/")[window.location.href.split("/").length - 1] ); 
           currentPage = isNaN(currentPage)?1:currentPage;
           var prevPage =  currentPage <= 1 ?1:currentPage-1 ;
-          var nextPage = currentPage >= Math.ceil(articles.total/10)?Math.ceil(articles.total/10):currentPage+1;
+          var pageNum = Math.ceil( articles.total/10 );
+          var nextPage = currentPage >= pageNum?pageNum:currentPage+1;
           %>
-      <li>
-        <a class="item" href="#/index/<%= prevPage %>">
-          &laquo;
+      <% if( currentPage > 1 ) {%>
+      <div class="prevs pull-left btn btn-default">
+        <a href="#/index/<%= prevPage %>">
+          Newer
         </a>
-      </li>
-      <% for (var i = 1;i <= Math.ceil( articles.total/10 );i++){%>
-        <li><a class="item" href="/#index/<%=i%>"><%=i%></a></li>
-      <%}%>
-      <li>
-        <a class="item" href="/#index/<%= nextPage %>">
-          &raquo;
+      </div>
+      <% } %>
+      <% if( currentPage < pageNum ) {%>
+      <div class="nexts pull-right btn btn-default">
+        <a href="/#index/<%= nextPage %>">
+          Older
         </a>
-      </li>
+      </div>
+      <% } %>
     </div>
 </script>
 <script type="text/template" id="article-template">

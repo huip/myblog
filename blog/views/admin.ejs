@@ -1,10 +1,10 @@
 {{- include header }}
-<div class="content">
-  <div class="col-md-2"></div>
-  <div class="col-md-8">
+<div class="content row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
     <div class="panel panel-default">
     <!-- Default panel contents -->
-    <div class="panel-heading col-md-12">blog's dashbord <a href="/admin/post"><div class="btn btn-primary">create</div></a></div>
+    <div class="panel-heading">blog's dashbord</div>
       <table class="table">
         <thead>
           <tr>
@@ -32,31 +32,33 @@
             </div>
           </a>
         </td>
-      </tr>
+     </tr>
     </tbody>
     {{ }) }}
       </table>
     </div>
-  </div>
-  <ul class="col-md-12 pagination">
-    {{ if (!isFirstPage) { }}
-    <li><a class="item" href="/admin/list/{{=page-1}}">
-     <i class="icon left arrow"></i> Previous
-    </a>
-    </li>
-   {{  } }}
-    {{ for(var i= 1 ; i<= numPage; i++) { }}
-      <li><a class="item" href="/admin/list/{{=i}}">{{=i}}</a></li>
-    {{  } }}
-    {{ if (!isLastPage) { }}
+    <ul class=" pagination">
+      {{ if (!isFirstPage) { }}
       <li>
-        <a class="item" href="/admin/list/{{=page+1}}">
-          Next <i class="icon right arrow"></i>
+        <a class="item" href="/admin/list/{{=page-1}}">
+          <i class="icon left arrow"></i> Previous
         </a>
       </li>
-    {{  } }}
+      {{  } }}
+      {{ for(var i= 1 ; i<= numPage; i++) { }}
+        <li><a class="item" href="/admin/list/{{=i}}">{{=i}}</a></li>
+      {{  } }}
+      {{ if (!isLastPage) { }}
+        <li>
+          <a class="item" href="/admin/list/{{=page+1}}">
+            Next <i class="icon right arrow"></i>
+          </a>
+        </li>
+     {{  } }}
   </ul>
-</div>
+ </div>
+ <div class="col-md-1"></div>
+ </div>
 {{- include footer}}
 </div>
 </body>

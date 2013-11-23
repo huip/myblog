@@ -105,12 +105,12 @@ module.exports = (app)->
       result.tag = req.params.tag
       res.json result
   # get tags 
-  app.get "/api/wigets/tags",(req,res)->
+  app.get "/api/widget/tags",(req,res)->
     Post.getTags (err,tags)->
       console.log err if err
       res.json tags
   # get rencent articles title
-  app.get "/api/wigets/recent/:id",(req,res)->
+  app.get "/api/widget/recent/:id",(req,res)->
     arg = 
       page:1
       limit:req.params.id

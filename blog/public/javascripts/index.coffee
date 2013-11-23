@@ -1,10 +1,7 @@
 $(document).ready ()->
   $indexContainer = $(".index-container")
-  $loginContainer = $(".login-container")
-  $registerContainer = $(".register-container")
-  $articleContainer = $(".article-container")
-  $tagsContainer = $(".tags-container")
-  $recentContainer = $(".recent-container")
+  $tagsWidget = $(".tags-widget")
+  $recentWidget = $(".recent-widget")
   $aboutContainer = $(".about-container")
   # arcile model get one article 
   ArticleModel = Backbone.Model.extend
@@ -19,17 +16,17 @@ $(document).ready ()->
   ArticlesModel = Backbone.Model.extend
     urlRoot: "/api/p/list/"
   # tag list model
-  TagsWigetsModel = Backbone.Model.extend
-    urlRoot: "/api/wigets/tags"
+  TagsWidgetsModel = Backbone.Model.extend
+    urlRoot: "/api/widget/tags"
   # article  tag model
   TagArticlesModel = Backbone.Model.extend
     urlRoot: "/api/p/tag/list/"
   # recent article model 
-  RecentWigetsModel = Backbone.Model.extend
-    urlRoot: "/api/wigets/recent/"
+  RecentWidgetsModel = Backbone.Model.extend
+    urlRoot: "/api/widget/recent/"
   # month archive model
-  MonthWigetsModel = Backbone.Model.extend
-    urlRoot: "/api/wigets/month"
+  MonthWidgetsModel = Backbone.Model.extend
+    urlRoot: "/api/widget/month"
   # one article view page
   ArticleView = Backbone.View.extend
     initialize:()->
@@ -53,10 +50,10 @@ $(document).ready ()->
       template = _.template $("#index-template").html(),{articles:data}
       @$el.html template
   # right tags cloud view
-  TagsWigetsView = Backbone.View.extend
+  TagsWidgetsView = Backbone.View.extend
     initialize:()->
       that = @
-      tags = new TagsWigetsModel()
+      tags = new TagsWidgetsModel()
       tags.fetch
         success:(data)->
           that.render data.toJSON()
@@ -76,10 +73,10 @@ $(document).ready ()->
       template = _.template $("#tagarticle-template").html(),{datas:data}
       @$el.html template
   # get recent post wigets
-  RecentWigetsView = Backbone.View.extend
+  RecentWidgetsView = Backbone.View.extend
     initialize:()->
       that = @
-      recentPost = new RecentWigetsModel {id:5}
+      recentPost = new RecentWidgetsModel {id:5}
       recentPost.fetch
         success:(data)->
           that.render data.toJSON()
@@ -87,10 +84,10 @@ $(document).ready ()->
       template = _.template $("#recent-template").html(),{recents:data}
       @$el.html template
   # get month archive wigets
-  MonthWigetsView = Backbone.View.extend
+  MonthWidgetsView = Backbone.View.extend
     initialize:()->
       that = @
-      month = new MonthWigetsModel()
+      month = new MonthWidgetsModel()
       month.fetch
         success:(data)->
           that.render data.toJSON()
@@ -98,8 +95,8 @@ $(document).ready ()->
       template = _.template $("#month-template").html() ,{months:data}
       @$el.html template
   # initial tagsView
-  tagsWigetsView = new TagsWigetsView {el:$tagsContainer}
-  recentWigetsView = new RecentWigetsView {el:$recentContainer}
+  tagsWigetsView = new TagsWidgetsView {el:$tagsWidget}
+  recentWigetsView = new RecentWidgetsView {el:$recentWidget}
   
   AppRouter = Backbone.Router.extend
     routes :
@@ -113,24 +110,20 @@ $(document).ready ()->
   appRouter.on "route:index",(id)->
     $(".navbar-nav li").eq(0).addClass("active").siblings().removeClass("active")
     $indexContainer.show()
-    $articleContainer.hide()
     $aboutContainer.hide()
     id = 1 if id == undefined
     indexView = new IndexView {el: $indexContainer,id:id}
   appRouter.on "route:about",()->
     $(".navbar-nav li").eq(1).addClass("active").siblings().removeClass("active")
-    $articleContainer.hide()
     $aboutContainer.show()
     $indexContainer.hide()
   appRouter.on "route:p",(id)->
     $(".navbar-nav li").removeClass("active")
-    $indexContainer.hide()
-    $articleContainer.show()
-    articleView = new ArticleView {el: $articleContainer,id:id}
+    $aboutContainer.hide()
+    articleView = new ArticleView {el: $indexContainer,id:id}
   appRouter.on "route:tag",(tag)->
     $(".navbar-nav li").removeClass("active")
     $indexContainer.show()
-    $articleContainer.hide()
     $aboutContainer.hide()
     tagArticlesView = new TagArticlesView {el:$indexContainer,id:tag}
     

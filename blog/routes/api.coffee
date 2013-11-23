@@ -89,14 +89,16 @@ module.exports = (app)->
         res.json docs
 
   app.get "/api/p/list/:id",(req,res)->
-    arg =
+    args =
       page: req.params.id
       limit: 10
-    Post.get arg,(err,posts,total)->
+    Post.get args,(err,posts,total)->
       console.log err if err
       result =
         posts:posts
         total:total
+        limit:args.limit
+        url:"#index"
       res.json result
   # get article by tag name
   app.get "/api/p/tag/list/:tag/:page",(req,res)->
@@ -105,11 +107,13 @@ module.exports = (app)->
       limit: 5
       tag: req.params.tag
     Post.getArticleByTagName args,(err,posts,total)->
-      result = {}
       console.log err if err
-      result.posts = posts
-      result.tag = args.tag
-      result.total = total
+      result =
+        posts:posts
+        tag:args.tag
+        total:total
+        limit:args.limit
+        url:"#p/tag/"+args.tag
       res.json result
   # get tags 
   app.get "/api/widget/tags",(req,res)->

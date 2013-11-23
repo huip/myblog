@@ -37,7 +37,7 @@
 <script src='/javascripts/index.js'></script>
 <script type="text/template" id="index-template">
     <div class="index-area">
-      <%_.each(articles.posts, function(article) {%>
+      <%_.each(datas.posts, function(article) {%>
       <div class="panel panel-default list-area">
         <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>
         <div class="panel-body">
@@ -46,29 +46,8 @@
         </div>
       </div>
     <%})%>
+    {{- include paging}}
     </div>
-    <div class="paging">
-        <% 
-          var currentPage = parseInt( window.location.href.split("/")[window.location.href.split("/").length - 1] ); 
-          currentPage = isNaN(currentPage)?1:currentPage;
-          var prevPage =  currentPage <= 1 ?1:currentPage-1 ;
-          var pageNum = Math.ceil( articles.total/10 );
-          var nextPage = currentPage >= pageNum?pageNum:currentPage+1;
-          %>
-      <% if( currentPage > 1 ) {%>
-      <div class="prevs pull-left btn btn-default">
-        <a href="#/index/<%= prevPage %>">
-          Newer
-        </a>
-      </div>
-      <% } %>
-      <% if( currentPage < pageNum ) {%>
-      <div class="nexts pull-right btn btn-default">
-        <a href="/#index/<%= nextPage %>">
-          Older
-        </a>
-      </div>
-      <% } %>
     </div>
 </script>
 <script type="text/template" id="article-template">
@@ -103,7 +82,7 @@
 <script type="text/template" id="tags-template">
   <h4>CATEGORIES</h4>
   <div class="cat-list">
-  <%_.each(tags,function(tag) {%>
+  <%_.each(datas,function(tag) {%>
     <div class="cat-item"><a href="#p/tag/<%=tag%>"><%=tag%></a></div>
   <%})%>
   </div>
@@ -111,9 +90,9 @@
 <script type="text/template" id="tagarticle-template">
   <div class="index-area">
     <h5 class="cat-title">
-      CATEGORIES ARCHIVE:<%=tags.tag%>
+      CATEGORIES ARCHIVE:<%=datas.tag%>
     </h5>
-    <%_.each(tags.posts, function(article) {%>
+    <%_.each(datas.posts, function(article) {%>
       <div class="panel panel-default list-area">
         <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>
         <div class="panel-body">
@@ -122,6 +101,7 @@
         </div>
       </div>
     <%})%>
+    {{- include paging }}
   </div>
 </script>
 </html>

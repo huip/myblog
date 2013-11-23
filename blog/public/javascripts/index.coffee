@@ -53,7 +53,7 @@ $(document).ready ()->
         success:(data)->
           that.render data.toJSON() 
     render:(data)->
-      template = _.template $("#index-template").html(),{articles:data}
+      template = _.template $("#index-template").html(),{datas:data}
       @$el.html template
   # right tags cloud view
   TagsWidgetsView = Backbone.View.extend
@@ -64,7 +64,7 @@ $(document).ready ()->
         success:(data)->
           that.render data.toJSON()
     render:(data)->
-      template = _.template $("#tags-template").html(),{tags:data}
+      template = _.template $("#tags-template").html(),{datas:data}
       @$el.html template
   # get all articles by tag name page
   TagArticlesView = Backbone.View.extend
@@ -78,7 +78,7 @@ $(document).ready ()->
         success:(data)->
           that.render data.toJSON()
     render:(data)->
-      template = _.template $("#tagarticle-template").html(),{tags:data}
+      template = _.template $("#tagarticle-template").html(),{datas:data}
       @$el.html template
   # get recent post wigets
   RecentWidgetsView = Backbone.View.extend

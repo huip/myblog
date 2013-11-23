@@ -102,7 +102,7 @@ module.exports = (app)->
   app.get "/api/p/tag/list/:tag/:page",(req,res)->
     args =
       page:req.params.page
-      limit: 10
+      limit: 5
       tag: req.params.tag
     Post.getArticleByTagName args,(err,posts,total)->
       result = {}

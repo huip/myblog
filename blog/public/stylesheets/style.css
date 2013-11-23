@@ -5,7 +5,6 @@ body {
   line-height: 10px;
 }
 a {
-  color: #00b7ff;
   under-line: none;
 }
 .wrap {
@@ -85,4 +84,18 @@ a {
 }
 .article-status {
   color: #a9a9a9;
+}
+.list-area {
+  height: 350px;
+  overflow: hidden;
+}
+.list-area .entry-title {
+  font-size: 2em;
+}
+.list-area .entry-title a {
+  color: #000;
+}
+.time-sty {
+  font-family: Georgia, Tahoma, Helvetica, arial;
+  color: #808080;
 }

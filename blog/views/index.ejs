@@ -8,7 +8,7 @@
   <div class="about-container col-md-7">
   {{- include about }} 
   </div>
-  <div class="right-column col-md-2">
+  <div class="right-column pull-right col-md-3">
     <div class="recent-container">
     </div>
     <div class="tags-container">
@@ -35,10 +35,12 @@
 <script type="text/template" id="index-template">
     <div class="index-area">
       <%_.each(articles.posts, function(article) {%>
-      <div class="index-article-area ">
-        <h2 class="articles-title"><a href="#p/<%=article._id%>"><%= article.title %></a></h2>
-        <p class="article-content"><%= article.post %></p>
-        <p>This entry was posted on <span class="article-time"><%= article.time.day%></span></p>
+      <div class="panel panel-default list-area">
+        <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>
+        <div class="panel-body">
+          <small class="time-sty"><%= article.time.day%></small>
+          <p class="article-content"><%= article.post %></p>
+        </div>
       </div>
     <%})%>
     </div>
@@ -88,16 +90,17 @@
   </ul>
 </script>
 <script type="text/template" id="tagarticle-template">
-  <div class="tagarticle-area">
+  <div class="index-area">
     <h4>
       TAGS ARCHIVE:<%=datas.tag%>
     </h4>
     <%_.each(datas.docs, function(article) {%>
-      <div class="index-article-area ">
-        <h2 class="articles-title"><a href="#p/<%=article._id%>"><%= article.title %></a></h2>
-        <p class="article-author">post by <%= article.name %></p>
-        <p class="article-content"><%= article.post %></p>
-        <p><%=article.time.minute%></p>
+      <div class="panel panel-default list-area">
+        <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>
+        <div class="panel-body">
+          <small class="time-sty"><%= article.time.day%></small>
+          <p class="article-content"><%= article.post %></p>
+        </div>
       </div>
     <%})%>
   </div>

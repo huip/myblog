@@ -18,7 +18,7 @@ a {
   margin: 5px 0 0 5%;
 }
 .content {
-  margin: 70px 0 0 0;
+  margin: 100px 0 0 0;
 }
 .index-area {
   line-height: 25px;
@@ -70,15 +70,6 @@ a {
 .input-tag {
   display: none;
 }
-.tags-area {
-  list-style: none;
-  margin: 0 0 0 -40px;
-}
-.tags-area li {
-  float: left;
-  display: inline;
-  margin: 0 0 0 5px;
-}
 .post-wigets div {
   line-height: 20px;
 }
@@ -98,4 +89,46 @@ a {
 .time-sty {
   font-family: Georgia, Tahoma, Helvetica, arial;
   color: #808080;
+}
+.cat-title {
+  color: #9f9f9e;
+}
+.site-widgets {
+  margin: 0 80px 0 0;
+}
+.site-widgets a {
+  color: #9f9f9e;
+  font-size: 1.1em;
+  line-height: 1.8em;
+  text-decoration: underline;
+}
+.site-widgets a:hover {
+  color: #21759b;
+}
+.site-widgets h4 {
+  font-size: 1.6em;
+}
+.site-widgets .me-widget .huip-logo {
+  margin: 20px 0 0 0;
+}
+.site-widgets .cat-widget {
+  margin: 40px 0 0 0;
+}
+.site-widgets .cat-widget .cat-list {
+  margin: 20px 0 0 0;
+}
+.site-widgets .recent-widget {
+  margin: 40px 0 0 0;
+}
+.site-widgets .recent-widget .recent-list {
+  margin: 20px 0 0 0;
+}
+.site-widgets .recent-widget .recent-list .recent {
+  line-height: 15px;
+}
+.site-widgets .friends-widget {
+  margin: 40px 0 0 0;
+}
+.site-widgets .friends-widget .friends {
+  margin: 20px 0 0 0;
 }

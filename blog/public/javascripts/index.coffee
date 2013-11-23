@@ -1,6 +1,6 @@
 $(document).ready ()->
   $indexContainer = $(".index-container")
-  $tagsWidget = $(".tags-widget")
+  $tagsWidget = $(".cat-widget")
   $recentWidget = $(".recent-widget")
   $aboutContainer = $(".about-container")
   # arcile model get one article 

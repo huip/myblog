@@ -6,15 +6,20 @@
   <div class="about-container col-md-7">
   {{- include about }} 
   </div>
-  <div class="right-column pull-right col-md-3">
+  <div class="pull-right site-widgets col-md-3">
+    <div class="me-widget">
+      <h4>ME</h4>
+      <div class="huip-logo">
+        <img src="http://en.gravatar.com/userimage/43948365/087625e21205aedbbb1d039489c4cff8.jpg" class="img-thumbnail" alt="me">
+      </div>
+    </div>
     <div class="recent-widget">
     </div>
-    <div class="tags-widget">
+    <div class="cat-widget">
     </div>
     <div class="friends-widget">
-      <br />
-      <h4>friends</h4>
-      <div class="post-widgets">
+      <h4>FRENDS</h4>
+      <div class="friends">
         <div><a href="http://mex7.org/" target="_blank">Mex</a></div>
         <div><a href="http://www.solome.org/" target="_blank">solo</a></div>
         <div><a href="http://www.ysmood.org/" target="_blank">ys</a></div>
@@ -67,11 +72,10 @@
 <script type="text/template" id="article-template">
     <div class="article-area">
       <h1 class="article-title"><%= title %></h1>
-      <p class="article-status">post on:&nbsp;<%= time.minute %> read:&nbsp;<%= pv %> tag:&nbsp;#<%=tags %></p>
+      <p class="article-status">post on:&nbsp;<%= time.minute %> read:&nbsp;<%= pv %> categories:&nbsp;#<%=tags %></p>
       <p><%= post %></p>
-    </div>
     <!-- Duoshuo Comment BEGIN -->
-    <div class="ds-thread"></di v>
+    <div class="ds-thread"></div>
     <script type="text/javascript">
     var duoshuoQuery = {short_name:"huip"};
     (function() {
@@ -81,32 +85,32 @@
       ds.charset = 'UTF-8';
       (document.getElementsByTagName('head       ')[0] 
      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    
      })();
     </script>
     <!-- Duoshuo Comment END -->    
+    </div>
 </script>
 <script type="text/template" id="recent-template">
-  <h4>Recent post</h4>
-  <%_.each(recents,function(article) {%>
-      <div class="post-wigets">
-        <div class="post-list"><a href="#p/<%=article._id%>"><%=article.title%></a></div>
-      </div>
+  <h4>RECENT POST</h4>
+  <div class="recent-list">
+    <%_.each(recents,function(article) {%>
+      <div class="recent"><a href="#p/<%=article._id%>"><%=article.title%></a></div>
    <%})%>
+  </div>
 </script>
 <script type="text/template" id="tags-template">
-  <h4>Tags</h4>
-  <ul class="tags-area">
+  <h4>CATEGORIES</h4>
+  <div class="cat-list">
   <%_.each(tags,function(tag) {%>
-    <li><a href="#p/tag/<%=tag%>"><%=tag%></a></li>
+    <div class="cat-item"><a href="#p/tag/<%=tag%>"><%=tag%></a></div>
   <%})%>
-  </ul>
+  </div>
 </script>
 <script type="text/template" id="tagarticle-template">
   <div class="index-area">
-    <h4>
-      TAGS ARCHIVE:<%=datas.tag%>
-    </h4>
+    <h5 class="cat-title">
+      CATEGORIES ARCHIVE:<%=datas.tag%>
+    </h5>
     <%_.each(datas.docs, function(article) {%>
       <div class="panel panel-default list-area">
         <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>

@@ -94,17 +94,22 @@ module.exports = (app)->
       limit: 10
     Post.get arg,(err,posts,total)->
       console.log err if err
-      post =
+      result =
         posts:posts
         total:total
-      res.json post
+      res.json result
   # get article by tag name
-  app.get "/api/p/tag/list/:tag",(req,res)->
-    Post.getArticleByTagName req.params.tag,(err,docs)->
+  app.get "/api/p/tag/list/:tag/:page",(req,res)->
+    args =
+      page:req.params.page
+      limit: 10
+      tag: req.params.tag
+    Post.getArticleByTagName args,(err,posts,total)->
       result = {}
       console.log err if err
-      result.docs = docs
-      result.tag = req.params.tag
+      result.posts = posts
+      result.tag = args.tag
+      result.total = total
       res.json result
   # get tags 
   app.get "/api/widget/tags",(req,res)->

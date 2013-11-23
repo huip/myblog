@@ -119,23 +119,29 @@ Post.getMonthArchive = (callback)->
         callback err if err
         callback null,month 
 # get articles by tag name
-Post.getArticleByTagName = (tagName,callback)->
+Post.getArticleByTagName = (args,callback)->
   mongodb.open (err,db)->
     callback err if err
     query = {}
-    query.tags = tagName if tagName?
+    query.tags = args.tag if args.tag?
     db.collection "posts",(err,collection)->
       if err
         mongodb.close()
         callback err
-      collection.find(query)
+      collection.count query,(err,total)->
+        collection.find(query,
+          {
+            skip: (args.page-1)*args.limit
+            limit:args.limit
+          }
+        )
         .sort({time:-1})
         .toArray (err,docs)->
           callback err if err
           mongodb.close()
           docs.forEach (doc)->
             doc.post = markdown.toHTML doc.post
-          callback null,docs
+          callback null,docs,total
 # add pv
 Post.countPv = (id,callback)->
   mongodb.open (err,db)->

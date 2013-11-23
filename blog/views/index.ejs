@@ -111,9 +111,9 @@
 <script type="text/template" id="tagarticle-template">
   <div class="index-area">
     <h5 class="cat-title">
-      CATEGORIES ARCHIVE:<%=datas.tag%>
+      CATEGORIES ARCHIVE:<%=tags.tag%>
     </h5>
-    <%_.each(datas.docs, function(article) {%>
+    <%_.each(tags.posts, function(article) {%>
       <div class="panel panel-default list-area">
         <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>
         <div class="panel-body">

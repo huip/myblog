@@ -20,7 +20,13 @@ $(document).ready ()->
     urlRoot: "/api/widget/tags"
   # article  tag model
   TagArticlesModel = Backbone.Model.extend
-    urlRoot: "/api/p/tag/list/"
+    urlRoot: "/api/p/tag/list"
+    url:()->
+      baseUrl = _.result @,'urlRoot'
+      baseUrl if @isNew()
+      baseUrl+
+      "/"+encodeURIComponent( @.get("tag") )+
+      "/"+encodeURIComponent(@.get("page"))
   # recent article model 
   RecentWidgetsModel = Backbone.Model.extend
     urlRoot: "/api/widget/recent/"
@@ -64,13 +70,15 @@ $(document).ready ()->
   TagArticlesView = Backbone.View.extend
     initialize:()->
       that = @
-      tagList = new TagArticlesModel {id:@id}
+      tagList = new TagArticlesModel()
+      tagList.set
+        tag:@id.tag
+        page:@id.page
       tagList.fetch
         success:(data)->
           that.render data.toJSON()
     render:(data)->
-      console.log data
-      template = _.template $("#tagarticle-template").html(),{datas:data}
+      template = _.template $("#tagarticle-template").html(),{tags:data}
       @$el.html template
   # get recent post wigets
   RecentWidgetsView = Backbone.View.extend
@@ -105,7 +113,8 @@ $(document).ready ()->
       "index/:id" : "index"
       "about" : "about"
       "p/:id" : "p"
-      "p/tag/:tag" : "tag"
+      "p/tag/:tag":"tag"
+      "p/tag/:tag/:page" : "tag"
   appRouter = new AppRouter
   appRouter.on "route:index",(id)->
     $(".navbar-nav li").eq(0).addClass("active").siblings().removeClass("active")
@@ -121,10 +130,14 @@ $(document).ready ()->
     $(".navbar-nav li").removeClass("active")
     $aboutContainer.hide()
     articleView = new ArticleView {el: $indexContainer,id:id}
-  appRouter.on "route:tag",(tag)->
+  appRouter.on "route:tag",(tag,page)->
     $(".navbar-nav li").removeClass("active")
     $indexContainer.show()
     $aboutContainer.hide()
-    tagArticlesView = new TagArticlesView {el:$indexContainer,id:tag}
+    page = 1 if page ==  undefined
+    args =
+      page:page
+      tag:tag
+    tagArticlesView = new TagArticlesView {el:$indexContainer,id:args}
     
   Backbone.history.start()

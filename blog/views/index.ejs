@@ -97,7 +97,24 @@
 <script type="text/template" id="tagarticle-template">
   <div class="index-area">
     <h5 class="cat-title">
-      CATEGORIES ARCHIVE:<%=datas.tag%>
+      TAGS ARCHIVE:<%=datas.tag%>
+    </h5>
+    <%_.each(datas.posts, function(article) {%>
+      <div class="panel panel-default list-area">
+        <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>
+        <div class="panel-body">
+          <small class="time-sty"><%= article.time.day%></small>
+          <p class="article-content"><%= article.post %></p>
+        </div>
+      </div>
+    <%})%>
+    {{- include paging }}
+  </div>
+</script>
+<script type="text/template" id="categories-template">
+  <div class="index-area">
+    <h5 class="cat-title">
+      CATEGORIES ARCHIVE:<%=datas.cat%>
     </h5>
     <%_.each(datas.posts, function(article) {%>
       <div class="panel panel-default list-area">

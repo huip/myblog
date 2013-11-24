@@ -26,6 +26,15 @@ $(document).ready ()->
       baseUrl+
       "/"+encodeURIComponent( @.get("tag") )+
       "/"+encodeURIComponent(@.get("page"))
+  # article categories model
+  CatArticlesModel = Backbone.Model.extend
+    urlRoot: "/api/p/categories"
+    url:()->
+      baseUrl = _.result @,'urlRoot'
+      baseUrl if @isNew()
+      baseUrl+
+      "/"+encodeURIComponent( @.get("cat") )+
+      "/"+encodeURIComponent(@.get("page"))
   # one article view page
   ArticleView = Backbone.View.extend
     initialize:()->
@@ -73,6 +82,20 @@ $(document).ready ()->
     render:(data)->
       template = _.template $("#tagarticle-template").html(),{datas:data}
       @$el.html template
+  # get all articles by categories name page
+  CatArticlesView = Backbone.View.extend
+    initialize:()->
+      that = @
+      catList = new CatArticlesModel()
+      catList.set
+        cat:@id.cat
+        page:@id.page
+      catList.fetch
+        success:(data)->
+          that.render data.toJSON()
+    render:(data)->
+      template = _.template $("#categories-template").html(),{datas:data}
+      @$el.html template
   widgets = new WidgetsView {el:$widgetsContainer}
   AppRouter = Backbone.Router.extend
     routes :
@@ -82,6 +105,8 @@ $(document).ready ()->
       "about" : "about"
       "p/:id" : "p"
       "p/tag/:tag":"tag"
+      "p/categories/:cat" : "cat"
+      "p/categories/:cat/:page" : "cat"
       "p/tag/:tag/:page" : "tag"
   appRouter = new AppRouter
   appRouter.on "route:index",(id)->
@@ -107,5 +132,14 @@ $(document).ready ()->
       page:page
       tag:tag
     tagArticlesView = new TagArticlesView {el:$indexContainer,id:args}
+  appRouter.on "route:cat",(cat,page)->
+    $(".navbar-nav li").removeClass("active")
+    $indexContainer.show()
+    $aboutContainer.hide()
+    page = 1 if page ==  undefined
+    args =
+      page:page
+      cat:cat
+    catArticlesView = new CatArticlesView {el:$indexContainer,id:args}
     
   Backbone.history.start()

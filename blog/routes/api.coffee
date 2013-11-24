@@ -116,6 +116,21 @@ module.exports = (app)->
         limit:args.limit
         url:"#p/tag/"+args.tag
       res.json result
+  # get article by categories 
+  app.get "/ap/p/categories/:cat/:page",(req,res)->
+    args =
+      page:req.params.page
+      limit: 5
+      categories: req.params.cat
+    Post.getArticleByCat args,(err,posts,total)->
+      console.log err if err
+      result =
+        posts:posts
+        tag:args.tag
+        total:total
+        limit:args.limit
+        url:"#p/categories/"+args.categories
+      res.json result
   # merge wigets
   app.get "/api/widgets",(req,res)->
     widgets = {}

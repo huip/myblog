@@ -132,12 +132,36 @@ Post.getArticleByTagName = (args,callback)->
         callback err
       collection.count query,(err,total)->
         collection.find(query,
-          {
             skip: (args.page-1)*args.limit
             limit:args.limit
-          }
         )
-        .sort({time:-1})
+        .sort(
+          time:-1
+        )
+        .toArray (err,docs)->
+          callback err if err
+          mongodb.close()
+          docs.forEach (doc)->
+            doc.post = markdown.toHTML doc.post
+          callback null,docs,total
+# get articles by categories
+Post.getArticleByCat = (args,callback)->
+  mongodb.open (err,db)->
+    callback err if err
+    query = {}
+    query.categories = args.categories if args.categories
+    db.collection "posts",(err,collection)->
+      if err
+        mongodb.close()
+        callback err
+      collection.count query,(err,total)->
+        collection.find(query,
+            skip: (args.page-1)*args.limit
+            limit:args.limit
+        )
+        .sort(
+          time:-1
+        )
         .toArray (err,docs)->
           callback err if err
           mongodb.close()

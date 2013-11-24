@@ -116,19 +116,23 @@ module.exports = (app)->
         limit:args.limit
         url:"#p/tag/"+args.tag
       res.json result
-  # get tags 
-  app.get "/api/widget/tags",(req,res)->
+  # merge wigets
+  app.get "/api/widgets",(req,res)->
+    widgets = {}
+    # get tags of articles
     Post.getTags (err,tags)->
       console.log err if err
-      res.json tags
-  # get rencent articles title
-  app.get "/api/widget/recent/:id",(req,res)->
-    arg = 
-      page:1
-      limit:req.params.id
-    Post.get arg,(err,posts,total)->
-      console.log err if err
-      res.json posts
+      widgets.tags = tags
+      arg = 
+        page:1
+        limit:6
+      # get recent post articles title
+      Post.get arg,(err,posts,total)->
+        console.log err if err
+        widgets.recents = posts
+        # get articles categories
+        widgets.categories = setting.categories
+        res.json widgets
   isLogin = (req,res)->
     res.redirect "/login" if !req.session.user
    

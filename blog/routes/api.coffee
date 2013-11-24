@@ -45,12 +45,13 @@ module.exports = (app)->
   # add article
   app.post "/api/p/add",(req,res)->
     isLogin req,res
-    newPost = new Post {
+    newPost = new Post
       name: req.session.user.username 
       title: req.body.title
       tags: req.body.tags
       post: req.body.post
-    }
+      categories: req.body.categories
+ 
     newPost.save (err)->
       if err
         status.status_code = 105

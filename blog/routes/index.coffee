@@ -77,6 +77,7 @@ module.exports = (app)->
         post: setting.admin.post
         user: req.session.user
         tags: tags
+        categories: setting.categories
 
   # admin article list
   app.get "/admin/list/:id",(req,res)->

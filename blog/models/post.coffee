@@ -6,6 +6,7 @@ Post = (post)->
   @title = post.title
   @tags =  post.tags
   @post = post.post
+  @categories =post.categories
 module.exports = Post
 # save a article
 Post.prototype.save = (callback)->
@@ -14,6 +15,7 @@ Post.prototype.save = (callback)->
     title: @title
     tags: @tags
     post: @post
+    categories: @categories
     time: Post.getTime()
     pv: 0
   mongodb.open (err,db)->

@@ -5,6 +5,7 @@ $(document).ready ()->
     $postTitle: $ ".post-title"
     $postTags: $ ".post-tags"
     $postPost: $ ".post-post"
+    $postCategories: $ ".post-categories"
     $postBtn: $ ".post-btn"
     $removeBtn: $ ".remove-article"
     $editPost: $ ".edit-post"
@@ -20,28 +21,29 @@ $(document).ready ()->
     $regBtn: $ ".register-btn"
     $preBtn: $ ".preview-btn"
     $ctagBtn: $ ".create-tag"
-    init:()->
+    init:->
       @event()
-    event:()->
-      @$postBtn.click ()->
+    event:->
+      @$postBtn.click ->
         AdminAction.doPost()
-      @$removeBtn.click ()->
+      @$removeBtn.click ->
         AdminAction.removePost $ @
-      @$editBtn.click ()->
+      @$editBtn.click ->
         AdminAction.editPost $ @
-      @$loginBtn.click ()->
+      @$loginBtn.click ->
         AdminAction.doLogin()
-      @$regBtn.click ()->
+      @$regBtn.click ->
         AdminAction.doRegister()
-      @$preBtn.click ()->
+      @$preBtn.click ->
         AdminAction.prePost $ @
-      @$ctagBtn.click ()->
+      @$ctagBtn.click ->
         AdminAction.createTag $ @
-    doPost:()->
+    doPost:->
       datas =
         title: @$postTitle.val()
         tags: @$postTags.val()
         post: @$postPost.val()
+        categories: @$postCategories.val()
       $.ajax
         url: @postUrl
         type: "post"
@@ -63,7 +65,7 @@ $(document).ready ()->
         data: datas
         success:(msg)->
           window.location.href = "/admin" if msg.status_code == 204
-    doLogin:()->
+    doLogin:->
       datas = 
         email:@$loginEmail.val()
         password:@$loginPassword.val()
@@ -78,7 +80,7 @@ $(document).ready ()->
             alert "用户名不存在！"
           else if msg.status_code == 104
             alert "用户名或密码错误！"
-    doRegister:()->
+    doRegister:->
       datas =
         username: @$regUname.val()
         email: @$regEmail.val()

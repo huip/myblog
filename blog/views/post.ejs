@@ -9,6 +9,16 @@
       </div>
   </div>
   <div class="form-group">
+      <label class="col-sm-1 control-label">categories</label>
+      <div class="col-sm-6">
+        <select class="post-categories form-control">
+        {{ for(var i = 0 ;i < categories.length; i++){ }}
+          <option value="{{=categories[i]}}">{{=categories[i]}}</option>
+        {{  } }}
+        </select>
+      </div>
+  </div>
+  <div class="form-group">
       <label class="col-sm-1 control-label">tags</label>
       <div class="col-sm-6">
         <select class="post-tags form-control">

@@ -38,7 +38,7 @@
       <p class="article-status">post on:&nbsp;<%= time.minute %> read:&nbsp;<%= pv %> categories:&nbsp;#<%=tags %></p>
       <p><%= post %></p>
     <!-- Duoshuo Comment BEGIN -->
-    <div class="ds-thread"></div>
+    <div class="ds-thread" data-thread-key="<%= _id %>" data-title="<%= title %>" ></div>
     <script type="text/javascript">
     var duoshuoQuery = {short_name:"huip"};
     (function() {

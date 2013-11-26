@@ -122,7 +122,7 @@ $(document).ready ()->
   appRouter.on "route:p",(id)->
     $(".navbar-nav li").removeClass("active")
     $aboutContainer.hide()
-    $IndexView.show()
+    $indexContainer.show()
     articleView = new ArticleView {el: $indexContainer,id:id}
   appRouter.on "route:tag",(tag,page)->
     $(".navbar-nav li").removeClass("active")

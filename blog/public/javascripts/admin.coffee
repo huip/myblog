@@ -90,8 +90,10 @@ $(document).ready ()->
         type: "post"
         data: datas
         success:(msg)->
-          alert "注册成功!" if msg.status_code == 201
-          alert "用户名或密码已经存在！" if msg.status_code == 101
+          if msg.errorCode == 201
+            window.location.href = '/admin'
+            return false
+          alert "账号已经存在！" if msg.errorCode == 101
     prePost:(that)->
      if that.hasClass "hides"
        $(".wmd-preview").css "display","none"

@@ -1,4 +1,4 @@
-mongodb = require "./db"
+mongodb = require "../lib/db"
 markdown = require("markdown").markdown
 ObjectID = require("mongodb").ObjectID
 Post = (post)->

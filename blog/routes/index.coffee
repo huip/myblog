@@ -68,6 +68,9 @@ module.exports = (app)->
   # list post by id
   app.get '/p/:id',(req,res)->
     postId = req.params.id
+    if postId.length isnt 24
+      res.render '404'
+      return false
     Post.getPostById postId,(err,post)->
        console.log err if err
        post.post = markdown.toHTML post.post

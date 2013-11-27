@@ -21,13 +21,21 @@ module.exports = (app)->
         posts:posts
         user: req.session.user 
   app.get '/index',(req,res)->
-    res.render 'index',
-      title: setting.title
-      brand: setting.brand
-      motto: setting.motto
-      index: setting.nav.index
-      about: setting.nav.about
-      user: req.session.user 
+    args =
+      condition: ''
+      page: 1
+      pageSize: 10
+    Post.getPosts args,(err,posts)->
+      posts.forEach (post)->
+        post.post = markdown.toHTML post.post
+      res.render 'index',
+        title: setting.title
+        brand: setting.brand
+        motto: setting.motto
+        index: setting.nav.index
+        about: setting.nav.about
+        posts:posts
+        user: req.session.user 
   # render about page 
   app.get '/about',(req,res)->
     res.render 'about',

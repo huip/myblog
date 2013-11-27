@@ -1,7 +1,33 @@
 setting = require '../settings'
 user = require '../models/user'
 module.exports = (app)->
-  # user login page
+  # render index page
+  app.get '/',(req,res)->
+    res.render 'index',
+      title: setting.title
+      brand: setting.brand
+      motto: setting.motto
+      index: setting.nav.index
+      about: setting.nav.about
+      user: req.session.user 
+  app.get '/index',(req,res)->
+    res.render 'index',
+      title: setting.title
+      brand: setting.brand
+      motto: setting.motto
+      index: setting.nav.index
+      about: setting.nav.about
+      user: req.session.user 
+  # render about page 
+  app.get '/about',(req,res)->
+    res.render 'about',
+      title: 'about page'
+      brand: setting.brand
+      motto: setting.motto
+      index: setting.nav.index
+      about: setting.nav.about
+      user: req.session.user 
+  # render login page
   app.get '/login',(req,res)->
     res.render 'login',
       title: 'login page'
@@ -10,7 +36,7 @@ module.exports = (app)->
       index: setting.nav.index
       about: setting.nav.about
       user: req.session.user 
-  # user register page
+  # render register page
   app.get '/register',(req,res)->
     res.render 'register',
       title: 'register page'

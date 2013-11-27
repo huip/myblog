@@ -1,0 +1,131 @@
+{{- include header }}
+<div class="content row">
+  <div class="col-md-1"></div>
+  <div class="index-container col-md-7">
+  </div>
+  <div class="about-container col-md-7">
+  {{- include about }} 
+  </div>
+  <div class="pull-right site-widgets  col-md-3">
+  </div>
+</div>
+{{- include footer }}
+</div>
+</body>
+<script src='/javascripts/jquery-1.10.2.min.js'></script>
+<script src='/javascripts/bootstrap.min.js'></script>
+<script src='/javascripts/underscore-min.js'></script>
+<script src='/javascripts/backbone-min.js'></script>
+<script src='/javascripts/index.js'></script>
+<script type="text/template" id="index-template">
+    <div class="index-area">
+      <%_.each(datas.posts, function(article) {%>
+      <div class="panel panel-default list-area">
+        <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>
+        <div class="panel-body">
+          <small class="time-sty"><%= article.time.day%></small>
+          <p class="article-content"><%= article.post %></p>
+        </div>
+      </div>
+    <%})%>
+    {{- include paging}}
+    </div>
+    </div>
+</script>
+<script type="text/template" id="article-template">
+    <div class="article-area">
+      <h2 class="article-title"><%= title %></h2>
+      <p class="article-status">post on:&nbsp;<%= time.minute %> read:&nbsp;<%= pv %> categories:&nbsp;#<%=tags %></p>
+      <p><%= post %></p>
+    <!-- Duoshuo Comment BEGIN -->
+    <div class="ds-thread" data-thread-key="<%= _id %>" data-title="<%= title %>" ></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huip"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+     })();
+    </script>
+    <!-- Duoshuo Comment END -->    
+    </div>
+</script>
+<script type="text/template" id="widgets-template">
+  <div class="me-widget">
+    <h4>ME</h4>
+    <div class="huip-logo">
+      <img src="http://en.gravatar.com/userimage/43948365/087625e21205aedbbb1d039489c4cff8.jpg" class="img-thumbnail" alt="me">
+    </div>
+  </div>
+  <div class="recent-widget">
+    <h4>RECENT POST</h4>
+    <div class="recent-list">
+      <%_.each(datas.recents,function(article) {%>
+        <div class="recent"><a href="#p/<%=article._id%>"><%=article.title%></a></div>
+     <%})%>
+    </div>
+  </div>
+  <div class="cat-widget">
+    <h4>CATEGORIES</h4>
+    <div class="cat-list">
+    <%_.each(datas.categories,function(cat) {%>
+      <div class="cat-item"><a href="#p/categories/<%=cat%>"><%=cat%></a></div>
+    <%})%>
+  </div>
+  <div class="tag-widget">
+    <h4>TAGS</h4>
+    <div class="cat-list">
+    <%_.each(datas.tags,function(tag) {%>
+      <div class="cat-item"><a href="#p/tag/<%=tag%>"><%=tag%></a></div>
+    <%})%>
+    </div>
+  </div>
+  <div class="friends-widget">
+    <h4>FRENDS</h4>
+    <div class="friends">
+      <div><a href="http://mex7.org/" target="_blank">Mex</a></div>
+      <div><a href="http://www.solome.org/" target="_blank">solo</a></div>
+      <div><a href="http://www.ysmood.org/" target="_blank">ys</a></div>
+    </div>
+  </div>
+  </div>
+</script>
+</script>
+<script type="text/template" id="tagarticle-template">
+  <div class="index-area">
+    <h5 class="cat-title">
+      TAGS ARCHIVE:<%=datas.tag%>
+    </h5>
+    <%_.each(datas.posts, function(article) {%>
+      <div class="panel panel-default list-area">
+        <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>
+        <div class="panel-body">
+          <small class="time-sty"><%= article.time.day%></small>
+          <p class="article-content"><%= article.post %></p>
+        </div>
+      </div>
+    <%})%>
+    {{- include paging }}
+  </div>
+</script>
+<script type="text/template" id="categories-template">
+  <div class="index-area">
+    <h5 class="cat-title">
+      CATEGORIES ARCHIVE:<%=datas.cat%>
+    </h5>
+    <%_.each(datas.posts, function(article) {%>
+      <div class="panel panel-default list-area">
+        <div class="panel-heading entry-title"><a href="#p/<%=article._id%>"><%= article.title %></a></div>
+        <div class="panel-body">
+          <small class="time-sty"><%= article.time.day%></small>
+          <p class="article-content"><%= article.post %></p>
+        </div>
+      </div>
+    <%})%>
+    {{- include paging }}
+  </div>
+</script>
+</html>

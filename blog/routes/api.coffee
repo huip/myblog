@@ -27,4 +27,20 @@ module.exports = (app)->
           req.session.user = user
           res.json status
   app.post "/api/u/login",(req,res)->
+    md5 = crypto.createHash("md5")
+    userInfo =
+      email: req.body.email
+      password: md5.update(req.body.password).digest("base64")
+    User.get userInfo,(err,user)->
+      if not user?
+        # 103 means user is not exit
+        status.errorCode = 103
+      else if userInfo.password isnt user.password
+        # 104 means user password is error
+        status.errorCode = 104
+      else
+        # login success
+        status.errorCode = 202
+      res.json status
+   
         

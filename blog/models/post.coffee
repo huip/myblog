@@ -5,6 +5,8 @@ postSchema = new mongoose.Schema
   tags: String
   post: String
   categories: String
-  time: Data
+  time: Date
   pv: Number
-module.exports = Post = mongoose model 'Post', postSchema
+module.exports = Post = mongoose.model 'Post', postSchema
+Post.getPosts = (args,next)->
+  Post.find(args.condition).skip((args.page-1)*args.pageSize).sort('-time').exec next

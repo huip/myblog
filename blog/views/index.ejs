@@ -2,6 +2,17 @@
 <div class="content row">
   <div class="col-md-1"></div>
   <div class="index-container col-md-7">
+    <div class="index-area">
+    {{ posts.forEach(function(article) {  }}
+      <div class="panel panel-default list-area">
+        <div class="panel-heading entry-title"><a href="#p/{{=article._id}}">{{=article.title}}</a></div>
+        <div class="panel-body">
+          <small class="time-sty">{{=article.time}}</small>
+          <p class="article-content">{{-article.post}}</p>
+        </div>
+      </div>
+    {{ }) }}
+    </div>
   </div>
   <div class="about-container col-md-7">
   </div>

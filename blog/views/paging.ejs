@@ -1,21 +1,12 @@
 <div class="paging">
-
-  <% 
-    var currentPage = parseInt( window.location.href.split("/")[window.location.href.split("/").length - 1] ); 
-    currentPage = isNaN(currentPage)?1:currentPage;
-    var prevPage =  currentPage <= 1 ?1:currentPage-1 ;
-    var pageNum = Math.ceil( datas.total/datas.limit );
-    var nextPage = currentPage >= pageNum?pageNum:currentPage+1;
-  %>
-  <% if( currentPage > 1 ) {%>
+  {{ if(!isFirstPage) { }}
     <div class="prevs pull-left btn btn-default">
-      <a href="/<%=datas.url%>/<%= prevPage %>">Newe</a>
+      <a href="/index/{{=page-1}}">Newer</a>
     </div>
-  <% } %>
-  <% if( currentPage < pageNum ) {%>
+  {{  } }}
+  {{  if(!isLastPage) { }}
     <div class="nexts pull-right btn btn-default">
-      <a href="/<%=datas.url%>/<%= nextPage %>">Older</a>
+      <a href="/index/{{=page+1}}">Older</a>
     </div>
-  <% } %>
-
+  {{  } }}
 </div>

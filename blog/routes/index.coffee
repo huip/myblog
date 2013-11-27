@@ -63,16 +63,20 @@ module.exports = (app)->
   indexPage = (req,res,page)->
     args =
       condition: ''
-      page: page
+      page: parseInt page
       pageSize: 10
-    Post.getPosts args,(err,posts)->
-      posts.forEach (post)->
-        post.post = markdown.toHTML post.post
-      res.render 'index',
-        title: setting.title
-        brand: setting.brand
-        motto: setting.motto
-        index: setting.nav.index
-        about: setting.nav.about
-        posts:posts
-        user: req.session.user 
+    Post.getTotal args,(err,total)->
+      Post.getPosts args,(err,posts)->
+        posts.forEach (post)->
+          post.post = markdown.toHTML post.post
+        res.render 'index',
+          title: setting.title
+          brand: setting.brand
+          motto: setting.motto
+          index: setting.nav.index
+          about: setting.nav.about
+          posts: posts
+          page: args.page
+          isFirstPage: (args.page - 1) == 0
+          isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
+          user: req.session.user 

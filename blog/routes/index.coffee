@@ -5,38 +5,12 @@ Post = require '../models/post'
 module.exports = (app)->
   # render index page
   app.get '/',(req,res)->
-    args =
-      condition: ''
-      page: 1
-      pageSize: 10
-    Post.getPosts args,(err,posts)->
-      console.log posts
-      posts.forEach (post)->
-        post.post = markdown.toHTML post.post
-      res.render 'index',
-        title: setting.title
-        brand: setting.brand
-        motto: setting.motto
-        index: setting.nav.index
-        about: setting.nav.about
-        posts:posts
-        user: req.session.user 
+    indexPage req,res,1
   app.get '/index',(req,res)->
-    args =
-      condition: ''
-      page: 1
-      pageSize: 10
-    Post.getPosts args,(err,posts)->
-      posts.forEach (post)->
-        post.post = markdown.toHTML post.post
-      res.render 'index',
-        title: setting.title
-        brand: setting.brand
-        motto: setting.motto
-        index: setting.nav.index
-        about: setting.nav.about
-        posts:posts
-        user: req.session.user 
+    indexPage req,res,1
+  # init index page
+  app.get '/index/:page',(req,res)->
+    indexPage req,res,req.params.page
   # render about page 
   app.get '/about',(req,res)->
     res.render 'about',
@@ -84,4 +58,21 @@ module.exports = (app)->
         post: post
   # check user is login
   checkLogin = (req,res)->
-    res.redirect "/login" if !req.session.user
+    res.redirect "/login" if not req.session.user?
+  # index page common
+  indexPage = (req,res,page)->
+    args =
+      condition: ''
+      page: page
+      pageSize: 10
+    Post.getPosts args,(err,posts)->
+      posts.forEach (post)->
+        post.post = markdown.toHTML post.post
+      res.render 'index',
+        title: setting.title
+        brand: setting.brand
+        motto: setting.motto
+        index: setting.nav.index
+        about: setting.nav.about
+        posts:posts
+        user: req.session.user 

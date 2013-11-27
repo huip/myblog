@@ -1,0 +1,41 @@
+{{- include header }}
+<div class="content row">
+  <div class="col-md-1"></div>
+  <div class="index-container col-md-7">
+    <div class="article-area">
+      <h2 class="article-title">{{=post.title}}</h2>
+      <p class="article-status">post on:&nbsp;{{post.time}} read:&nbsp;{{=post.pv}} tags:&nbsp;#{{=post.tags}}</p>
+      <p>{{-post.post}}</p>
+    <!-- Duoshuo Comment BEGIN -->
+    <div class="ds-thread" data-thread-key="{{=post._id}}" data-title="{{=post.title}}" ></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"huip"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+     })();
+    </script>
+    <!-- Duoshuo Comment END -->    
+    </div>
+  </div>
+  <div class="pull-right site-widgets  col-md-3">
+    <div class="me-widget">
+      <h4>ME</h4>
+      <div class="huip-logo">
+        <img src="http://en.gravatar.com/userimage/43948365/087625e21205aedbbb1d039489c4cff8.jpg" class="img-thumbnail" alt="me">
+      </div>
+    </div>
+  </div>
+</div>
+{{- include footer }}
+</div>
+</body>
+<script src='/javascripts/jquery-1.10.2.min.js'></script>
+<script src='/javascripts/bootstrap.min.js'></script>
+<script src='/javascripts/underscore-min.js'></script>
+<script src='/javascripts/backbone-min.js'></script>
+<!--script src='/javascripts/index.js'></script-->

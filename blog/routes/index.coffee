@@ -10,6 +10,7 @@ module.exports = (app)->
       page: 1
       pageSize: 10
     Post.getPosts args,(err,posts)->
+      console.log posts
       posts.forEach (post)->
         post.post = markdown.toHTML post.post
       res.render 'index',
@@ -63,6 +64,21 @@ module.exports = (app)->
       index: setting.nav.index
       about: setting.nav.about
       user: req.session.user
+  # check user is login
+  # list post by id
+  app.get '/p/:id',(req,res)->
+    postId = req.params.id
+    Post.getPostById postId,(err,post)->
+       console.log err if err
+       post.post = markdown.toHTML post.post
+       res.render 'page',
+        title: 'register page'
+        brand: setting.brand
+        motto: setting.motto
+        index: setting.nav.index
+        about: setting.nav.about
+        user: req.session.user
+        post: post
   # check user is login
   checkLogin = (req,res)->
     res.redirect "/login" if !req.session.user

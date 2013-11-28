@@ -21,4 +21,5 @@ Post.getPostById = (id,next)->
       next err,null
 Post.getRecents = (args,next)->
   Post.getPosts args,next
-
+Post.getPostByCate = (args,next)->
+  Post.getPosts args,next

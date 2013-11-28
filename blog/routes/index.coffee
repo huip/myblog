@@ -57,6 +57,28 @@ module.exports = (app)->
         about: setting.nav.about
         user: req.session.user
         post: post
+  # list post by categories 
+  app.get '/p/categories/:id',(req,res)->
+    args = 
+      condition:
+        categories:req.params.id
+      page: 1
+      pageSize: 10
+    Post.getPostByCate args,(err,posts)->
+        posts.forEach (post)->
+          post.post = markdown.toHTML post.post
+        res.render 'categories',
+          title: setting.title
+          brand: setting.brand
+          motto: setting.motto
+          index: setting.nav.index
+          about: setting.nav.about
+          posts: posts
+          page: args.page
+          cate: req.params.id
+          widgets: renderWidgets()
+          user: req.session.user 
+      
   # check user is login
   checkLogin = (req,res)->
     res.redirect "/login" if not req.session.user?
@@ -70,7 +92,6 @@ module.exports = (app)->
       Post.getPosts args,(err,posts)->
         posts.forEach (post)->
           post.post = markdown.toHTML post.post
-        console.log posts
         res.render 'index',
           title: setting.title
           brand: setting.brand

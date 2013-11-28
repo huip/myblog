@@ -58,32 +58,16 @@ module.exports = (app)->
         user: req.session.user
         post: post
   # list post by categories 
-  app.get '/p/categories/:id',(req,res)->
-    args = 
-      condition:
-        categories:req.params.id
-      page: 1
-      pageSize: 10
-    Post.getPostByCate args,(err,posts)->
-        posts.forEach (post)->
-          post.post = markdown.toHTML post.post
-        res.render 'categories',
-          title: setting.title
-          brand: setting.brand
-          motto: setting.motto
-          index: setting.nav.index
-          about: setting.nav.about
-          posts: posts
-          page: args.page
-          cate: req.params.id
-          widgets: renderWidgets()
-          user: req.session.user 
-      
-  # check user is login
+  app.get '/p/categories/:cate',(req,res)->
+    catePage req,res,req.params.cate,1
+  app.get '/p/categories/:cate/:page',(req,res)->
+    catePage req,res,req.params.cate,req.params.page
+      # check user is login
   checkLogin = (req,res)->
     res.redirect "/login" if not req.session.user?
-  # index page common
+  # index common page
   indexPage = (req,res,page)->
+    page = 1 if page < 1
     args =
       condition: ''
       page: parseInt page
@@ -100,10 +84,37 @@ module.exports = (app)->
           about: setting.nav.about
           posts: posts
           page: args.page
+          location: 'index'
           widgets: renderWidgets()
           isFirstPage: (args.page - 1) == 0
           isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
           user: req.session.user 
+   # categories common page
+   catePage = (req,res,cate,page)->
+     page = 1 if page < 1
+     args = 
+      condition:
+        categories:cate
+      page: page
+      pageSize: 10
+     Post.getTotal args,(err,total)->
+      Post.getPostByCate args,(err,posts)->
+          posts.forEach (post)->
+            post.post = markdown.toHTML post.post
+          res.render 'categories',
+            title: setting.title
+            brand: setting.brand
+            motto: setting.motto
+            index: setting.nav.index
+            about: setting.nav.about
+            posts: posts
+            page: args.page
+            cate: req.params.cate
+            location: '/p/categories/'+req.params.cate
+            isFirstPage: (args.page - 1) == 0
+            isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
+            widgets: renderWidgets()
+            user: req.session.user 
    # widgets collections
    renderWidgets = ->
      widgets = {}

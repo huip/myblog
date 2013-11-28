@@ -1,12 +1,12 @@
 <div class="paging">
   {{ if(!isFirstPage) { }}
     <div class="prevs pull-left btn btn-default">
-      <a href="/index/{{=page-1}}">Newer</a>
+      <a href="{{=location}}/{{=page-1}}">Newer</a>
     </div>
   {{  } }}
   {{  if(!isLastPage) { }}
     <div class="nexts pull-right btn btn-default">
-      <a href="/index/{{=page+1}}">Older</a>
+      <a href="{{=location}}/{{=page+1}}">Older</a>
     </div>
   {{  } }}
 </div>

@@ -40,6 +40,7 @@ module.exports = (app)->
         status.errorCode = 104
       else
         # login success
+        req.session.user = user
         status.errorCode = 202
       res.json status
    

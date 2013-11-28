@@ -20,7 +20,7 @@ $(document).ready ->
         type: 'post'
         data: datas
         success:(msg)->
-          if msg.status_code == 202
+          if msg.errorCode == 202
             window.location.href = 'admin'
           else if msg.errorCode == 103
             alert '用户名不存在！'

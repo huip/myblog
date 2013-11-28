@@ -56,12 +56,18 @@ module.exports = (app)->
         index: setting.nav.index
         about: setting.nav.about
         user: req.session.user
+        widgets: renderWidgets()
         post: post
   # list post by categories 
   app.get '/p/categories/:cate',(req,res)->
     catePage req,res,req.params.cate,1
   app.get '/p/categories/:cate/:page',(req,res)->
     catePage req,res,req.params.cate,req.params.page
+  # render admin page
+  app.get '/admin',(req,res)->
+    adminPage req,res,1
+  app.get '/admin/list/:page',(req,res)->
+    adminPage req,res,req.params.page
       # check user is login
   checkLogin = (req,res)->
     res.redirect "/login" if not req.session.user?
@@ -127,3 +133,30 @@ module.exports = (app)->
      Post.getRecents recentsArgs,(err,posts)->
        widgets.recents = posts
      return widgets
+   # admin common info
+   adminPage = (req,res,page)->
+    checkLogin req,res
+    page = parseInt page
+    page = 1 if page < 1
+    args = {
+      condition: ''
+      page: page
+      pageSize: 10
+    }
+    Post.getTotal args,(err,total)->
+      console.log total
+      Post.getPosts args,(err,posts)->
+        console.log err if err
+        res.render "admin",
+          title: setting.title
+          brand: setting.brand
+          index: setting.nav.index
+          about: setting.nav.about
+          user: req.session.user
+          list: setting.admin.list
+          post: setting.admin.post
+          posts: posts
+          page:args.page
+          isFirstPage: (args.page - 1) == 0
+          isLastPage: ((args.page - 1) * args.pageSize + posts.length) == total
+          numPage:Math.ceil(total/10)

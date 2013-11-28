@@ -29,16 +29,20 @@ Post.getRecents = (args,next)->
 Post.getPostByCate = (args,next)->
   Post.getPosts args,next
 # update post
-Post.update = (args,next)->
-  updatePost = new Post
-    _id:args.id
-    name:args.name
-    title:args.title
-    post: args.post
-    tags: args.targs
-    time: new Date()
-  updatePost.save()
-  next null,updatePost
+Post.update = (info,next)->
+  post = new Post
+  post.modify info,next
+Post::modify = (args,next)->
+  self = @
+  self._id = args.id
+  self.title = args.title
+  self.name = args.name
+  self.title = args.title
+  self.post = args.post
+  self.tags: args.targs
+  self.time: new Date()
+  self.save()
+  next null,args
 
 # remove post
 Post.remove = (id,next)->

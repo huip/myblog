@@ -12,9 +12,9 @@
       <label class="col-sm-1 control-label">categories</label>
       <div class="col-sm-6">
         <select class="post-categories form-control">
-        {{ for(var i = 0 ;i < categories.length; i++){ }}
-          <option value="{{=categories[i]}}">{{=categories[i]}}</option>
-        {{  } }}
+        {{ categories.forEach(function(cate) { }}
+          <option value="{{=cate}}">{{=cate}}</option>
+        {{  }) }}
         </select>
       </div>
   </div>
@@ -22,9 +22,9 @@
       <label class="col-sm-1 control-label">tags</label>
       <div class="col-sm-6">
         <select class="post-tags form-control">
-        {{ for(var i = 0 ;i < tags.length; i++){ }}
-          <option value="{{=tags[i]}}">{{=tags[i]}}</option>
-        {{  } }}
+        {{ tags.forEach(function(tag) { }}
+          <option value="{{=tag}}">{{=tag}}</option>
+        {{  }) }}
         </select>
         <br />
         <input type="text" class="form-control input-tag" placeholder="create tags" />

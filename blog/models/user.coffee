@@ -12,10 +12,17 @@ userSchema = new mongoose.Schema
   password: String
 module.exports = User = mongoose.model 'User', userSchema
 # save user
-User.save = (user,next)->
-  user = new User user
-  user.save()
-  next null,user
+User.save = (info,next)->
+  user = new User
+  user.register info,next
+User::register = (info,next)->
+  self = @
+  self.name = info.name
+  self.email = info.email
+  self.password = info.password
+  console.log self
+  self.save()
+  next null,info
 # check user
 User.get = (user,next)->
   next '201' if not user.email?

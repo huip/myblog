@@ -10,3 +10,5 @@
 > ### success code
 > * 201 register success
 > * 202 login success
+> * 203 post success
+> * 204 update post success

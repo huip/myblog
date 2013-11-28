@@ -19,13 +19,14 @@ module.exports = (app)->
         res.json status
         return false
       # if not register do register
-      User.save newUser,(err,user)->
+      User.save newUser,(err,info)->
+        console.log info
         if err
           status.errorCode = 102
           res.json status
         else
           status.errorCode = 201
-          req.session.user = user
+          req.session.user = info
           res.json status
   app.post "/api/u/login",(req,res)->
     md5 = crypto.createHash("md5")
@@ -44,10 +45,21 @@ module.exports = (app)->
         req.session.user = user
         status.errorCode = 202
       res.json status
+  app.post "/api/p/update/:id",(req,res)->
+    checkLogin req,res
+    args = 
+      id: req.params.id
+      name: req.session.user.username
+      title: req.body.title
+      tags: req.body.tags
+      post: req.body.post
+    Post.update args,(err,update)->
+      status.errorCode = 204
+      res.json status
   # delte post by id 
   app.get "/api/p/remove/:id",(req,res)->
     checkLogin req,res
-    Post.removePost req.params.id,(err,remove)->
+    Post.remove req.params.id,(err,remove)->
       res.redirect '/admin'
   # check user is login
   checkLogin = (req,res)->

@@ -29,7 +29,7 @@ module.exports = (app)->
       motto: setting.motto
       index: setting.nav.index
       about: setting.nav.about
-      user: req.session.user 
+      user: req.session.user
   # render register page
   app.get '/register',(req,res)->
     res.render 'register',

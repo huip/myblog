@@ -41,9 +41,9 @@ $(document).ready ->
         doRegister()
     doRegister = ->
       datas =
-        username: @$uname.val()
-        email: @$email.val()
-        password: @$password.val()
+        username: $uname.val()
+        email: $email.val()
+        password: $password.val()
       $.ajax
         url: url
         type: 'post'
@@ -94,7 +94,7 @@ $(document).ready ->
         type: 'post'
         data: datas
         success:(msg)->
-          window.location.href = '/admin' if msg.status_code == 203
+          window.location.href = '/admin' if msg.errorCode == 203
     removePost = (that)->
       isRemove = window.confirm 'are your sure delte this article?'
       window.location.href = that.attr 'href' if isRemove
@@ -105,11 +105,11 @@ $(document).ready ->
         post: $editPost.val()
         id:that.attr 'pid'
       $.ajax
-        url:@editUrl+datas.id
+        url: editUrl+datas.id
         type: 'post'
         data: datas
         success:(msg)->
-          window.location.href = '/admin' if msg.status_code == 204
+          window.location.href = '/admin' if msg.errorCode == 204
     prePost = (that)->
      if that.hasClass 'hides'
        $('.wmd-preview').css 'display','none'

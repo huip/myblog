@@ -69,16 +69,17 @@ module.exports = (app)->
   app.get '/admin/list/:page',(req,res)->
     adminPage req,res,req.params.page
   app.get '/admin/post',(req,res)->
-    res.render 'post',
-      title: setting.title
-      brand: setting.brand
-      motto: setting.motto
-      index: setting.nav.index
-      about: setting.nav.about
-      categories: setting.categories
-      user: req.session.user 
-      tags:['1','2']
-      # check user is login
+    Post.getTags (err,tags)->
+      res.render 'post',
+        title: setting.title
+        brand: setting.brand
+        motto: setting.motto
+        index: setting.nav.index
+        about: setting.nav.about
+        categories: setting.categories
+        user: req.session.user 
+        tags:tags
+  # check user is login
   checkLogin = (req,res)->
     res.redirect "/login" if not req.session.user?
   # index common page

@@ -30,4 +30,5 @@ Post.removePost = (id,next)->
     else
       post.remove()
       next null,post
-
+Post.getTags = (next)->
+  Post.find().distinct('tags').exec next

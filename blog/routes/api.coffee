@@ -45,11 +45,21 @@ module.exports = (app)->
         req.session.user = user
         status.errorCode = 202
       res.json status
+  # add post
+  app.post '/api/p/add',(req,res)->
+    newPost =
+      name: req.session.user.name 
+      title: req.body.title
+      tags: req.body.tags
+      post: req.body.post
+      categories: req.body.categories
+    Post.add newPost,(err,post)->
+      console.log err
   app.post "/api/p/update/:id",(req,res)->
     checkLogin req,res
     args = 
       id: req.params.id
-      name: req.session.user.username
+      name: req.session.user.name
       title: req.body.title
       tags: req.body.tags
       post: req.body.post

@@ -69,6 +69,7 @@ module.exports = (app)->
   app.get '/admin/list/:page',(req,res)->
     adminPage req,res,req.params.page
   app.get '/admin/post',(req,res)->
+    checkLogin req,res
     Post.getTags (err,tags)->
       res.render 'post',
         title: setting.title
@@ -79,6 +80,27 @@ module.exports = (app)->
         categories: setting.categories
         user: req.session.user 
         tags:tags
+  # edit post page
+  app.get '/admin/p/edit/:id',(req,res)->
+    checkLogin req,res
+    postId = req.params.id
+    if postId.length isnt 24
+      res.render '404'
+      return false
+    Post.getPostById postId,(err,docs)->
+      console.log err if err
+      Post.getTags (err,tags)->
+        console.log err if err
+        res.render "edit",
+         title: setting.title
+         brand: setting.brand
+         index: setting.nav.index
+         about: setting.nav.about
+         list: setting.admin.list
+         post: setting.admin.post
+         posts: docs
+         user: req.session.user
+         tags: tags
   # check user is login
   checkLogin = (req,res)->
     res.redirect "/login" if not req.session.user?

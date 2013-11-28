@@ -20,7 +20,7 @@ module.exports = (app)->
       index: setting.nav.index
       about: setting.nav.about
       user: req.session.user 
-      categories: setting.categories
+      widgets: renderWidgets()
   # render login page
   app.get '/login',(req,res)->
     res.render 'login',
@@ -70,6 +70,7 @@ module.exports = (app)->
       Post.getPosts args,(err,posts)->
         posts.forEach (post)->
           post.post = markdown.toHTML post.post
+        console.log posts
         res.render 'index',
           title: setting.title
           brand: setting.brand
@@ -78,7 +79,19 @@ module.exports = (app)->
           about: setting.nav.about
           posts: posts
           page: args.page
-          categories: setting.categories
+          widgets: renderWidgets()
           isFirstPage: (args.page - 1) == 0
           isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
           user: req.session.user 
+   # widgets collections
+   renderWidgets = ->
+     widgets = {}
+     widgets.categories = setting.categories
+     recentsArgs = 
+       condition: ''
+       page: 1
+       pageSize: 1
+     # to fixed the bug
+     Post.getRecents recentsArgs,(err,posts)->
+       widgets.recents = posts
+     return widgets

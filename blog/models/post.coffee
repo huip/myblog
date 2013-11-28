@@ -19,3 +19,6 @@ Post.getPostById = (id,next)->
       next null,post
     else 
       next err,null
+Post.getRecents = (args,next)->
+  Post.getPosts args,next
+

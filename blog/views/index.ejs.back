@@ -129,3 +129,9 @@
   </div>
 </script>
 </html>
+  <!--div class="recent-list">
+    {{ widgets.recents.forEach(function(recent) {  }}
+      <div class="recent"><a href="/p/{{=recent._id}}">{{=recent.title}}</a></div>
+    {{  }) }}
+  </div-->
+</div>

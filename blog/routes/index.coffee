@@ -90,7 +90,7 @@ module.exports = (app)->
           about: setting.nav.about
           posts: posts
           page: args.page
-          location: 'index'
+          location: '/index'
           widgets: renderWidgets()
           isFirstPage: (args.page - 1) == 0
           isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total

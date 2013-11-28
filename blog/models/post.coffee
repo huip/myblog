@@ -23,3 +23,11 @@ Post.getRecents = (args,next)->
   Post.getPosts args,next
 Post.getPostByCate = (args,next)->
   Post.getPosts args,next
+Post.removePost = (id,next)->
+  Post.findOne({_id:new ObjectID(id)}).exec (err,post)->
+    if err
+      next err,null
+    else
+      post.remove()
+      next null,post
+

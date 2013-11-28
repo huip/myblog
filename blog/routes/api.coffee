@@ -1,6 +1,7 @@
 crypto = require "crypto"
 setting = require "../settings"
 User = require "../models/user"
+Post = require "../models/post"
 status = {}
 module.exports = (app)->
   # user register api
@@ -43,5 +44,11 @@ module.exports = (app)->
         req.session.user = user
         status.errorCode = 202
       res.json status
-   
-        
+  # delte post by id 
+  app.get "/api/p/remove/:id",(req,res)->
+    checkLogin req,res
+    Post.removePost req.params.id,(err,remove)->
+      res.redirect '/admin'
+  # check user is login
+  checkLogin = (req,res)->
+    res.redirect "/login" if not req.session.user?

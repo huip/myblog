@@ -20,6 +20,7 @@ module.exports = (app)->
       index: setting.nav.index
       about: setting.nav.about
       user: req.session.user 
+      categories: setting.categories
   # render login page
   app.get '/login',(req,res)->
     res.render 'login',
@@ -77,6 +78,7 @@ module.exports = (app)->
           about: setting.nav.about
           posts: posts
           page: args.page
+          categories: setting.categories
           isFirstPage: (args.page - 1) == 0
           isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
           user: req.session.user 

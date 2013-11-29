@@ -29,35 +29,36 @@ Post.getRecents = (args,next)->
 Post.getPostByCate = (args,next)->
   Post.getPosts args,next
 # update post
-Post.update = (args,next)->
-  post = new Post
-  post.modify args,next
+Post.modify = (args,author,next)->
+  Post.findOne({_id:ObjectID(args.id)}).exec (err,post)->
+    try
+      post.time = new Date()
+      post.tags = args.tags
+      post.post = args.post
+      post.title = args.title
+      post.save()
+      next null,post
+    catch err
+      next err,null
+# remove post
+Post.remove = (id,next)->
 # post add 
-Post.add = (args,author,next) ->
+Post.add = (args,author,next)->
   post = new Post
-  post.author = author
-  post.title = args.title
-  post.pv = 0
-  post.categories = args.categories
-  post.tags = args.tags
-  post.post = args.post
-  post.time = new Date()
-  post.save()
-  next null,post
-
-Post::modify = (args,next) ->
   try
-    @_id = args.id
-    @name = args.author
-    @title = args.title
-    @post = args.post
-    @tags = args.tags
-    @categories = args.categories
-    @time = new Date()
-    @save()
-    next null,args
+    post.author = author
+    post.title = args.title
+    post.pv = 0
+    post.categories = args.categories
+    post.tags = args.tags
+    post.post = args.post
+    post.time = new Date()
+    post.save()
+    next null,post
   catch err
-    next err
+    next err,null
+
+  next null,post
 # remove post
 Post.remove = (id,next)->
   Post.findOne({_id:new ObjectID(id)}).exec (err,post)->

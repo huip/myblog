@@ -53,13 +53,7 @@ module.exports = (app)->
       res.json status
   app.post "/api/p/update/:id",(req,res)->
     checkLogin req,res
-    args = 
-      id: req.params.id
-      name: req.session.user.name
-      title: req.body.title
-      tags: req.body.tags
-      post: req.body.post
-    Post.update args,(err,update)->
+    Post.modify req.body,req.session.user.name,(err,update)->
       status.errorCode = 204
       res.json status
   # delte post by id 

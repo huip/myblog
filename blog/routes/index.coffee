@@ -13,14 +13,15 @@ module.exports = (app)->
     indexPage req,res,req.params.page
   # render about page 
   app.get '/about',(req,res)->
-    res.render 'about',
-      title: 'about page'
-      brand: setting.brand
-      motto: setting.motto
-      index: setting.nav.index
-      about: setting.nav.about
-      user: req.session.user 
-      widgets: renderWidgets()
+    getWidgets (err,widgets)->
+      res.render 'about',
+        title: 'about page'
+        brand: setting.brand
+        motto: setting.motto
+        index: setting.nav.index
+        about: setting.nav.about
+        user: req.session.user 
+        widgets: widgets
   # render login page
   app.get '/login',(req,res)->
     res.render 'login',
@@ -46,19 +47,20 @@ module.exports = (app)->
     if postId.length isnt 24
       res.render '404'
       return false
-    Post.getPostById postId,(err,post)->
-       console.log err if err
-       post.post = markdown.toHTML post.post
-       console.log post.time
-       res.render 'page',
-        title: 'register page'
-        brand: setting.brand
-        motto: setting.motto
-        index: setting.nav.index
-        about: setting.nav.about
-        user: req.session.user
-        widgets: renderWidgets()
-        post: post
+    getWidgets (err,widgets)->
+      Post.getPostById postId,(err,post)->
+         console.log err if err
+         post.post = markdown.toHTML post.post
+         console.log post.time
+         res.render 'page',
+          title: 'register page'
+          brand: setting.brand
+          motto: setting.motto
+          index: setting.nav.index
+          about: setting.nav.about
+          user: req.session.user
+          widgets: widgets
+          post: post
   # list post by categories 
   app.get '/p/categories/:cate',(req,res)->
     catePage req,res,req.params.cate,1
@@ -112,23 +114,25 @@ module.exports = (app)->
       condition: ''
       page: parseInt page
       pageSize: 10
-    Post.getTotal args,(err,total)->
-      Post.getPosts args,(err,posts)->
-        posts.forEach (post)->
-          post.post = markdown.toHTML post.post
-        res.render 'index',
-          title: setting.title
-          brand: setting.brand
-          motto: setting.motto
-          index: setting.nav.index
-          about: setting.nav.about
-          posts: posts
-          page: args.page
-          location: '/index'
-          widgets: renderWidgets()
-          isFirstPage: (args.page - 1) == 0
-          isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
-          user: req.session.user
+    getWidgets (err,widgets)->
+      Post.getTotal args,(err,total)->
+        Post.getPosts args,(err,posts)->
+          posts.forEach (post)->
+            post.post = markdown.toHTML post.post
+          console.log posts
+          res.render 'index',
+            title: setting.title
+            brand: setting.brand
+            motto: setting.motto
+            index: setting.nav.index
+            about: setting.nav.about
+            posts: posts
+            page: args.page
+            location: '/index'
+            widgets: widgets
+            isFirstPage: (args.page - 1) == 0
+            isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
+            user: req.session.user
    # categories common page
    catePage = (req,res,cate,page)->
      page = 1 if page < 1
@@ -137,36 +141,39 @@ module.exports = (app)->
         categories:cate
       page: page
       pageSize: 10
-     Post.getTotal args,(err,total)->
-      Post.getPostByCate args,(err,posts)->
-          posts.forEach (post)->
-            post.post = markdown.toHTML post.post
-          res.render 'categories',
-            title: setting.title
-            brand: setting.brand
-            motto: setting.motto
-            index: setting.nav.index
-            about: setting.nav.about
-            posts: posts
-            page: args.page
-            cate: req.params.cate
-            location: '/p/categories/'+req.params.cate
-            isFirstPage: (args.page - 1) == 0
-            isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
-            widgets: renderWidgets()
-            user: req.session.user 
+     getWidgets (err,widgets)->
+       Post.getTotal args,(err,total)->
+        Post.getPostByCate args,(err,posts)->
+            posts.forEach (post)->
+              post.post = markdown.toHTML post.post
+            res.render 'categories',
+              title: setting.title
+              brand: setting.brand
+              motto: setting.motto
+              index: setting.nav.index
+              about: setting.nav.about
+              posts: posts
+              page: args.page
+              cate: req.params.cate
+              location: '/p/categories/'+req.params.cate
+              isFirstPage: (args.page - 1) == 0
+              isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
+              widgets: widgets
+              user: req.session.user 
    # widgets collections
-   renderWidgets = ->
+   getWidgets =(next)->
      widgets = {}
      widgets.categories = setting.categories
      recentsArgs = 
        condition: ''
        page: 1
-       pageSize: 1
+       pageSize: 5
      # to fixed the bug
      Post.getRecents recentsArgs,(err,posts)->
        widgets.recents = posts
-     return widgets
+       Post.getTags (err,tags)->
+        widgets.tags = tags
+        next null,widgets
    # admin common info
    adminPage = (req,res,page)->
     checkLogin req,res
@@ -178,7 +185,6 @@ module.exports = (app)->
       pageSize: 10
     }
     Post.getTotal args,(err,total)->
-      console.log total
       Post.getPosts args,(err,posts)->
         posts.forEach (post)->
           console.log post.time

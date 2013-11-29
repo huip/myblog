@@ -6,12 +6,25 @@
 </div>
 <div class="recent-widget">
   <h4>RECENT POST</h4>
+  <div class="cat-list">
+    {{ widgets.recents.forEach(function(recent){ }}
+      <div class="cat-item"><a href="/p/{{=recent._id}}">{{=recent.title}}</a></div>
+    {{  }) }}
+  </div>
 </div>
 <div class="cat-widget">
   <h4>CATEGORIES</h4>
   <div class="cat-list">
     {{ widgets.categories.forEach(function(cate){ }}
       <div class="cat-item"><a href="/p/categories/{{=cate}}">{{=cate}}</a></div>
+    {{  }) }}
+  </div>
+</div>
+<div class="tags-widget">
+  <h4>TAGS</h4>
+  <div class="cat-list">
+    {{ widgets.tags.forEach(function(tag){ }}
+      <div class="cat-item"><a href="/p/tag/{{=tag}}">{{=tag}}</a></div>
     {{  }) }}
   </div>
 </div>

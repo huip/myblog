@@ -1,7 +1,7 @@
 mongoose = require '../lib/mongoose'
 ObjectID = require("mongodb").ObjectID
 postSchema = new mongoose.Schema
-  name: String
+  author: String
   title: String
   tags: String
   post: String
@@ -33,31 +33,31 @@ Post.update = (args,next)->
   post = new Post
   post.modify args,next
 # post add 
-Post.add = (args,next)->
+Post.add = (args,author,next) ->
   post = new Post
-  post.save args,next
+  post.author = author
+  post.title = args.title
+  post.pv = 0
+  post.categories = args.categories
+  post.tags = args.tags
+  post.post = args.post
+  post.time = new Date()
+  post.save()
+  next null,post
 
-Post::modify = (info,next)->
-  @_id = info.id
-  @name = info.name
-  @title = info.title
-  @post = info.post
-  @tags = info.tags
-  @categories = info.categories
-  @time = new Date()
-  @save()
-
-Post::save = (info,next)->
-  @name = info.name
-  @title = info.title
-  @post = info.post
-  @tags = info.tags
-  @categories = info.categories
-  @pv = 0
-  @time = new Date()
-  @save()
-  next null,info
-
+Post::modify = (args,next) ->
+  try
+    @_id = args.id
+    @name = args.author
+    @title = args.title
+    @post = args.post
+    @tags = args.tags
+    @categories = args.categories
+    @time = new Date()
+    @save()
+    next null,args
+  catch err
+    next err
 # remove post
 Post.remove = (id,next)->
   Post.findOne({_id:new ObjectID(id)}).exec (err,post)->

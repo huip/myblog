@@ -47,14 +47,10 @@ module.exports = (app)->
       res.json status
   # add post
   app.post '/api/p/add',(req,res)->
-    newPost =
-      name: req.session.user.name 
-      title: req.body.title
-      tags: req.body.tags
-      post: req.body.post
-      categories: req.body.categories
-    Post.add newPost,(err,post)->
-      console.log err
+    Post.add req.body,req.session.user.name,(err,post)->
+      console.log status
+      status.errorCode = 203 if not err?
+      res.json status
   app.post "/api/p/update/:id",(req,res)->
     checkLogin req,res
     args = 

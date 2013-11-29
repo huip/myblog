@@ -84,7 +84,7 @@ $(document).ready ->
       $ctagBtn.click ->
         createTag $ @
     doPost = ->
-      datas =
+      post =
         title: $postTitle.val()
         tags: $postTags.val()
         post: $postPost.val()
@@ -92,7 +92,7 @@ $(document).ready ->
       $.ajax
         url: postUrl
         type: 'post'
-        data: datas
+        data: post
         success:(msg)->
           window.location.href = '/admin' if msg.errorCode == 203
     removePost = (that)->

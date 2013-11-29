@@ -21,15 +21,7 @@
   <div class="form-group">
       <label class="col-sm-1 control-label">tags</label>
       <div class="col-sm-6">
-        <select class="post-tags form-control">
-        {{ tags.forEach(function(tag) { }}
-          <option value="{{=tag}}">{{=tag}}</option>
-        {{  }) }}
-        </select>
-        <br />
-        <input type="text" class="form-control input-tag" placeholder="create tags" />
-        <br />
-        <div class="btn btn-primary hides create-tag">create</div>
+        <input type="text" class="form-control post-tags" placeholder="type tags with ,to slice" />
       </div>
   </div>
   <div class="form-group">

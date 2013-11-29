@@ -4,7 +4,7 @@ ParseDate = require '../middlewares/timeparse'
 postSchema = new mongoose.Schema
   author: String
   title: String
-  tags: String
+  tags: Array
   post: String
   categories: String
   time:
@@ -21,7 +21,16 @@ Post.getTotal = (args,next)->
   Post.find(args.condition).count().exec next
 # get posts
 Post.getPosts = (args,next)->
-  Post.find(args.condition).skip((args.page-1)*args.pageSize).limit(args.pageSize).sort('-time').exec next
+  console.log args.type
+  if args.type ==  'tag'
+    args.condition = ''
+    posts = []
+    Post.find(args.condition).skip((args.page-1)*args.pageSize).limit(args.pageSize).sort('-time').exec (err,posts)->
+      for tags in posts.tags
+        for tag in  tags
+          console.log tag
+
+          
 # get post by post id
 Post.getPostById = (id,next)->
   Post.findOne({_id:new ObjectID(id)}).exec (err,post)->
@@ -39,7 +48,7 @@ Post.getPostByWidgets = (args,next)->
 Post.modify = (args,author,next)->
   Post.findOne({_id:ObjectID(args.id)}).exec (err,post)->
     try
-      post.time = Post.getTime()
+      post.time = getTime()
       post.tags = args.tags
       post.post = args.post
       post.title = args.title
@@ -57,7 +66,7 @@ Post.add = (args,author,next)->
     post.categories = args.categories
     post.tags = args.tags
     post.post = args.post
-    post.time = Post.getTime()
+    post.time = getTime()
     post.save()
     next null,post
   catch err
@@ -72,7 +81,20 @@ Post.remove = (id,next)->
       next null,post
 # get tags
 Post.getTags = (next)->
-  Post.find().distinct('tags').exec next
+  Post.find().exec (err,posts)->
+    tags = {}
+    for post in posts
+      for tag in  post.tags
+        tag = parseTag tag
+        for item in tag
+          tags[item]?=0
+          tags[item]++
+    result = []
+    for tag in Object.keys tags
+      result.push tag 
+    next null,result
+    
+    #console.log parseTag tags
 # get archive 
 Post.getArchive = (next)->
   Post.find().distinct('time.month').exec next
@@ -83,7 +105,7 @@ Post.addPv = (id,next)->
     post.save()
     next null,post
 # get local time
-Post.getTime = ->
+getTime = ->
   date = new Date()
   time =
     date: date
@@ -92,4 +114,11 @@ Post.getTime = ->
     day: ParseDate(date).getDay()
     minutes: ParseDate(date).getMinutes()
     seconds: ParseDate(date).getSeconds()
-  return time
+  time
+# parse tags
+parseTag = (tags)->
+  return [] if not tags
+  tags = tags.split ','
+  for i of tags
+    tags[i] = tags[i].trim()
+  tags

@@ -51,19 +51,19 @@ module.exports = (app)->
       res.render '404'
       return false
     getWidgets (err,widgets)->
-      Post.getPostById postId,(err,post)->
-         console.log err if err
-         post.post = markdown.toHTML post.post
-         console.log post.time
-         res.render 'page',
-          title: 'register page'
-          brand: setting.brand
-          motto: setting.motto
-          index: setting.nav.index
-          about: setting.nav.about
-          user: req.session.user
-          widgets: widgets
-          post: post
+      Post.addPv postId,(err,post)->
+        Post.getPostById postId,(err,post)-> 
+           post.post = markdown.toHTML post.post
+           console.log post.time
+           res.render 'page',
+            title: 'register page'
+            brand: setting.brand
+            motto: setting.motto
+            index: setting.nav.index
+            about: setting.nav.about
+            user: req.session.user
+            widgets: widgets
+            post: post
   # list post by categories 
   app.get '/w/:widgets/:type',(req,res)->
     widgetsPage req,res,req.params.widgets,req.params.type,1

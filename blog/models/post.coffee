@@ -76,6 +76,12 @@ Post.getTags = (next)->
 # get archive 
 Post.getArchive = (next)->
   Post.find().distinct('time.month').exec next
+# add pv
+Post.addPv = (id,next)->
+  Post.findOne({_id:ObjectID(id)}).exec (err,post)->
+    post.pv = post.pv+1
+    post.save()
+    next null,post
 # get local time
 Post.getTime = ->
   date = new Date()

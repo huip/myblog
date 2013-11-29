@@ -73,6 +73,9 @@ Post.remove = (id,next)->
 # get tags
 Post.getTags = (next)->
   Post.find().distinct('tags').exec next
+# get archive 
+Post.getArchive = (next)->
+  Post.find().distinct('time.month').exec next
 # get local time
 Post.getTime = ->
   date = new Date()

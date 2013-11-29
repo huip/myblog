@@ -173,7 +173,9 @@ module.exports = (app)->
        widgets.recents = posts
        Post.getTags (err,tags)->
         widgets.tags = tags
-        next null,widgets
+        Post.getArchive (err,archive)->
+          widgets.archive = archive
+          next null,widgets
    # admin common info
    adminPage = (req,res,page)->
     checkLogin req,res

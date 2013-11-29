@@ -63,6 +63,9 @@ module.exports = (app)->
     checkLogin req,res
     Post.remove req.params.id,(err,remove)->
       res.redirect '/admin'
+  app.get '/archive',(req,res)->
+    Post.getArchive (err,time)->
+      console.log time
   # check user is login
   checkLogin = (req,res)->
     res.redirect '/login' if not req.session.user?

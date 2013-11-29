@@ -33,7 +33,7 @@ Post.getPostById = (id,next)->
 Post.getRecents = (args,next)->
   Post.getPosts args,next
 # get posts by cate
-Post.getPostByCate = (args,next)->
+Post.getPostByWidgets = (args,next)->
   Post.getPosts args,next
 # update post
 Post.modify = (args,author,next)->

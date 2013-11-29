@@ -31,6 +31,9 @@ module.exports = (app)->
       index: setting.nav.index
       about: setting.nav.about
       user: req.session.user
+  app.get '/logout',(req,res)->
+    req.session.user = undefined
+    res.redirect '/'
   # render register page
   app.get '/register',(req,res)->
     res.render 'register',
@@ -62,10 +65,10 @@ module.exports = (app)->
           widgets: widgets
           post: post
   # list post by categories 
-  app.get '/p/categories/:cate',(req,res)->
-    catePage req,res,req.params.cate,1
-  app.get '/p/categories/:cate/:page',(req,res)->
-    catePage req,res,req.params.cate,req.params.page
+  app.get '/w/:widgets/:type',(req,res)->
+    widgetsPage req,res,req.params.widgets,req.params.type,1
+  app.get '/w/:widgets/:type/:page',(req,res)->
+    widgetsPage req,res,req.params.widgets,req.params.type,req.params.page
   # render admin page
   app.get '/admin',(req,res)->
     adminPage req,res,1
@@ -119,7 +122,6 @@ module.exports = (app)->
         Post.getPosts args,(err,posts)->
           posts.forEach (post)->
             post.post = markdown.toHTML post.post
-          console.log posts
           res.render 'index',
             title: setting.title
             brand: setting.brand
@@ -133,17 +135,20 @@ module.exports = (app)->
             isFirstPage: (args.page - 1) == 0
             isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
             user: req.session.user
-   # categories common page
-   catePage = (req,res,cate,page)->
+   # widgets common page {widgets means widgets type}
+   widgetsPage = (req,res,widget,type,page)->
      page = 1 if page < 1
      args = 
-      condition:
-        categories:cate
+      condition:''
       page: page
       pageSize: 10
+     switch widget
+       when 'categorie' then args.condition = 'categories':type
+       when 'tag' then args.condition = 'tags':type
+       when 'archive' then args.condition = 'time.month':type
      getWidgets (err,widgets)->
        Post.getTotal args,(err,total)->
-        Post.getPostByCate args,(err,posts)->
+        Post.getPostByWidgets args,(err,posts)->
             posts.forEach (post)->
               post.post = markdown.toHTML post.post
             res.render 'categories',
@@ -154,7 +159,8 @@ module.exports = (app)->
               about: setting.nav.about
               posts: posts
               page: args.page
-              cate: req.params.cate
+              type: type
+              widget: widget
               location: '/p/categories/'+req.params.cate
               isFirstPage: (args.page - 1) == 0
               isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total

@@ -4,7 +4,7 @@
   <div class="index-container col-md-7">
     <div class="article-area">
       <h2 class="article-title">{{=post.title}}</h2>
-      <p class="article-status">post on:&nbsp;{{post.time}} read:&nbsp;{{=post.pv}} tags:&nbsp;#{{=post.tags}}</p>
+      <p class="article-status">post on:&nbsp;{{=post.time.seconds}} read:&nbsp;{{=post.pv}} tags:&nbsp;#{{=post.tags}}</p>
       <p>{{-post.post}}</p>
     <!-- Duoshuo Comment BEGIN -->
     <div class="ds-thread" data-thread-key="{{=post._id}}" data-title="{{=post.title}}" ></div>

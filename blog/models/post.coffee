@@ -1,12 +1,19 @@
 mongoose = require '../lib/mongoose'
 ObjectID = require("mongodb").ObjectID
+ParseDate = require '../middlewares/timeparse'
 postSchema = new mongoose.Schema
   author: String
   title: String
   tags: String
   post: String
   categories: String
-  time: Date
+  time:
+    date: String
+    year: String
+    month: String
+    day: String
+    minutes: String
+    seconds: String
   pv: Number
 module.exports = Post = mongoose.model 'Post', postSchema
 # get total post
@@ -32,7 +39,7 @@ Post.getPostByCate = (args,next)->
 Post.modify = (args,author,next)->
   Post.findOne({_id:ObjectID(args.id)}).exec (err,post)->
     try
-      post.time = new Date()
+      post.time = Post.getTime()
       post.tags = args.tags
       post.post = args.post
       post.title = args.title
@@ -40,8 +47,6 @@ Post.modify = (args,author,next)->
       next null,post
     catch err
       next err,null
-# remove post
-Post.remove = (id,next)->
 # post add 
 Post.add = (args,author,next)->
   post = new Post
@@ -52,13 +57,11 @@ Post.add = (args,author,next)->
     post.categories = args.categories
     post.tags = args.tags
     post.post = args.post
-    post.time = new Date()
+    post.time = Post.getTime()
     post.save()
     next null,post
   catch err
     next err,null
-
-  next null,post
 # remove post
 Post.remove = (id,next)->
   Post.findOne({_id:new ObjectID(id)}).exec (err,post)->
@@ -70,3 +73,14 @@ Post.remove = (id,next)->
 # get tags
 Post.getTags = (next)->
   Post.find().distinct('tags').exec next
+# get local time
+Post.getTime = ->
+  date = new Date()
+  time =
+    date: date
+    year: ParseDate(date).getYear()
+    month: ParseDate(date).getMonth()
+    day: ParseDate(date).getDay()
+    minutes: ParseDate(date).getMinutes()
+    seconds: ParseDate(date).getSeconds()
+  return time

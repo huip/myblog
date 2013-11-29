@@ -49,6 +49,7 @@ module.exports = (app)->
     Post.getPostById postId,(err,post)->
        console.log err if err
        post.post = markdown.toHTML post.post
+       console.log post.time
        res.render 'page',
         title: 'register page'
         brand: setting.brand
@@ -127,7 +128,7 @@ module.exports = (app)->
           widgets: renderWidgets()
           isFirstPage: (args.page - 1) == 0
           isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
-          user: req.session.user 
+          user: req.session.user
    # categories common page
    catePage = (req,res,cate,page)->
      page = 1 if page < 1
@@ -179,7 +180,8 @@ module.exports = (app)->
     Post.getTotal args,(err,total)->
       console.log total
       Post.getPosts args,(err,posts)->
-        console.log err if err
+        posts.forEach (post)->
+          console.log post.time
         res.render "admin",
           title: setting.title
           brand: setting.brand
@@ -193,3 +195,13 @@ module.exports = (app)->
           isFirstPage: (args.page - 1) == 0
           isLastPage: ((args.page - 1) * args.pageSize + posts.length) == total
           numPage:Math.ceil(total/10)
+    getDate = ->
+      date = new Date()
+      time =
+        date: date
+        year: ParseDate(date).getYear()
+        month: ParseDate(date).getMonth()
+        day: ParseDate(date).getDay()
+        minutes: ParseDate(date).getMinutes()
+        seconds: ParseDate(date).getSeconds()
+      return time

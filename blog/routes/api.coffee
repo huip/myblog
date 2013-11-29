@@ -1,16 +1,16 @@
-crypto = require "crypto"
-setting = require "../settings"
-User = require "../models/user"
-Post = require "../models/post"
+crypto = require 'crypto'
+setting = require '../settings'
+User = require '../models/user'
+Post = require '../models/post'
 status = {}
 module.exports = (app)->
   # user register api
   app.post '/api/u/register',(req,res)->
-    md5 = crypto.createHash("md5")
+    md5 = crypto.createHash('md5')
     newUser =
       name: req.body.username
       email: req.body.email
-      password: md5.update(req.body.password).digest("base64")
+      password: md5.update(req.body.password).digest('base64')
     # confirm user is register
     User.get newUser,(err,user)->
       err  = '101' if user
@@ -28,11 +28,11 @@ module.exports = (app)->
           status.errorCode = 201
           req.session.user = info
           res.json status
-  app.post "/api/u/login",(req,res)->
-    md5 = crypto.createHash("md5")
+  app.post '/api/u/login',(req,res)->
+    md5 = crypto.createHash('md5')
     userInfo =
       email: req.body.email
-      password: md5.update(req.body.password).digest("base64")
+      password: md5.update(req.body.password).digest('base64')
     User.get userInfo,(err,user)->
       if not user?
         # 103 means user is not exit
@@ -47,20 +47,22 @@ module.exports = (app)->
       res.json status
   # add post
   app.post '/api/p/add',(req,res)->
-    Post.add req.body,req.session.user.name,(err,post)->
-      console.log status
+    checkLogin req,res
+    args = req.body
+    Post.add args,req.session.user.name,(err,post)->
       status.errorCode = 203 if not err?
       res.json status
-  app.post "/api/p/update/:id",(req,res)->
+  app.post '/api/p/update/:id',(req,res)->
     checkLogin req,res
-    Post.modify req.body,req.session.user.name,(err,update)->
+    args = req.body
+    Post.modify args,req.session.user.name,(err,update)->
       status.errorCode = 204
       res.json status
   # delte post by id 
-  app.get "/api/p/remove/:id",(req,res)->
+  app.get '/api/p/remove/:id',(req,res)->
     checkLogin req,res
     Post.remove req.params.id,(err,remove)->
       res.redirect '/admin'
   # check user is login
   checkLogin = (req,res)->
-    res.redirect "/login" if not req.session.user?
+    res.redirect '/login' if not req.session.user?

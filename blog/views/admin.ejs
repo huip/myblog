@@ -19,7 +19,7 @@
       <tr>
         <td><a href="/p/{{= post._id }}">{{= post.title }}</td>
           <td>{{= post.author }}</td>
-          <td>{{= post.time }}</td>
+          <td>{{= post.time.seconds }}</td>
           <td>
             <div class="remove-article btn btn-danger" href="api/p/remove/{{=post._id}}">
               Trash

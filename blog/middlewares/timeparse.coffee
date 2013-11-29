@@ -1,4 +1,5 @@
 ParseDate = (timestamp)->
+  timestamp = new Date timestamp
   getYear: ()->
     return timestamp.getYear()+1900
   getMonth: (type)->

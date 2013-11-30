@@ -73,6 +73,7 @@ a {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
+  line-height: 25px;
 }
 .page-container .post-area {
   line-height: 25px;

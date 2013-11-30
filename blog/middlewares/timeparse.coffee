@@ -9,7 +9,7 @@ ParseDate = (timestamp)->
     else
       return @getYear()+'/'+month
   getDay: (type)->
-     day = timestamp.getDay()
+     day = timestamp.getDate()
      day = '0'+day if day < 10
      if not type?
        return @getMonth(type)+'-'+day

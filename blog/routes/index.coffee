@@ -41,7 +41,6 @@ module.exports = (app)->
     Post.getTotal args,(total)->
       args.pageSize = total
       Post.getPosts args,(err,posts)->
-        console.log posts
         posts.forEach (post)->
           post.post = markdown.toHTML post.post
         for key of posts
@@ -50,7 +49,7 @@ module.exports = (app)->
             link: 'http://huip.org/p/'+posts[key]._id
             description: posts[key].title.trim()
             date: new Date(posts[key].time.date)
-          res.set 'Content-Type','application/rss+xml'
+          res.set 'Content-Type','text/xml'
           res.send feed.render 'rss-2.0'
   # render login page
   app.get '/login',(req,res)->

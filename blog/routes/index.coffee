@@ -160,7 +160,7 @@ module.exports = (app)->
               posts: posts
               page: args.page
               type: type
-              widget: widget
+              widget: widget.toUpperCase()
               location: '/p/categories/'+req.params.cate
               isFirstPage: (args.page - 1) == 0
               isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total

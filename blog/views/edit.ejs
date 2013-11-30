@@ -13,7 +13,7 @@
       <div class="col-sm-6">
         <select class="edit-tags tags form-control">
         {{ tags.forEach(function(tag) { }}
-          <option value="{{=tags[i]}}">{{=tags[i]}}</option>
+          <option value="{{=tag}}">{{=tag}}</option>
         {{  }) }}
         </select>
         <br />
@@ -33,11 +33,6 @@
   </form>
 </div>
 {{- include footer}}
-</div>
-</body>
-<script src='/javascripts/jquery-1.10.2.min.js'></script>
-<script src='/javascripts/bootstrap.min.js'></script>
-<script src='/javascripts/main.js'></script>
 <script src="/javascripts/Markdown.Converter.js"></script>
 <script src="/javascripts/Markdown.Sanitizer.js"></script>
 <script src="/javascripts/Markdown.Editor.js"></script>

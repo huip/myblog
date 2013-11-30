@@ -24,7 +24,7 @@
         <select class="post-tags tags form-control">
         {{ tags.forEach(function(tag) { }}
           <option value="{{=tag}}">{{=tag}}</option>
-        {{  } }}
+        {{  }) }}
         </select>
         <br />
         <input type="text" class="form-control input-tag" placeholder="create tags" />
@@ -46,10 +46,6 @@
   </form>
 </div>
 {{- include footer}}
-</div>
-</body>
-<script src='/javascripts/jquery-1.10.2.min.js'></script>
-<script src='/javascripts/main.js'></script>
 <script src="/javascripts/Markdown.Converter.js"></script>
 <script src="/javascripts/Markdown.Sanitizer.js"></script>
 <script src="/javascripts/Markdown.Editor.js"></script>

@@ -53,6 +53,7 @@ $(document).ready ->
             window.location.href = '/admin'
             return false
           alert '账号已经存在！' if msg.errorCode == 101
+     
   class Admin
     constructor: ->
       @init()
@@ -127,10 +128,48 @@ $(document).ready ->
       else 
         if $inptTag.val() != ''
           tagOption = '<option value='+$inptTag.val()+'>'+$inptTag.val()+'</option>'
-          console.log $inptTag.val()
           $('.tags').append( tagOption )
           $inptTag.css( 'display','none' ).val('')
           that.addClass 'hides'
-  login = new Login()
-  register = new Register()
-  admin = new Admin()
+  class Router
+    constructor: ->
+      @url = window.location.href
+      @init @url
+    current = ''
+    init:(url)->
+      urlHash url
+    urlHash = (url)->
+      urls = url.split '/'
+      current = urls[3]
+    on:(router,next)->
+      if router is current
+        next null,router
+      else 
+        next 'not current',null
+
+  # router config 
+  router = new Router()
+  router.on 'admin',(err,current)->
+    if current
+      admin = new Admin()
+      $('.navbar-nav li').eq(2).addClass('active').siblings().removeClass('active')
+  router.on 'index',(err,current)->
+    if current
+      $('.navbar-nav li').eq(0).addClass('active').siblings().removeClass('active')
+  router.on 'login',(err,current)->
+    if current
+      $('.navbar-nav li').removeClass('active')
+      login = new Login()
+  router.on 'register',(err,current)->
+    if current
+      register = new Register()
+      $('.navbar-nav li').removeClass('active')
+  router.on 'about',(err,current)->
+    if current
+      $('.navbar-nav li').eq(1).addClass('active').siblings().removeClass('active')
+  router.on 'p',(err,current)->
+    if current 
+      $('.navbar-nav li').removeClass('active')
+  router.on 'w',(err,current)->
+    if current 
+      $('.navbar-nav li').removeClass('active')

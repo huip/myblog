@@ -2,6 +2,7 @@ setting = require '../settings'
 markdown = require('markdown').markdown
 User = require '../models/user'
 Post = require '../models/post'
+Feed = require 'feed'
 module.exports = (app)->
   # render index page
   app.get '/',(req,res)->
@@ -22,6 +23,35 @@ module.exports = (app)->
         about: setting.nav.about
         user: req.session.user 
         widgets: widgets
+  # render rss
+  app.get '/rss',(req,res)->
+    feed = new Feed
+      title: setting.title
+      description: setting.motto
+      link: 'huip.org'
+      image: ''
+      author:
+        name: 'huip'
+        email: 'penghui1012@gmail.com'
+        link: 'huip.org/about'
+    args =
+      condition: ''
+      page: 1
+      pageSize: 10
+    Post.getTotal args,(total)->
+      args.pageSize = total
+      Post.getPosts args,(err,posts)->
+        console.log posts
+        posts.forEach (post)->
+          post.post = markdown.toHTML post.post
+        for key of posts
+          feed.item
+            title: posts[key].title.trim()
+            link: 'http://huip.org/p/'+posts[key]._id
+            description: posts[key].title.trim()
+            date: new Date(posts[key].time.date)
+          res.set 'Content-Type','application/rss+xml'
+          res.send feed.render 'rss-2.0'
   # render login page
   app.get '/login',(req,res)->
     res.render 'login',

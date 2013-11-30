@@ -10,7 +10,8 @@
     "ejs": "*",
     "stylus": "*",
     "mongodb": "*",
-    "markdown":"*"
-    "mongoose":"*"
+    "markdown":"*",
+    "mongoose":"*",
+    "feed":"*"
   }
 }

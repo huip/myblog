@@ -142,7 +142,6 @@ module.exports = (app)->
       condition:''
       page: page
       pageSize: 10
-      type: widget
      switch widget
        when 'categorie' then args.condition = 'categories':type
        when 'tag' then args.condition = 'tags':type

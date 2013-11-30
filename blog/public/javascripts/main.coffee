@@ -127,7 +127,8 @@ $(document).ready ->
       else 
         if $inptTag.val() != ''
           tagOption = '<option value='+$inptTag.val()+'>'+$inptTag.val()+'</option>'
-          $('.post-tags').append( tagOption )
+          console.log $inptTag.val()
+          $('.tags').append( tagOption )
           $inptTag.css( 'display','none' ).val('')
           that.addClass 'hides'
   login = new Login()

@@ -21,16 +21,7 @@ Post.getTotal = (args,next)->
   Post.find(args.condition).count().exec next
 # get posts
 Post.getPosts = (args,next)->
-  console.log args.type
-  if args.type ==  'tag'
-    args.condition = ''
-    posts = []
-    Post.find(args.condition).skip((args.page-1)*args.pageSize).limit(args.pageSize).sort('-time').exec (err,posts)->
-      for tags in posts.tags
-        for tag in  tags
-          console.log tag
-
-          
+  Post.find(args.condition).skip((args.page-1)*args.pageSize).limit(args.pageSize).sort('-time').exec next
 # get post by post id
 Post.getPostById = (id,next)->
   Post.findOne({_id:new ObjectID(id)}).exec (err,post)->

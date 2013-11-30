@@ -21,13 +21,30 @@ a {
 .content {
   margin: 100px 0 0 0;
 }
-.index-area {
+.footer {
+  margin: 50px 0 0 0;
+  padding: 0 0 20px 0;
+}
+.index-container .index-area {
   line-height: 25px;
+}
+.index-container .list-area {
+  height: 350px;
+  overflow: hidden;
+}
+.index-container .list-area .entry-title {
+  font-size: 2em;
+}
+.index-container .list-area .entry-title a {
+  color: #000;
+}
+.index-container .post-status {
+  color: #a9a9a9;
 }
 .login-area {
   margin: 60px auto;
 }
-.login-form {
+.login-area .login-form {
   border: 1px solid #ddd;
   width: 560px;
   height: 200px;
@@ -35,13 +52,13 @@ a {
   padding: 30px 10px 30px 30px;
   border-radius: 5px;
 }
-.login-btn {
+.login-area .login-btn {
   margin: 10px 0 0 200px;
 }
 .register-area {
   margin: 60px auto;
 }
-.register-form {
+.register-area .register-form {
   border: 1px solid #ddd;
   width: 560px;
   height: 250px;
@@ -49,56 +66,40 @@ a {
   padding: 30px 10px 30px 30px;
   border-radius: 5px;
 }
-.register-btn {
+.register-area .register-btn {
   margin: 10px 0 0 200px;
 }
-.index-article-area {
+.page-container {
+  background: #fff;
   border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px 0 0 0;
-  min-height: 200px;
   border-radius: 5px;
 }
-.article-area {
+.page-container .post-area {
   line-height: 25px;
   word-break: break-all;
   white-space: normal;
 }
+.page-container a {
+  color: #a9a9a9;
+}
+.page-container .post-status {
+  color: #a9a9a9;
+}
 .about-container {
   line-height: 2em;
-}
-.footer {
-  margin: 50px 0 0 0;
-  padding: 0 0 20px 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 .input-tag {
   display: none;
 }
-.post-wigets div {
-  line-height: 20px;
-}
-.article-status {
-  color: #a9a9a9;
-}
-.list-area {
-  height: 350px;
-  overflow: hidden;
-}
-.list-area .entry-title {
-  font-size: 2em;
-}
-.list-area .entry-title a {
-  color: #000;
-}
-.time-sty {
-  font-family: Georgia, Tahoma, Helvetica, arial;
-  color: #808080;
-}
-.cat-title {
-  color: #9f9f9e;
-}
 .site-widgets {
   margin: 0 0px 0 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+  padding: 10px 0 10px 40px;
 }
 .site-widgets a {
   color: #9f9f9e;
@@ -135,4 +136,8 @@ a {
 }
 .site-widgets .friends-widget .friends {
   margin: 20px 0 0 0;
+}
+.time-sty {
+  font-family: Georgia, Tahoma, Helvetica, arial;
+  color: #a9a9a9;
 }

@@ -79,7 +79,7 @@ $(document).ready ->
         bok = true
     msgHandle = (msg)->
       if msg.errorCode is 201
-        #window.location.href = '/admin'
+        window.location.href = '/admin'
         return false
       if msg.errorCode is 101
         errorTip $errorTip,'user acount is already exist','show'

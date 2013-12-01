@@ -65,6 +65,7 @@ module.exports = (app)->
     res.redirect '/'
   # render register page
   app.get '/register',(req,res)->
+    checkLogin req,res
     res.render 'register',
       title: 'register page'
       brand: setting.brand

@@ -136,7 +136,7 @@ $(document).ready ->
         type: 'post'
         data: post
         success:(msg)->
-          window.location.href = '/admin' if msg.errorCode is '203'
+          window.location.href = '/admin' if msg.errorCode is 203
     removePost = (that)->
       isRemove = window.confirm 'are your sure delte this article?'
       window.location.href = that.attr 'href' if isRemove
@@ -151,7 +151,7 @@ $(document).ready ->
         type: 'post'
         data: datas
         success:(msg)->
-          window.location.href = '/admin' if msg.errorCode is '203'
+          window.location.href = '/admin' if msg.errorCode is 203
     prePost = (that)->
      if that.hasClass 'hides'
        $('.wmd-preview').css 'display','none'

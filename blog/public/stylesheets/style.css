@@ -115,7 +115,55 @@ a {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-.input-tag {
+.post-container {
+  position: absolute;
+  background: #e6e6e6;
+  padding: 10px;
+  border: 1px solid #ddd;
+  height: 95%;
+  top: 50px;
+  border-radius: 5px;
+}
+.post-container .wmd-button-row {
+  background: #fff;
+  width: 690px;
+  padding: 5px;
+  height: 30px;
+}
+.post-container .wmd-input {
+  border: 0;
+  min-height: 600px;
+  float: left;
+  width: 50%;
+}
+.post-container .wmd-preview {
+  float: right;
+  min-height: 600px;
+  background: #fcfaf2;
+}
+.post-container .title-area {
+  display: none;
+}
+.post-container .editor-area .input-tag {
+  display: none;
+}
+.post-container .post-button-bar {
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+}
+.post-container .post-edit {
+  margin: 5px 0 0 0;
+}
+.post-container .post-info {
+  height: 200px;
+  line-height: 25px;
+}
+.post-container .post-info .form-group {
+  margin: 20px 0 0 0;
+}
+.post-container .post-info .input-tag {
   display: none;
 }
 .site-widgets {

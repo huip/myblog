@@ -136,6 +136,7 @@ module.exports = (app)->
          post: setting.admin.post
          posts: docs
          user: req.session.user
+         categories: setting.categories
          tags: tags
   # check user is login
   checkLogin = (req,res)->

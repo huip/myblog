@@ -13,9 +13,8 @@ module.exports = (app)->
       password: md5.update(req.body.password).digest('base64')
     # confirm user is register
     User.get newUser,(err,user)->
-      err  = '101' if user
-      status.errorCode = err
-      if err
+      if user?
+        status.errorCode = 101
         res.json status
         return false
       # if not register do register

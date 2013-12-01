@@ -62,10 +62,19 @@ a {
 .login-container .login-btn {
   margin: 10px 0 0 45%;
 }
-.register-area {
+.register-container {
   margin: 60px auto;
 }
-.register-area .register-form {
+.register-container .register-area {
+  width: 600px;
+  height: 300px;
+  margin: 50px 0 0 0;
+  padding: 50px 10px 30px 30px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+}
+.register-container .register-area .register-form {
   border: 1px solid #ddd;
   width: 560px;
   height: 250px;
@@ -73,7 +82,13 @@ a {
   padding: 30px 10px 30px 30px;
   border-radius: 5px;
 }
-.register-area .register-btn {
+.register-container .register-area .error-tip {
+  height: 20px;
+  width: 100%;
+  line-height: 20px;
+  text-align: center;
+}
+.register-container .register-area .register-btn {
   margin: 10px 0 0 200px;
 }
 .page-container {

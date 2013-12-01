@@ -13,27 +13,27 @@ $(document).ready ->
     events = ->
       $btn.click ->
         doLogin()
-      $password.focus ->
-        $errorTip.html ''
       $email.focus ->
-        $errorTip.html ''
+        errorTip $errorTip,'','hide'
+      $password.focus ->
+        errorTip $errorTip,'','hide'
     checkInvalid = (data) ->
       if not isValidEmail data.email
-        $errorTip.html('invalid email address!').css 'color','#b94a48'
+        errorTip $errorTip,'invalid email address!','show'
         bok = false 
       else if data.password.length < 6
-        $errorTip.html('password less than 6 charaters').css 'color','#b94a48'
+        errorTip $errorTip,'password less than 6 charaters','show'
         bok = false
       else
         bok = true
       return bok
     msgHandle = (msg)->
-      if msg.errorCode is 202
+      if msg.errorCode is 203
         window.location.href = '/admin'
       else if msg.errorCode is 103
-        $errorTip.html('user not exist!').css 'color','#b94a48'
+        errorTip $errorTip,'user not exist!','show'
       else if msg.errorCode is 104
-        $errorTip.html('username or password error!').css 'color','#b94a48'
+        errorTip $errorTip,'username or password error!','show'
     doLogin = ->
       data = 
         email:$email.val()
@@ -52,27 +52,49 @@ $(document).ready ->
     $email = $ '.register-email'
     $password = $ '.register-password'
     $btn = $ '.register-btn'
+    $errorTip = $ '.error-tip'
     url =  '/api/u/register'
+    bok = false
     init: ->
       events()
     events = ->
       $btn.click ->
         doRegister()
+      $uname.focus ->
+        errorTip $errorTip,'','hide'
+      $email.focus ->
+        errorTip $errorTip,'','hide'
+      $password.focus ->
+        errorTip $errorTip,'','hide'
+    checkInvalid = (data) ->
+      if data.username.length < 4
+        errorTip $errorTip,'Invalid user name!','show'
+      else if not isValidEmail data.email
+        errorTip $errorTip,'Invalid email address!','show'
+        bok = false 
+      else if data.password.length < 6
+        errorTip $errorTip,'Password less than 6 characters!','show'
+        bok = false
+      else
+        bok = true
+    msgHandle = (msg)->
+      if msg.errorCode is 201
+        #window.location.href = '/admin'
+        return false
+      if msg.errorCode is 101
+        errorTip $errorTip,'user acount is already exist','show'
     doRegister = ->
-      datas =
+      data =
         username: $uname.val()
         email: $email.val()
         password: $password.val()
-      $.ajax
-        url: url
-        type: 'post'
-        data: datas
-        success:(msg)->
-          if msg.errorCode == 201
-            window.location.href = '/admin'
-            return false
-          alert '账号已经存在！' if msg.errorCode == 101
-     
+      if checkInvalid data
+        $.ajax
+          url: url
+          type: 'post'
+          data: data
+          success:(msg)->
+            msgHandle msg
   class Admin
     constructor: ->
       @init()
@@ -114,7 +136,7 @@ $(document).ready ->
         type: 'post'
         data: post
         success:(msg)->
-          window.location.href = '/admin' if msg.errorCode == 203
+          window.location.href = '/admin' if msg.errorCode is '203'
     removePost = (that)->
       isRemove = window.confirm 'are your sure delte this article?'
       window.location.href = that.attr 'href' if isRemove
@@ -129,7 +151,7 @@ $(document).ready ->
         type: 'post'
         data: datas
         success:(msg)->
-          window.location.href = '/admin' if msg.errorCode == 204
+          window.location.href = '/admin' if msg.errorCode is '203'
     prePost = (that)->
      if that.hasClass 'hides'
        $('.wmd-preview').css 'display','none'
@@ -197,3 +219,9 @@ $(document).ready ->
  isValidEmail = (email)->
    reMail = /^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i
    return reMail.test email
+ # error tip 
+ errorTip = (dom,msg,method)->
+   if method is 'show'
+     dom.html(msg).css 'color','#b94a48'
+   else
+     dom.html ''

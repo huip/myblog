@@ -28,7 +28,7 @@ $(document).ready ->
         bok = true
       return bok
     msgHandle = (msg)->
-      if msg.errorCode is 203
+      if msg.errorCode is 202
         window.location.href = '/admin'
       else if msg.errorCode is 103
         errorTip $errorTip,'user not exist!','show'

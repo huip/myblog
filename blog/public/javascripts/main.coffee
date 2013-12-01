@@ -151,7 +151,7 @@ $(document).ready ->
         type: 'post'
         data: datas
         success:(msg)->
-          window.location.href = '/admin' if msg.errorCode is 203
+          window.location.href = '/admin' if msg.errorCode is 204
     prePost = (that)->
      if that.hasClass 'hides'
        $('.wmd-preview').css 'display','none'

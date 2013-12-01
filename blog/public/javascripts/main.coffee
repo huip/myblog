@@ -4,28 +4,47 @@ $(document).ready ->
       @init()
     $email = $ '.login-email'
     $password = $ '.login-password'
+    $errorTip = $ '.error-tip'
     $btn = $ '.login-btn'
     url = '/api/u/login'
+    bok = false
     init: ->
       events()
     events = ->
       $btn.click ->
         doLogin()
+      $password.focus ->
+        $errorTip.html ''
+      $email.focus ->
+        $errorTip.html ''
+    checkInvalid = (data) ->
+      if not isValidEmail data.email
+        $errorTip.html('invalid email address!').css 'color','#b94a48'
+        bok = false 
+      else if data.password.length < 6
+        $errorTip.html('password less than 6 charaters').css 'color','#b94a48'
+        bok = false
+      else
+        bok = true
+      return bok
+    msgHandle = (msg)->
+      if msg.errorCode is 202
+        window.location.href = '/admin'
+      else if msg.errorCode is 103
+        $errorTip.html('user not exist!').css 'color','#b94a48'
+      else if msg.errorCode is 104
+        $errorTip.html('username or password error!').css 'color','#b94a48'
     doLogin = ->
-      datas = 
+      data = 
         email:$email.val()
         password:$password.val()
-      $.ajax
-        url: url
-        type: 'post'
-        data: datas
-        success:(msg)->
-          if msg.errorCode == 202
-            window.location.href = 'admin'
-          else if msg.errorCode == 103
-            alert '用户名不存在！'
-          else if msg.errorCode == 104
-            alert '用户名或密码错误！'
+      if checkInvalid data
+        $.ajax
+          url: url
+          type: 'post'
+          data: data
+          success:(msg)->
+            msgHandle msg 
   class Register
     constructor: ->
       @init()
@@ -173,3 +192,8 @@ $(document).ready ->
   router.on 'w',(err,current)->
     if current 
       $('.navbar-nav li').removeClass('active')
+
+ # is valid email
+ isValidEmail = (email)->
+   reMail = /^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i
+   return reMail.test email

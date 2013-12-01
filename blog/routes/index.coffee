@@ -47,7 +47,7 @@ module.exports = (app)->
           feed.item
             title: posts[key].title.trim()
             link: 'http://huip.org/p/'+posts[key]._id
-            description: posts[key].title.trim()
+            description: posts[key].post.trim()
             date: new Date(posts[key].time.date)
         res.set 'Content-Type','text/xml'
         res.send feed.render 'rss-2.0'

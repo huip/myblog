@@ -49,8 +49,8 @@ module.exports = (app)->
             link: 'http://huip.org/p/'+posts[key]._id
             description: posts[key].title.trim()
             date: new Date(posts[key].time.date)
-          res.set 'Content-Type','text/xml'
-          res.send feed.render 'rss-2.0'
+        res.set 'Content-Type','text/xml'
+        res.send feed.render 'rss-2.0'
   # render login page
   app.get '/login',(req,res)->
     res.render 'login',

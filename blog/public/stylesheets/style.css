@@ -29,7 +29,8 @@ a {
   line-height: 25px;
 }
 .index-container .list-area {
-  height: 350px;
+  min-height: 50px;
+  max-height: 350px;
   overflow: hidden;
 }
 .index-container .list-area .entry-title {

@@ -191,8 +191,8 @@ module.exports = (app)->
               posts: posts
               page: args.page
               type: type
+              location: '/w/'+widget+'/'+type
               widget: widget.toUpperCase()
-              location: '/p/categories/'+req.params.cate
               isFirstPage: (args.page - 1) == 0
               isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
               widgets: widgets

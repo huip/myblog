@@ -1,0 +1,66 @@
+{{- include header}}
+<div class="content">
+<div class="col-md-2"></div>
+<form class="form-horizontal col-md-10" role="form">
+  <div class="form-group">
+      <label class="col-sm-1 control-label">title</label>
+      <div class="col-sm-6">
+        <input class="edit-title form-control" value="{{=posts.title}}" type="text">
+      </div>
+  </div>
+  <div class="form-group">
+      <label class="col-sm-1 control-label">tags</label>
+      <div class="col-sm-6">
+        <select class="edit-tags tags form-control">
+        {{ tags.forEach(function(tag) { }}
+          <option value="{{=tag}}">{{=tag}}</option>
+        {{  }) }}
+        </select>
+        <br />
+        <input type="text" class="form-control input-tag" placeholder="create tags" />
+        <br />
+        <div class="btn btn-primary hides create-tag">create</div>
+      </div>
+  </div>
+  <div class="wmd-panel col-md-10 form-group">
+     <div id="wmd-button-bar"></div>
+     <textarea class="wmd-input edit-post form-control" id="wmd-input">{{=posts.post}}</textarea>
+  <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+  <div class="col-md-10" style="clear:both;top:10px">
+      <input type="button" class="btn edit-btn" pid="{{=posts._id}}" value="update" />
+      <input type="button" class="btn preview-btn" value="preview" />
+  </div>
+  </form>
+</div>
+{{- include footer}}
+<script src="/javascripts/Markdown.Converter.js"></script>
+<script src="/javascripts/Markdown.Sanitizer.js"></script>
+<script src="/javascripts/Markdown.Editor.js"></script>
+<script>
+(function () {
+ var converter1 = Markdown.getSanitizingConverter();
+ converter1.hooks.chain("preBlockGamut", function (text, rbg) {
+   return text.replace(/^ {0,3}""" *\n((?:.*?\n)+?) {0,3}""" *$/gm, 
+     function (whole, inner) {
+       return "<blockquote>" + rbg(inner) + "</blockquote>\n";
+     });
+   });
+ var editor1 = new Markdown.Editor(converter1);
+ editor1.run();
+ var converter2 = new Markdown.Converter();
+ converter2.hooks.chain("preConversion", function (text) {
+     return text.replace(/\b(a\w*)/gi, "*$1*");
+ });
+ converter2.hooks.chain("plainLinkText", function (url) {
+     return "This is a link to " + url.replace(/^https?:\/\//, "");
+ });
+ var help = function () { alert("Do you need help?");  }
+ var options = {
+    helpButton: { handler: help  },
+    strings: { quoteexample: "whatever you're quoting, put it right here"  }
+ };
+ var editor2 = new Markdown.Editor(converter2, "-second", options);
+ editor2.run();
+ })();
+</script>
+</html>

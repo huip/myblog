@@ -84,7 +84,6 @@ module.exports = (app)->
       Post.addPv postId,(err,post)->
         Post.getPostById postId,(err,post)-> 
            post.post = markdown.toHTML post.post
-           console.log post.time
            res.render 'page',
             title: 'register page'
             brand: setting.brand

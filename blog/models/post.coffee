@@ -21,7 +21,7 @@ Post.getTotal = (args,next)->
   Post.find(args.condition).count().exec next
 # get posts
 Post.getPosts = (args,next)->
-  Post.find(args.condition).skip((args.page-1)*args.pageSize).limit(args.pageSize).sort('-time.date').exec next
+  Post.find(args.condition).skip((args.page-1)*args.pageSize).limit(args.pageSize).sort('time.date').exec next
 # get post by post id
 Post.getPostById = (id,next)->
   Post.findOne({_id:new ObjectID(id)}).exec (err,post)->

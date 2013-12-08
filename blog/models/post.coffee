@@ -7,6 +7,7 @@ postSchema = new mongoose.Schema
   tags: Array
   post: String
   categories: String
+  date: Date
   time:
     date: String
     year: String
@@ -21,7 +22,7 @@ Post.getTotal = (args,next)->
   Post.find(args.condition).count().exec next
 # get posts
 Post.getPosts = (args,next)->
-  Post.find(args.condition).skip((args.page-1)*args.pageSize).limit(args.pageSize).sort('time.date').exec next
+  Post.find(args.condition).skip((args.page-1)*args.pageSize).limit(args.pageSize).sort('-date').exec next
 # get post by post id
 Post.getPostById = (id,next)->
   Post.findOne({_id:new ObjectID(id)}).exec (err,post)->
@@ -43,6 +44,7 @@ Post.modify = (args,author,next)->
       post.tags = args.tags
       post.post = args.post
       post.title = args.title
+      post.date = new Date()
       post.save()
       next null,post
     catch err
@@ -58,6 +60,7 @@ Post.add = (args,author,next)->
     post.tags = args.tags
     post.post = args.post
     post.time = getTime()
+    post.date = new Date()
     post.save()
     next null,post
   catch err

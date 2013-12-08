@@ -16,7 +16,7 @@ module.exports = (app)->
   app.get '/about',(req,res)->
     getWidgets (err,widgets)->
       res.render 'about',
-        title: 'about page'
+        title: 'about'
         brand: setting.brand
         motto: setting.motto
         index: setting.nav.index
@@ -54,7 +54,7 @@ module.exports = (app)->
   # render login page
   app.get '/login',(req,res)->
     res.render 'login',
-      title: 'login page'
+      title: 'login'
       brand: setting.brand
       motto: setting.motto
       index: setting.nav.index
@@ -67,7 +67,7 @@ module.exports = (app)->
   app.get '/register',(req,res)->
     checkLogin req,res
     res.render 'register',
-      title: 'register page'
+      title: 'register'
       brand: setting.brand
       motto: setting.motto
       index: setting.nav.index
@@ -85,7 +85,7 @@ module.exports = (app)->
         Post.getPostById postId,(err,post)-> 
            post.post = markdown.toHTML post.post
            res.render 'page',
-            title: 'register page'
+            title: 'article'
             brand: setting.brand
             motto: setting.motto
             index: setting.nav.index

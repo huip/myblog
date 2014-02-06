@@ -12,6 +12,17 @@ module.exports = (app)->
   # init index page
   app.get '/index/:page',(req,res)->
     indexPage req,res,req.params.page
+  # words page
+  app.get '/words',(req,res)->
+     getWidgets (err,widgets)->
+       res.render 'words',
+          title: 'words'
+          brand: setting.brand
+          motto: setting.motto
+          index: setting.nav.index
+          about: setting.nav.about
+          user: req.session.user 
+          widgets: widgets
   # render about page 
   app.get '/about',(req,res)->
     getWidgets (err,widgets)->

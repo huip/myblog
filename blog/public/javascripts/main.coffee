@@ -193,7 +193,7 @@ $(document).ready ->
   router.on 'admin',(err,current)->
     if current
       admin = new Admin()
-      $('.navbar-nav li').eq(2).addClass('active').siblings().removeClass('active')
+      $('.navbar-nav li').eq(3).addClass('active').siblings().removeClass('active')
   router.on 'index',(err,current)->
     if current
       $('.navbar-nav li').eq(0).addClass('active').siblings().removeClass('active')
@@ -206,6 +206,9 @@ $(document).ready ->
       register = new Register()
       $('.navbar-nav li').removeClass('active')
   router.on 'about',(err,current)->
+    if current
+      $('.navbar-nav li').eq(2).addClass('active').siblings().removeClass('active')
+  router.on 'words',(err,current)->
     if current
       $('.navbar-nav li').eq(1).addClass('active').siblings().removeClass('active')
   router.on 'p',(err,current)->

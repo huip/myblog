@@ -218,6 +218,15 @@ a {
 .site-widgets .friends-widget .friends {
   margin: 20px 0 0 0;
 }
+.words-area li {
+  line-height: 20px;
+  background: #fefefe;
+  padding: 10px;
+  margin: 10px;
+}
+.words-area li:hover {
+  background: #f0f0f0;
+}
 .time-sty {
   font-family: Georgia, Tahoma, Helvetica, arial;
   color: #a9a9a9;

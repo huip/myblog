@@ -182,7 +182,7 @@ $(document).ready ->
         events = ->
             initView()
         initView = ->
-            wordsUrl = 'http://dic.huip.org/api/show/10/get'
+            wordsUrl = 'http://dic.huip.org/api/show/100/get'
             $.ajax
                 url: wordsUrl
                 type: 'get'
@@ -190,7 +190,16 @@ $(document).ready ->
                 jsonp: 'callback'
                 jsonpCallback: 'get'
                 data: 'json'
-                success:(msg)->
+                success:(data)->
+                    appendWords(data)
+        appendWords = (data)->
+            items = ''
+            for item in data
+                items += '<li>'+item+'</li>'
+            $('.words-area').html items
+
+            
+
 
     class Router
         constructor: ->

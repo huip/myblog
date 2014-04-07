@@ -182,7 +182,7 @@ $(document).ready ->
         events = ->
             initView()
         initView = ->
-            wordsUrl = 'http://dic.huip.org/api/show/100/get'
+            wordsUrl = 'http://dic.huip.org/api/show/10000/get'
             $.ajax
                 url: wordsUrl
                 type: 'get'
@@ -192,11 +192,14 @@ $(document).ready ->
                 data: 'json'
                 success:(data)->
                     appendWords(data)
+        parseDate = (data)->
+            console.log $.parseJSON data
         appendWords = (data)->
-            items = ''
+            parseDate(data)
+            items = [] 
             for item in data
-                items += '<li>'+item+'</li>'
-            $('.words-area').html items
+                items.push '<li>'+item+'</li>'
+            $('.words-area').html items.join ''
 
             
 

@@ -12,6 +12,7 @@
     "mongodb": "*",
     "markdown":"*",
     "mongoose":"*",
-    "feed":"*"
+    "feed":"*",
+    "markx":"*"
   }
 }

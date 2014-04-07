@@ -3,6 +3,8 @@ markdown = require('markdown').markdown
 User = require '../models/user'
 Post = require '../models/post'
 Feed = require 'feed'
+markx = require 'markx'
+path = require 'path'
 module.exports = (app)->
   # render index page
   app.get '/',(req,res)->
@@ -26,14 +28,15 @@ module.exports = (app)->
   # render about page 
   app.get '/about',(req,res)->
     getWidgets (err,widgets)->
-      res.render 'about',
-        title: 'about'
-        brand: setting.brand
-        motto: setting.motto
-        index: setting.nav.index
-        about: setting.nav.about
-        user: req.session.user 
-        widgets: widgets
+        res.render 'about',
+            title: 'about'
+            brand: setting.brand
+            motto: setting.motto
+            index: setting.nav.index
+            about: setting.nav.about
+            user: req.session.user 
+            widgets: widgets
+
   # render rss
   app.get '/rss',(req,res)->
     feed = new Feed
@@ -62,6 +65,10 @@ module.exports = (app)->
             date: new Date(posts[key].time.date)
         res.set 'Content-Type','text/xml'
         res.send feed.render 'rss-2.0'
+  # download my resume
+  app.get '/resume',(req,res)->
+    res.download path.join __dirname,'../','file/resume.pdf'
+
   # render login page
   app.get '/login',(req,res)->
     res.render 'login',

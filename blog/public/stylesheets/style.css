@@ -3,7 +3,7 @@ body {
   padding: 0px;
   margin: 0px;
   line-height: 10px;
-  background: url("../images/bg.png");
+  background: url("../../images/bg.png");
 }
 a {
   under-line: none;
@@ -30,13 +30,14 @@ a {
 }
 .index-container .list-area .entry-title {
   font-size: 2em;
-  padding: 45px 0 0 10px;
+  padding: 25px 0 0 10px;
 }
 .index-container .list-area .entry-title a {
   color: #000;
 }
 .index-container .post-status {
   color: #a9a9a9;
+  margin: -20px 0 0 0;
 }
 .login-container {
   margin: 60px auto;

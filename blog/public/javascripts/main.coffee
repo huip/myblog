@@ -239,11 +239,12 @@ $(document).ready ->
           $('.navbar-nav li').removeClass('active')
     router.on 'about',(err,current)->
         if current
-          $('.navbar-nav li').eq(2).addClass('active').siblings().removeClass('active')
-    router.on 'words',(err,current)->
+          $('.navbar-nav li').eq(1).addClass('active').siblings().removeClass('active')
+    ### router.on 'words',(err,current)->
         if current
             words = new Words()
             $('.navbar-nav li').eq(1).addClass('active').siblings().removeClass('active')
+    ### 
     router.on 'p',(err,current)->
         if current 
             $('.navbar-nav li').removeClass('active')

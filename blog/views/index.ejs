@@ -5,7 +5,7 @@
     <div class="index-area">
     {{ posts.forEach(function(post) {  }}
       <div class="panel panel-default list-area">
-        <div class="panel panel-header  entry-title"><a href="/p/{{=post._id}}">{{=post.title}}</a></div>
+        <div class="panel panel-heading  entry-title"><a href="/p/{{=post._id}}">{{=post.title}}</a></div>
         <div class="panel-body">
           <div class="post-status">POST on:&nbsp<span class="time-sty">{{=post.time.minutes}}</span>&nbsp;Read:{{=post.pv}}</div>
           <p class="article-content">{{-post.post}}</p>

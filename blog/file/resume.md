@@ -9,12 +9,13 @@
 * web前端开发工程师
 
 ### 技能树
-* 较为熟练：html,css,javascript,php,mysql,coffeescript
-* 有所涉及：mongodb,python,node.js,apache,nginx
-* 所用框架:CodeIgniter,Bootstrap,Jquery,stylus,Backbone,
-  Underscore,Sea,Express,Symfony,Tornado
-* 工具利器：vim,sublime,chrome,git,Navicat Premium
-* 操作系统：osx,ubuntu,windows
+
+* HTML(5)/CSS(3): 熟练网页重构，保证兼容性。调研过html5,使用html5写过小的demo
+* JavaScript: 熟练手写原生JS
+* PHP: 用CI做过项目，了解后台MVC
+* 使用过的框架: CodeIgniter,Bootstrap,Jquery,Express
+* IDE: vim,sublime
+* 其他: 学习使用过python,ruby,mysql
 
 ### 工作经验
 * 2014年2月 至今 百度复合搜索部   
@@ -24,7 +25,7 @@
   
 * 2013年07月 至 2013年10月 北京清华大学colorwork创业团队 
  
-  职位：web开发工程师  
+  职位：web开发工程师(实习)  
   职责：参与colorwork网站的开发和基于node.js的在线多人实时协作文档的开发  
   
 * 2012年07月 至 2012年09月 光庭导航科技公司（武汉） 移动事业部 导航系统部

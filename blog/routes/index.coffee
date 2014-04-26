@@ -243,7 +243,6 @@ module.exports = (app)->
     Post.getTotal args,(err,total)->
       Post.getPosts args,(err,posts)->
         posts.forEach (post)->
-          console.log post.time
         res.render "admin",
           title: setting.title
           brand: setting.brand

@@ -5,18 +5,23 @@ Post = require '../models/post'
 Feed = require 'feed'
 markx = require 'markx'
 path = require 'path'
-module.exports = (app)->
+
+module.exports = (app) ->
   # render index page
-  app.get '/',(req,res)->
-    indexPage req,res,1
+ 
+ app.get '/',(req,res) ->
+    indexPage req, res, 1
+  
   app.get '/index',(req,res)->
-    indexPage req,res,1
-  # init index page
-  app.get '/index/:page',(req,res)->
-    indexPage req,res,req.params.page
-  # words page
-  app.get '/words',(req,res)->
-     getWidgets (err,widgets)->
+    indexPage req, res, 1
+ 
+ # init index page
+  app.get '/index/:page',(req,res) ->
+    indexPage req, res, req.params.page
+
+# words page
+  app.get '/words',(req,res) ->
+     getWidgets (err,widgets) ->
        res.render 'words',
           title: 'words'
           brand: setting.brand
@@ -25,9 +30,10 @@ module.exports = (app)->
           about: setting.nav.about
           user: req.session.user 
           widgets: widgets
-  # render about page 
-  app.get '/about',(req,res)->
-    getWidgets (err,widgets)->
+ 
+ # render about page 
+  app.get '/about',(req,res) ->
+    getWidgets (err,widgets) ->
         res.render 'about',
             title: 'about'
             brand: setting.brand
@@ -38,7 +44,7 @@ module.exports = (app)->
             widgets: widgets
 
   # render rss
-  app.get '/rss',(req,res)->
+  app.get '/rss',(req,res) ->
     feed = new Feed
       title: setting.title
       description: setting.motto
@@ -52,25 +58,26 @@ module.exports = (app)->
       condition: ''
       page: 1
       pageSize: 10
-    Post.getTotal args,(total)->
+    Post.getTotal args, (total) ->
       args.pageSize = total
-      Post.getPosts args,(err,posts)->
-        posts.forEach (post)->
+      Post.getPosts args, (err,posts) ->
+        posts.forEach (post) ->
           post.post = markdown.toHTML post.post
         for key of posts
           feed.item
             title: posts[key].title.trim()
-            link: 'http://huip.org/p/'+posts[key]._id
+            link: 'http://huip.org/p/' + posts[key]._id
             description: posts[key].post.trim()
             date: new Date(posts[key].time.date)
         res.set 'Content-Type','text/xml'
         res.send feed.render 'rss-2.0'
+
   # download my resume
-  app.get '/resume',(req,res)->
+  app.get '/resume',(req,res) ->
     res.download path.join __dirname,'../','file/resume.pdf'
 
   # render login page
-  app.get '/login',(req,res)->
+  app.get '/login', (req,res) ->
     res.render 'login',
       title: 'login'
       brand: setting.brand
@@ -78,12 +85,14 @@ module.exports = (app)->
       index: setting.nav.index
       about: setting.nav.about
       user: req.session.user
-  app.get '/logout',(req,res)->
+
+  app.get '/logout', (req,res) ->
     req.session.user = undefined
     res.redirect '/'
+  
   # render register page
-  app.get '/register',(req,res)->
-    checkLogin req,res
+  app.get '/register', (req,res) ->
+    checkLogin req, res
     res.render 'register',
       title: 'register'
       brand: setting.brand
@@ -91,16 +100,18 @@ module.exports = (app)->
       index: setting.nav.index
       about: setting.nav.about
       user: req.session.user
+
   # check user is login
   # list post by id
-  app.get '/p/:id',(req,res)->
+  app.get '/p/:id', (req,res) ->
     postId = req.params.id
     if postId.length isnt 24
       res.render '404'
       return false
-    getWidgets (err,widgets)->
-      Post.addPv postId,(err,post)->
-        Post.getPostById postId,(err,post)-> 
+
+    getWidgets (err,widgets) ->
+      Post.addPv postId, (err,post) ->
+        Post.getPostById postId, (err,post) -> 
            post.post = markdown.toHTML post.post
            res.render 'page',
             title: 'article'
@@ -112,18 +123,18 @@ module.exports = (app)->
             widgets: widgets
             post: post
   # list post by categories 
-  app.get '/w/:widgets/:type',(req,res)->
+  app.get '/w/:widgets/:type', (req,res) ->
     widgetsPage req,res,req.params.widgets,req.params.type,1
-  app.get '/w/:widgets/:type/:page',(req,res)->
+  app.get '/w/:widgets/:type/:page', (req,res) ->
     widgetsPage req,res,req.params.widgets,req.params.type,req.params.page
   # render admin page
-  app.get '/admin',(req,res)->
+  app.get '/admin', (req,res) ->
     adminPage req,res,1
-  app.get '/admin/list/:page',(req,res)->
+  app.get '/admin/list/:page',(req,res) ->
     adminPage req,res,req.params.page
-  app.get '/admin/post',(req,res)->
+  app.get '/admin/post', (req,res) ->
     checkLogin req,res
-    Post.getTags (err,tags)->
+    Post.getTags (err,tags) ->
       res.render 'post',
         title: setting.title
         brand: setting.brand
@@ -133,16 +144,17 @@ module.exports = (app)->
         categories: setting.categories
         user: req.session.user 
         tags:tags
+  
   # edit post page
-  app.get '/admin/p/edit/:id',(req,res)->
+  app.get '/admin/p/edit/:id', (req,res) ->
     checkLogin req,res
     postId = req.params.id
     if postId.length isnt 24
       res.render '404'
       return false
-    Post.getPostById postId,(err,docs)->
+    Post.getPostById postId, (err,docs) ->
       console.log err if err
-      Post.getTags (err,tags)->
+      Post.getTags (err,tags) ->
         console.log err if err
         res.render "edit",
          title: setting.title
@@ -156,19 +168,20 @@ module.exports = (app)->
          categories: setting.categories
          tags: tags
   # check user is login
-  checkLogin = (req,res)->
+  checkLogin = (req,res) ->
     res.redirect "/login" if not req.session.user?
   # index common page
-  indexPage = (req,res,page)->
+  indexPage = (req,res,page) ->
     page = 1 if page < 1
     args =
       condition: ''
       page: parseInt page
       pageSize: 10
-    getWidgets (err,widgets)->
-      Post.getTotal args,(err,total)->
-        Post.getPosts args,(err,posts)->
-          posts.forEach (post)->
+
+    getWidgets (err,widgets) ->
+      Post.getTotal args, (err,total) ->
+        Post.getPosts args, (err,posts) ->
+          posts.forEach (post) ->
             post.post = markdown.toHTML post.post
           res.render 'index',
             title: setting.title
@@ -181,19 +194,20 @@ module.exports = (app)->
             location: '/index'
             widgets: widgets
             isFirstPage: (args.page - 1) == 0
-            isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
+            isLastPage: ((args.page - 1) * args.pageSize + posts.length) == total
             user: req.session.user
+
    # widgets common page {widgets means widgets type}
    widgetsPage = (req,res,widget,type,page)->
      page = 1 if page < 1
      args = 
-      condition:''
+      condition: ''
       page: page
       pageSize: 10
      switch widget
-       when 'categorie' then args.condition = 'categories':type
+       when 'categorie' then args.condition = 'categories': type
        when 'tag' then args.condition = 'tags':type
-       when 'archive' then args.condition = 'time.month':type
+       when 'archive' then args.condition = 'time.month': type
      getWidgets (err,widgets)->
        Post.getTotal args,(err,total)->
         Post.getPostByWidgets args,(err,posts)->
@@ -208,14 +222,15 @@ module.exports = (app)->
               posts: posts
               page: args.page
               type: type
-              location: '/w/'+widget+'/'+type
+              location: '/w/' + widget + '/' + type
               widget: widget.toUpperCase()
               isFirstPage: (args.page - 1) == 0
-              isLastPage: ((args.page - 1)*args.pageSize + posts.length) == total
+              isLastPage: ((args.page - 1) * args.pageSize + posts.length) == total
               widgets: widgets
               user: req.session.user 
+
    # widgets collections
-   getWidgets =(next)->
+   getWidgets =(next) ->
      widgets = {}
      widgets.categories = setting.categories
      recentsArgs = 
@@ -223,26 +238,26 @@ module.exports = (app)->
        page: 1
        pageSize: 5
      # to fixed the bug
-     Post.getRecents recentsArgs,(err,posts)->
+     Post.getRecents recentsArgs, (err,posts) ->
        widgets.recents = posts
-       Post.getTags (err,tags)->
+       Post.getTags (err,tags) ->
         widgets.tags = tags
-        Post.getArchive (err,archive)->
+        Post.getArchive (err,archive) ->
           widgets.archive = archive
-          next null,widgets
+          next null, widgets
    # admin common info
-   adminPage = (req,res,page)->
+   adminPage = (req,res,page) ->
     checkLogin req,res
     page = parseInt page
     page = 1 if page < 1
-    args = {
+    args =
       condition: ''
       page: page
       pageSize: 10
-    }
-    Post.getTotal args,(err,total)->
-      Post.getPosts args,(err,posts)->
-        posts.forEach (post)->
+
+    Post.getTotal args, (err,total) ->
+      Post.getPosts args, (err,posts) ->
+        posts.forEach (post) ->
         res.render "admin",
           title: setting.title
           brand: setting.brand
@@ -255,7 +270,8 @@ module.exports = (app)->
           page:args.page
           isFirstPage: (args.page - 1) == 0
           isLastPage: ((args.page - 1) * args.pageSize + posts.length) == total
-          numPage:Math.ceil(total/10)
+          numPage:Math.ceil(total / 10)
+
     getDate = ->
       date = new Date()
       time =

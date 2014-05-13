@@ -8,6 +8,7 @@ $(document).ready ->
         $btn = $ '.login-btn'
         url = '/api/u/login'
         bok = false
+
         init: ->
           events()
         events = ->
@@ -27,7 +28,7 @@ $(document).ready ->
           else
             bok = true
           return bok
-        msgHandle = (msg)->
+        msgHandle = (msg) ->
           if msg.errorCode is 202
             window.location.href = '/admin'
           else if msg.errorCode is 103
@@ -36,14 +37,14 @@ $(document).ready ->
             errorTip $errorTip,'username or password error!','show'
         doLogin = ->
           data = 
-            email:$email.val()
-            password:$password.val()
+            email: $email.val()
+            password: $password.val()
           if checkInvalid data
             $.ajax
               url: url
               type: 'post'
               data: data
-              success:(msg)->
+              success: (msg) ->
                 msgHandle msg 
     
     class Register
@@ -62,28 +63,30 @@ $(document).ready ->
           $btn.click ->
             doRegister()
           $uname.focus ->
-            errorTip $errorTip,'','hide'
+            errorTip $errorTip, '', 'hide'
           $email.focus ->
-            errorTip $errorTip,'','hide'
+            errorTip $errorTip, '', 'hide'
           $password.focus ->
-            errorTip $errorTip,'','hide'
+            errorTip $errorTip, '', 'hide'
         checkInvalid = (data) ->
           if data.username.length < 4
-            errorTip $errorTip,'Invalid user name!','show'
+            errorTip $errorTip, 'Invalid user name!', 'show'
           else if not isValidEmail data.email
-            errorTip $errorTip,'Invalid email address!','show'
+            errorTip $errorTip, 'Invalid email address!', 'show'
             bok = false 
           else if data.password.length < 6
-            errorTip $errorTip,'Password less than 6 characters!','show'
+            errorTip $errorTip, 'Password less than 6 characters!', 'show'
             bok = false
           else
             bok = true
-        msgHandle = (msg)->
+        
+        msgHandle = (msg) ->
           if msg.errorCode is 201
             window.location.href = '/admin'
             return false
           if msg.errorCode is 101
-            errorTip $errorTip,'user acount is already exist','show'
+            errorTip $errorTip,'user acount is already exist', 'show'
+        
         doRegister = ->
           data =
             username: $uname.val()
@@ -136,51 +139,58 @@ $(document).ready ->
             url: postUrl
             type: 'post'
             data: post
-            success:(msg)->
+            success:(msg) ->
               window.location.href = '/admin' if msg.errorCode is 203
-        removePost = (that)->
+        removePost = (that) ->
           isRemove = window.confirm 'are your sure delte this article?'
           window.location.href = that.attr 'href' if isRemove
-        editPost = (that)->
+        editPost = (that) ->
           datas =
             title: $editTitle.val()
             tags: $editTags.val()
             post: $editPost.val()
-            id:that.attr 'pid'
+            id: that.attr 'pid'
           $.ajax
-            url: editUrl+datas.id
+            url: editUrl + datas.id
             type: 'post'
             data: datas
             success:(msg)->
               window.location.href = '/admin' if msg.errorCode is 204
-        prePost = (that)->
+
+        prePost = (that) ->
+
          if that.hasClass 'hides'
-           $('.wmd-preview').css 'display','none'
-           $('.wmd-input').css 'display','block'
+           $('.wmd-preview').css 'display', 'none'
+           $('.wmd-input').css 'display', 'block'
            that.removeClass 'hides'
          else 
-           $('.wmd-input').css 'display','none'
-           $('.wmd-preview').css 'display','block'
+           $('.wmd-input').css 'display', 'none'
+           $('.wmd-preview').css 'display', 'block'
            that.addClass 'hides'
-        createTag = (that)->
+
+        createTag = (that) ->
             $inptTag = $('.input-tag')
+
             if that.hasClass 'hides'
-                $inptTag.css 'display','block'
+                $inptTag.css 'display', 'block'
                 that.removeClass 'hides'
-            else 
+            else
                 if $inptTag.val() != ''
                     tagOption = '<option value='+$inptTag.val()+'>'+$inptTag.val()+'</option>'
-                    $('.tags').append( tagOption )
-                    $inptTag.css( 'display','none' ).val('')
+                    $('.tags').append(tagOption)
+                    $inptTag.css('display','none').val('')
                     that.addClass 'hides'
 
     class Words
         constructor: ->
-            @init() 
+            @init()
+
         init: ->
             events()
+
         events = ->
             initView()
+
         initView = ->
             wordsUrl = 'http://dic.huip.org/api/show/10000/get'
             $.ajax
@@ -190,75 +200,89 @@ $(document).ready ->
                 jsonp: 'callback'
                 jsonpCallback: 'get'
                 data: 'json'
-                success:(data)->
+                success:(data) ->
                     appendWords(data)
-        parseDate = (data)->
+
+        parseDate = (data) ->
             console.log $.parseJSON data
-        appendWords = (data)->
+
+        appendWords = (data) ->
             parseDate(data)
             items = [] 
             for item in data
-                items.push '<li>'+item+'</li>'
+                items.push '<li>' + item + '</li>'
             $('.words-area').html items.join ''
-
-            
-
 
     class Router
         constructor: ->
           @url = window.location.href
           @init @url
         current = ''
-        init:(url)->
+        
+        init:(url) ->
           urlHash url
-        urlHash = (url)->
+        
+        urlHash = (url) ->
           urls = url.split '/'
           current = urls[3]
         on:(router,next)->
           if router is current
-            next null,router
+            next null, router
           else 
-            next 'not current',null
+            next 'not current', null
 
 # router config 
     router = new Router()
-    router.on 'admin',(err,current)->
+  
+  router.on 'admin',(err,current)->
         if current
             admin = new Admin()
-            $('.navbar-nav li').eq(3).addClass('active').siblings().removeClass('active')
-    router.on 'index',(err,current)->
+            $('.navbar-nav li').eq(3).addClass('active').
+                siblings().removeClass('active')
+   
+   router.on 'index',(err,current)->
         if current
-          $('.navbar-nav li').eq(0).addClass('active').siblings().removeClass('active')
+          $('.navbar-nav li').eq(0).addClass('active').
+                siblings().removeClass('active')
+    
     router.on 'login',(err,current)->
         if current
           $('.navbar-nav li').removeClass('active')
           login = new Login()
-    router.on 'register',(err,current)->
+    
+    router.on 'register',(err,current) ->
         if current
           register = new Register()
           $('.navbar-nav li').removeClass('active')
-    router.on 'about',(err,current)->
+
+    router.on 'about',(err,current) ->
         if current
-          $('.navbar-nav li').eq(1).addClass('active').siblings().removeClass('active')
+          $('.navbar-nav li').eq(1).addClass('active').
+            siblings().removeClass('active')
+    
     ### router.on 'words',(err,current)->
         if current
             words = new Words()
-            $('.navbar-nav li').eq(1).addClass('active').siblings().removeClass('active')
+            $('.navbar-nav li').eq(1).addClass('active').
+                siblings().removeClass('active')
     ### 
-    router.on 'p',(err,current)->
+    
+    router.on 'p',(err,current) ->
         if current 
             $('.navbar-nav li').removeClass('active')
-    router.on 'w',(err,current)->
+   
+   router.on 'w',(err,current) ->
         if current 
             $('.navbar-nav li').removeClass('active')
 
 # is valid email
-    isValidEmail = (email)->
+    isValidEmail = (email) ->
         reMail = /^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i
         return reMail.test email
+
 # error tip 
-    errorTip = (dom,msg,method)->
+    errorTip = (dom,msg,method) ->
         if method is 'show'
-            dom.html(msg).css 'color','#b94a48'
+            dom.html(msg).css 'color', '#b94a48'
         else
             dom.html ''

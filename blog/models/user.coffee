@@ -10,25 +10,29 @@ userSchema = new mongoose.Schema
     index: true
     unique: true
   password: String
+
 module.exports = User = mongoose.model 'User', userSchema
+
 # save user
-User.save = (info,next)->
+User.save = (info,next) ->
   user = new User
-  user.register info,next
-User::register = (info,next)->
+  user.register info, next
+
+# user register
+User::register = (info,next) ->
   self = @
   self.name = info.name
   self.email = info.email
   self.password = info.password
-  console.log self
   self.save()
-  next null,info
+  next null, info
+
 # check user
-User.get = (user,next)->
+User.get = (user,next) ->
   next 201 if not user.email?
-  User.findOne {email:user.email},(err,dbUser)->
+  User.findOne {email:user.email},(err,dbUser) ->
     return next err if err
     if not dbUser?
-      next err,null
+      next err, null
     else
-      next err,dbUser
+      next err, dbUser
